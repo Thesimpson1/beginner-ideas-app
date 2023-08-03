@@ -8,6 +8,7 @@
 import type { PropsWithChildren } from 'react';
 import React from 'react';
 import {
+  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -23,9 +24,10 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import * as Sentry from '@sentry/react-native';
+import { sentryFcmTopicError } from 'app/logging/sentry/sentryEvents';
 
 import { StartScreen } from 'app/screens/Authentication';
-
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -64,7 +66,6 @@ function App(): JSX.Element {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -121,4 +122,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default Sentry.wrap(App);
