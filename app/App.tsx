@@ -8,7 +8,6 @@
 import type { PropsWithChildren } from 'react';
 import React from 'react';
 import {
-  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -25,8 +24,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import * as Sentry from '@sentry/react-native';
-import { sentryFcmTopicError } from 'app/logging/sentry/sentryEvents';
 
+import { ErrorBoundary } from 'app/components/ErrorBoundary/ErrorBoundary';
 import { StartScreen } from 'app/screens/Authentication';
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -72,7 +71,9 @@ function App(): JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <StartScreen />
+      <ErrorBoundary>
+        <StartScreen />
+      </ErrorBoundary>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}
