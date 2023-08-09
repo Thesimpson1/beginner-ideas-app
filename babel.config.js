@@ -1,6 +1,6 @@
 module.exports = function override(api) {
   const presets = ['module:metro-react-native-babel-preset'];
-  const plugins = [];
+  const plugins = ['react-native-reanimated/plugin'];
 
   api.cache(true);
 
