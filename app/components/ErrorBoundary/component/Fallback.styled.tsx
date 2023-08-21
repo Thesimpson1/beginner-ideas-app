@@ -11,4 +11,5 @@ export const StyledTextContainer = styled.View`
 export const StyledText = styled.Text`
   font-size: 30px;
   text-align: center;
+  font-family: Inter-SemiBold;
 `;
