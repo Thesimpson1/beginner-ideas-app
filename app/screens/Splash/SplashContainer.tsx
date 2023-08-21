@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Splash } from 'app/screens/Splash/components/Splash';
 
