@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { Splash } from 'app/screens/Splash/components/Splash';
+import { StyledSplashContainer } from 'app/screens/Splash/SplashContainer.styled';
 
 type SplashContainerPropsType = {
   children: ReactNode;
@@ -13,13 +14,8 @@ export function SplashContainer({
   isReady,
 }: SplashContainerPropsType) {
   return (
-    <View testID={'SplashContainerTestID'} style={styles.container}>
+    <StyledSplashContainer>
       {isReady ? <View>{children}</View> : <Splash />}
-    </View>
+    </StyledSplashContainer>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

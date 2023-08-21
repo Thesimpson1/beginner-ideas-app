@@ -6,10 +6,10 @@
  */
 
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
+import { StyledSplashContainer } from 'app/App.styled';
 
 import { ErrorBoundary } from 'app/components/ErrorBoundary/ErrorBoundary';
 import { StartScreen } from 'app/screens/Authentication';
@@ -23,24 +23,18 @@ function App(): JSX.Element {
   };
 
   return (
-    <SafeAreaView style={styles.mainContainer}>
-      <NavigationContainer onReady={onReady}>
-        <SplashContainer isReady={isReady}>
-          <Animated.View entering={FadeIn.duration(1000)}>
-            <ErrorBoundary>
+    <StyledSplashContainer>
+      <ErrorBoundary>
+        <NavigationContainer onReady={onReady}>
+          <SplashContainer isReady={isReady}>
+            <Animated.View entering={FadeIn.duration(1000)}>
               <StartScreen />
-            </ErrorBoundary>
-          </Animated.View>
-        </SplashContainer>
-      </NavigationContainer>
-    </SafeAreaView>
+            </Animated.View>
+          </SplashContainer>
+        </NavigationContainer>
+      </ErrorBoundary>
+    </StyledSplashContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-  },
-});
 
 export default Sentry.wrap(App);
