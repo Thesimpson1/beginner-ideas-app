@@ -1,15 +1,12 @@
 import styled from 'styled-components/native';
 
-export const StyledFallbackContainer = styled.SafeAreaView`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
+import { StyledTextH2 } from 'app/utils/common-styled-components';
+import { calcFontSize, calcHeight } from 'app/utils/scaling-system';
+
 export const StyledTextContainer = styled.View`
-  margin: 50px 50px;
+  margin: ${calcHeight(50)}px ${calcHeight(50)}px;
 `;
-export const StyledText = styled.Text`
-  font-size: 30px;
+export const StyledText = styled(StyledTextH2)`
+  font-size: ${calcFontSize(30)}px;
   text-align: center;
-  font-family: Inter-SemiBold;
 `;
