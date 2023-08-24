@@ -7,9 +7,11 @@
 
 import React, { useState } from 'react';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
 import { StyledSplashContainer } from 'app/App.styled';
+import { store } from 'app/redux/store';
 
 import { ErrorBoundary } from 'app/components/ErrorBoundary/ErrorBoundary';
 import { StartScreen } from 'app/screens/Authentication';
@@ -28,7 +30,9 @@ function App(): JSX.Element {
         <NavigationContainer onReady={onReady}>
           <SplashContainer isReady={isReady}>
             <Animated.View entering={FadeIn.duration(1000)}>
-              <StartScreen />
+              <Provider store={store}>
+                <StartScreen />
+              </Provider>
             </Animated.View>
           </SplashContainer>
         </NavigationContainer>
