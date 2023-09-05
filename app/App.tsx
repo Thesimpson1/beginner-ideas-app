@@ -11,7 +11,8 @@ import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
 import { StyledSplashContainer } from 'app/App.styled';
-import { store } from 'app/redux/store';
+import { persistor, store } from 'app/redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import { ErrorBoundary } from 'app/components/ErrorBoundary/ErrorBoundary';
 import { StartScreen } from 'app/screens/Authentication';
@@ -31,7 +32,9 @@ function App(): JSX.Element {
           <SplashContainer isReady={isReady}>
             <Animated.View entering={FadeIn.duration(1000)}>
               <Provider store={store}>
-                <StartScreen />
+                <PersistGate loading={null} persistor={persistor}>
+                  <StartScreen />
+                </PersistGate>
               </Provider>
             </Animated.View>
           </SplashContainer>

@@ -5,7 +5,6 @@ module.exports = {
     '/node_modules/(?![@autofiy/autofiyable|@autofiy/property]).+\\.js$',
     '/node_modules/(?![@autofiy/autofiyable|@autofiy/property]).+\\.ts$',
     '/node_modules/(?![@autofiy/autofiyable|@autofiy/property]).+\\.tsx$',
-    'app/redux/store.ts',
   ],
   transform: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
@@ -13,6 +12,7 @@ module.exports = {
   },
   collectCoverageFrom: [
     'app/**/*.{js,ts,jsx,tsx}',
+    '!app/redux/store.ts',
     '!app/**/index.ts',
     '!app/**/types.{ts,tsx}',
     '!app/**/*.types.{ts,tsx}',
@@ -24,6 +24,6 @@ module.exports = {
     '!app/**/*.providers.tsx',
     '!app/**/*.navigator.tsx',
     '!app/**/rootNavigation.ts',
-    '!app/**/utils/testHelpers.ts*',
+    '!app/**/utils/test-utils/**',
   ],
 };
