@@ -2,10 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export interface AuthState {
   isFetchUserInfo: boolean;
-  user: [];
+  user: unknown[];
   fetchUserInfoError: string;
 }
-
+interface GetUserInfoErrorActionI {
+  type: string;
+  payload: string;
+}
 const initialState: AuthState = {
   isFetchUserInfo: false,
   user: [],
@@ -23,7 +26,7 @@ export const slice = createSlice({
       state.isFetchUserInfo = false;
       state.user = action.payload;
     },
-    getUserInfoError: (state, action) => {
+    getUserInfoError: (state, action: GetUserInfoErrorActionI) => {
       state.isFetchUserInfo = false;
       state.fetchUserInfoError = action.payload;
     },
