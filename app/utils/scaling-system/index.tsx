@@ -26,4 +26,4 @@ const calcWidth = (px: number) =>
   widthPixelRatio(convertWidthPixelsToPercent(px));
 const calcFontSize = (size: number) => size * fontScale;
 
-export { calcHeight, calcWidth, calcFontSize };
+export { calcHeight, calcWidth, calcFontSize, width, height };
