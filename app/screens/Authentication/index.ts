@@ -1,1 +1,1 @@
-export * from './StartScreen/StartScreen';
+export * from 'app/screens/Authentication/Login/Login';
