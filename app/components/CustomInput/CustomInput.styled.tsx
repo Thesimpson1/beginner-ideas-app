@@ -5,10 +5,12 @@ import { StyledTextH3 } from 'app/utils/common-styled-components';
 import { calcFontSize, calcHeight, calcWidth } from 'app/utils/scaling-system';
 import { colors } from 'app/constants/color';
 
-export const StyledCustomInputContainer = styled.View``;
+export const StyledCustomInputContainer = styled.View`
+  margin-bottom: ${calcHeight(7)}px;
+`;
 export const StyledCustomInput = styled.TextInput`
   height: ${calcHeight(40)}px;
-  font-size: 16px;
+  font-size: ${calcFontSize(16)}px;
   padding-left: ${calcWidth(10)}px;
   flex: 1;
 `;
@@ -35,7 +37,7 @@ export const StyledLeftIconWrapper = styled.View`
   padding-left: ${calcWidth(10)}px;
 `;
 export const StyledRightIconWrapper = styled.TouchableOpacity`
-  padding-right: ${calcWidth(10)}px;
+  padding-right: ${calcWidth(20)}px;
 `;
 export const StyledErrorWrapper = styled.View`
   padding-left: ${calcWidth(50)}px;
