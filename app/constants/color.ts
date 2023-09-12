@@ -1,4 +1,4 @@
-enum MainColorName {
+export enum MainColorName {
   BLUE = 'BLUE',
   LIGHT_GRAY = 'LIGHT_GRAY',
   GREY = 'GREY',
