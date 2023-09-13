@@ -15,7 +15,7 @@ import { persistor, store } from 'app/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { ErrorBoundary } from 'app/components/ErrorBoundary/ErrorBoundary';
-import { StartScreen } from 'app/screens/Authentication';
+import { LoginScreen } from 'app/screens/Authentication';
 import { SplashContainer } from 'app/screens/Splash/SplashContainer';
 
 function App(): JSX.Element {
@@ -33,7 +33,7 @@ function App(): JSX.Element {
             <Animated.View entering={FadeIn.duration(1000)}>
               <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
-                  <StartScreen />
+                  <LoginScreen />
                 </PersistGate>
               </Provider>
             </Animated.View>

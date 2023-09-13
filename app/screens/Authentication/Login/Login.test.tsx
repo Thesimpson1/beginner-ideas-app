@@ -2,12 +2,12 @@ import React from 'react';
 import { fireEvent } from '@testing-library/react-native';
 
 import { renderWithProviders } from 'app/utils/test-utils/renderWithProviders';
-import { StartScreen } from 'app/screens/Authentication';
+import { Login } from 'app/screens/Authentication';
 
 describe('Start screen', () => {
   const testText = 'Hello test';
   it('Check action from component', async () => {
-    const screen = renderWithProviders(<StartScreen />);
+    const screen = renderWithProviders(<Login />);
 
     fireEvent.press(screen.getByTestId('ButtonTestId'));
     const userFetchStatus = await screen.getByTestId('userFetchStatus');
@@ -19,7 +19,7 @@ describe('Start screen', () => {
       user: [],
       fetchUserInfoError: '',
     };
-    const screen = renderWithProviders(<StartScreen />, {
+    const screen = renderWithProviders(<Login />, {
       preloadedState: {
         auth: initial,
       },
@@ -34,7 +34,7 @@ describe('Start screen', () => {
       user: [testText],
       fetchUserInfoError: '',
     };
-    const screen = renderWithProviders(<StartScreen />, {
+    const screen = renderWithProviders(<Login />, {
       preloadedState: {
         auth: initial,
       },
