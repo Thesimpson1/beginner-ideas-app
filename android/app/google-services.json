@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "565152579210",
+    "project_id": "beginner-ideas-app",
+    "storage_bucket": "beginner-ideas-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565152579210:android:fbf5f7f5783532172f3773",
+        "android_client_info": {
+          "package_name": "com.beginerideasapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMSgK4P_nKpCcIe0Kd0_e1Xkd9MkyeCXo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
