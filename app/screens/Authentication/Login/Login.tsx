@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import { getUserInfo, setUserInfo } from 'app/redux/auth/slice';
+import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
+import { RootState } from 'app/redux/store';
 import { useFormik } from 'formik';
 
 import { EmailIcon, PasswordIcon, PersonIcon } from 'app/assets/icon';
@@ -27,35 +30,16 @@ const loginScreenTitles = {
   signInTitle: 'Welcome Back',
 };
 export function LoginScreen() {
-  // // Set an initializing state whilst Firebase connects
-  // const [initializing, setInitializing] = useState(true);
-  // const [user, setUser] = useState();
-  //
-  // // Handle user state changes
-  // function onAuthStateChanged(users) {
-  //   setUser(users);
-  //   if (users === null) {
-  //     auth()
-  //       .createUserWithEmailAndPassword(
-  //         'arturbiosdev@gmail.com',
-  //         'SuperSecretPassword!'
-  //       )
-  //       .then(() => {
-  //         console.log('User account created & signed in!');
-  //       });
-  //   }
-  //   if (initializing) {
-  //     setInitializing(false);
-  //   }
-  // }
-  //
-  // useEffect(() => {
-  //   const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-  //   return subscriber; // unsubscribe on unmount
-  // }, []);
-  /////////////
-  // const dispatch = useAppDispatch();
-  // const userData = useAppSelector((state: RootState) => state.auth.user);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const dispatch = useAppDispatch();
+
+  const userData = useAppSelector((state: RootState) => state.auth.user);
+  useEffect(() => {
+    dispatch(getUserInfo());
+  }, [dispatch]);
+  ////
+
+  console.log('11111', userData);
   // const userFetchStatus = useAppSelector(
   //   (state: RootState) => state.auth.isFetchUserInfo
   // );
@@ -67,12 +51,12 @@ export function LoginScreen() {
         email: '',
       },
       onSubmit: (formValue) => {
-        Alert.alert(JSON.stringify(formValue, null, 2));
+        const { email, password } = formValue;
+        dispatch(setUserInfo({ email, password }));
       },
       validate,
     });
 
-  const [currentIndex, setCurrentIndex] = useState(0);
   return (
     <StyledLoginScreenContainer>
       <StyledLoginScreenTopContainer>

@@ -2,8 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export interface AuthState {
   isFetchUserInfo: boolean;
-  user: unknown[];
+  user: string | null;
   fetchUserInfoError: string;
+  isSetUserFetch: boolean;
+  isSetUserError: string;
 }
 interface GetUserInfoErrorActionI {
   type: string;
@@ -11,8 +13,10 @@ interface GetUserInfoErrorActionI {
 }
 const initialState: AuthState = {
   isFetchUserInfo: false,
-  user: [],
+  user: null,
   fetchUserInfoError: '',
+  isSetUserFetch: false,
+  isSetUserError: '',
 };
 
 export const slice = createSlice({
@@ -30,11 +34,31 @@ export const slice = createSlice({
       state.isFetchUserInfo = false;
       state.fetchUserInfoError = action.payload;
     },
+    setUserInfo: (state, action) => {
+      state.isSetUserFetch = true;
+    },
+    setUserInfoSuccess: (state, action) => {
+      state.isSetUserFetch = false;
+      state.user = action.payload.user?.email.slice(
+        0,
+        action.payload.user?.email.indexOf('@')
+      );
+    },
+    setUserInfoError: (state, action: GetUserInfoErrorActionI) => {
+      state.isSetUserFetch = false;
+      state.isSetUserError = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { getUserInfo, getUserInfoSuccess, getUserInfoError } =
-  slice.actions;
+export const {
+  getUserInfo,
+  getUserInfoSuccess,
+  getUserInfoError,
+  setUserInfo,
+  setUserInfoSuccess,
+  setUserInfoError,
+} = slice.actions;
 
 export default slice.reducer;

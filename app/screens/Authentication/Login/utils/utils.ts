@@ -19,6 +19,6 @@ export const validate = (values: FrameStateI) => {
     errors.email = 'Invalid email address';
   }
   // we check here all states, if we have no error we will return false
-  const isError = !!errors.email && errors.password;
+  const isError = !!errors.email || !!errors.password;
   return isError ? errors : undefined;
 };
