@@ -68,4 +68,18 @@ describe('Simple Button', () => {
     expect(StyledRoundButtonTitleTest.children).toBe(testTitle);
     expect(StyledRoundButtonTitleTest.style.color).toBe(color);
   });
+  it('Should display loading state', () => {
+    const { getByTestId } = render(
+      <RoundButton title={testTitle} onPress={mockOnPress} isLoading={true} />
+    );
+
+    const StyledActivityIndicatorWrapperTest = getByTestId(
+      'StyledActivityIndicatorWrapperTest'
+    ).props;
+    const ActivityIndicatorTest = getByTestId('ActivityIndicatorTest').props;
+
+    expect(StyledActivityIndicatorWrapperTest.children).toBeTruthy();
+    expect(ActivityIndicatorTest.color).toBe(colors[MainColorName.WHITE]);
+    expect(ActivityIndicatorTest.size).toBe('large');
+  });
 });

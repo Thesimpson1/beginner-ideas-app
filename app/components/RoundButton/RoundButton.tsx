@@ -1,7 +1,8 @@
 import React from 'react';
+import { ActivityIndicator } from 'react-native';
 
-import { calcWidth } from 'app/utils/scaling-system';
 import {
+  StyledActivityIndicatorWrapper,
   StyledRoundButtonTitle,
   StyledRoundButtonWrapper,
 } from 'app/components/RoundButton/RoundButton.styled';
@@ -14,6 +15,7 @@ interface SimpleButtonPropsI {
   color?: string;
   backgroundColor?: string;
   isDisabled?: boolean;
+  isLoading?: boolean;
   onPressTestID?: string;
 }
 export function RoundButton({
@@ -23,6 +25,7 @@ export function RoundButton({
   color,
   backgroundColor = colors[MainColorName.BLUE],
   isDisabled = false,
+  isLoading = false,
   onPressTestID = 'StyledRoundButtonWrapperTest',
 }: SimpleButtonPropsI) {
   return (
@@ -35,10 +38,21 @@ export function RoundButton({
     >
       <StyledRoundButtonTitle
         color={color}
+        isLoading={isLoading}
         testID={'StyledRoundButtonTitleTest'}
       >
         {title}
       </StyledRoundButtonTitle>
+      <StyledActivityIndicatorWrapper
+        isLoading={isLoading}
+        testID={'StyledActivityIndicatorWrapperTest'}
+      >
+        <ActivityIndicator
+          color={colors[MainColorName.WHITE]}
+          size={'large'}
+          testID={'ActivityIndicatorTest'}
+        />
+      </StyledActivityIndicatorWrapper>
     </StyledRoundButtonWrapper>
   );
 }

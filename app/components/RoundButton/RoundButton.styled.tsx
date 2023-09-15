@@ -18,7 +18,14 @@ export const StyledRoundButtonWrapper = styled.TouchableOpacity<{
 `;
 export const StyledRoundButtonTitle = styled(StyledTextH3)<{
   color?: string;
+  isLoading?: boolean;
 }>`
   color: ${({ color }) => (color ? color : colors.WHITE)};
   font-size: ${calcFontSize(14)}px;
+  display: ${({ isLoading }) => (isLoading ? 'none' : 'flex')};
+`;
+export const StyledActivityIndicatorWrapper = styled.View<{
+  isLoading: boolean;
+}>`
+  display: ${({ isLoading }) => (isLoading ? 'flex' : 'none')};
 `;
