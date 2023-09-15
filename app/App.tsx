@@ -7,6 +7,7 @@
 
 import React, { useState } from 'react';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import ToastMessage from 'react-native-toast-message';
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
@@ -15,6 +16,7 @@ import { persistor, store } from 'app/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { ErrorBoundary } from 'app/components/ErrorBoundary/ErrorBoundary';
+import { toastMessageConfig } from 'app/components/Toasts/Toast';
 import { LoginScreen } from 'app/screens/Authentication';
 import { SplashContainer } from 'app/screens/Splash/SplashContainer';
 
@@ -34,6 +36,7 @@ function App(): JSX.Element {
               <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
                   <LoginScreen />
+                  <ToastMessage config={toastMessageConfig} />
                 </PersistGate>
               </Provider>
             </Animated.View>
