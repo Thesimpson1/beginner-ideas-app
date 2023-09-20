@@ -13,7 +13,7 @@ import { persistor, store } from 'app/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { ErrorBoundary } from 'app/components/ErrorBoundary/ErrorBoundary';
-import { RootNavigator } from 'app/navigation/RootNavigator';
+import { RootNavigator } from 'app/navigation/RootNavigator.navigator';
 
 function App(): JSX.Element {
   return (

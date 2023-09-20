@@ -8,7 +8,7 @@ import { RootState } from 'app/redux/store';
 
 import { StyledAnimatedWrapper } from 'app/utils/common-styled-components';
 import { toastMessageConfig } from 'app/components/Toasts/Toast';
-import { MainStack } from 'app/navigation/app/MainStack';
+import { MainStack } from 'app/navigation/app/MainStack.navigator';
 import { SplashContainer } from 'app/screens/Splash/SplashContainer';
 
 export const RootNavigator = () => {
@@ -21,7 +21,6 @@ export const RootNavigator = () => {
   const onReady = () => {
     return setTimeout(() => setIsReady(true), 3000);
   };
-console.log('111', user)
   const isReallyReady = isReady && (user || user === null);
 
   return (

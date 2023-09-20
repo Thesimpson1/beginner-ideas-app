@@ -17,7 +17,7 @@ import { SimpleButton } from 'app/components/SimpleButton/SimpleButton';
 import {
   MainStackParamList,
   MainStackScreenName,
-} from 'app/navigation/app/MainStack';
+} from 'app/navigation/app/MainStack.navigator';
 import { colors, MainColorName } from 'app/constants/color';
 import { Tabs } from 'app/screens/Authentication/Login/components/Tabs/Tabs';
 import {
