@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { View } from 'react-native';
 
 import { StyledWrapper } from 'app/utils/common-styled-components';
 import { Splash } from 'app/screens/Splash/components/Splash';
@@ -15,7 +14,7 @@ export function SplashContainer({
 }: SplashContainerPropsType) {
   return (
     <StyledWrapper testID={'SplashContainerTestID'}>
-      {isReady ? <View>{children}</View> : <Splash />}
+      {isReady ? <StyledWrapper>{children}</StyledWrapper> : <Splash />}
     </StyledWrapper>
   );
 }

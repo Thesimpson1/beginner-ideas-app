@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
+import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
+import ToastMessage from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
-import { getUserInfo, setUserInfo } from 'app/redux/auth/slice';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { createUser, getUserInfo, login } from 'app/redux/auth/slice';
 import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
 import { RootState } from 'app/redux/store';
 import { useFormik } from 'formik';
 
-import { EmailIcon, PasswordIcon, PersonIcon } from 'app/assets/icon';
+import { EmailIcon, PasswordIcon } from 'app/assets/icon';
 import { CustomInput } from 'app/components/CustomInput/CustomInput';
 import { RoundButton } from 'app/components/RoundButton/RoundButton';
 import { SimpleButton } from 'app/components/SimpleButton/SimpleButton';
+import {
+  MainStackParamList,
+  MainStackScreenName,
+} from 'app/navigation/app/MainStack';
 import { colors, MainColorName } from 'app/constants/color';
 import { Tabs } from 'app/screens/Authentication/Login/components/Tabs/Tabs';
 import {
@@ -32,31 +40,54 @@ const loginScreenTitles = {
 export function LoginScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const dispatch = useAppDispatch();
+  const navigation = useNavigation<StackNavigationProp<MainStackParamList>>();
 
-  const userData = useAppSelector((state: RootState) => state.auth.user);
+  const { isCreateUserFetch, isLogin, user, createUserError, loginError } =
+    useAppSelector((state: RootState) => state.auth);
+  const isLoading = isCreateUserFetch || isLogin;
+
+  const onSkipStep = () => navigation.navigate(MainStackScreenName.Home);
   useEffect(() => {
-    dispatch(getUserInfo());
-  }, [dispatch]);
-  ////
-
-  console.log('11111', userData);
+    if (user) {
+      navigation.navigate(MainStackScreenName.Home);
+    }
+  }, [navigation, user]);
+  // const userData = useAppSelector(
+  //   (state: RootState) => state.auth.isLoginError
+  // );
   // const userFetchStatus = useAppSelector(
   //   (state: RootState) => state.auth.isFetchUserInfo
   // );
 
-  const { errors, values, handleChange, handleBlur, handleSubmit, touched } =
-    useFormik({
-      initialValues: {
-        password: '',
-        email: '',
-      },
-      onSubmit: (formValue) => {
-        const { email, password } = formValue;
-        dispatch(setUserInfo({ email, password }));
-      },
-      validate,
-    });
-
+  const {
+    errors,
+    values,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    touched,
+    resetForm,
+  } = useFormik({
+    initialValues: {
+      password: '',
+      email: '',
+    },
+    onSubmit: (formValue) => {
+      const { email, password } = formValue;
+      currentIndex === 0
+        ? dispatch(createUser({ email, password }))
+        : dispatch(login({ email, password }));
+    },
+    validate,
+  });
+  useEffect(() => {
+    resetForm();
+  }, [currentIndex]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (createUserError || loginError) {
+      resetForm();
+    }
+  }, [loginError, createUserError]); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <StyledLoginScreenContainer>
       <StyledLoginScreenTopContainer>
@@ -89,11 +120,15 @@ export function LoginScreen() {
           placeholder={'Password'}
           onBlur={handleBlur('password')}
         />
-        <RoundButton onPress={handleSubmit} title={'Submit'} />
+        <RoundButton
+          onPress={handleSubmit}
+          title={'Submit'}
+          isLoading={isLoading}
+        />
         <StyledSimpleButtonContainer>
           <StyledLine />
           <SimpleButton
-            onPress={() => {}}
+            onPress={onSkipStep}
             title={'Or skip this step'}
             color={colors[MainColorName.BLACK]}
           />

@@ -1,4 +1,5 @@
 import { TextProps } from 'react-native';
+import Animated, { FadeIn } from 'react-native-reanimated';
 import styled from 'styled-components/native';
 
 import { colors } from 'app/constants/color';
@@ -11,6 +12,11 @@ export const StyledCenteredWrapper = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
+`;
+export const StyledAnimatedWrapper = styled(Animated.View).attrs({
+  entering: FadeIn.duration(1000),
+})`
+  flex: 1;
 `;
 export const StyledTextH1 = styled.Text<TextProps>`
   font-family: Inter-Bold;

@@ -5,5 +5,7 @@ interface setUserApiI {
   email: string;
   password: string;
 }
-export const setUserInfoApi = ({ email, password }: setUserApiI) =>
+export const createUserApi = ({ email, password }: setUserApiI) =>
   auth().createUserWithEmailAndPassword(email, password);
+export const loginApi = ({ email, password }: setUserApiI) =>
+  auth().signInWithEmailAndPassword(email, password);

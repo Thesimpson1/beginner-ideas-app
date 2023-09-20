@@ -4,8 +4,10 @@ export interface AuthState {
   isFetchUserInfo: boolean;
   user: string | null;
   fetchUserInfoError: string;
-  isSetUserFetch: boolean;
-  isSetUserError: string;
+  isCreateUserFetch: boolean;
+  createUserError: string;
+  isLogin: boolean;
+  loginError: string;
 }
 interface GetUserInfoErrorActionI {
   type: string;
@@ -13,10 +15,12 @@ interface GetUserInfoErrorActionI {
 }
 const initialState: AuthState = {
   isFetchUserInfo: false,
-  user: null,
+  user: '',
   fetchUserInfoError: '',
-  isSetUserFetch: false,
-  isSetUserError: '',
+  isCreateUserFetch: false,
+  createUserError: '',
+  isLogin: false,
+  loginError: '',
 };
 
 export const slice = createSlice({
@@ -25,28 +29,47 @@ export const slice = createSlice({
   reducers: {
     getUserInfo: (state) => {
       state.isFetchUserInfo = true;
+      state.fetchUserInfoError = '';
     },
     getUserInfoSuccess: (state, action) => {
       state.isFetchUserInfo = false;
-      state.user = action.payload;
+      state.user = action.payload?.email
+        ? action.payload?.email.slice(0, action.payload?.email.indexOf('@'))
+        : action.payload;
     },
     getUserInfoError: (state, action: GetUserInfoErrorActionI) => {
       state.isFetchUserInfo = false;
       state.fetchUserInfoError = action.payload;
     },
-    setUserInfo: (state, action) => {
-      state.isSetUserFetch = true;
+    createUser: (state, action) => {
+      state.isCreateUserFetch = true;
+      state.createUserError = '';
     },
-    setUserInfoSuccess: (state, action) => {
-      state.isSetUserFetch = false;
+    createUserSuccess: (state, action) => {
+      state.isCreateUserFetch = false;
       state.user = action.payload.user?.email.slice(
         0,
         action.payload.user?.email.indexOf('@')
       );
     },
-    setUserInfoError: (state, action: GetUserInfoErrorActionI) => {
-      state.isSetUserFetch = false;
-      state.isSetUserError = action.payload;
+    createUserError: (state, action: GetUserInfoErrorActionI) => {
+      state.isCreateUserFetch = false;
+      state.createUserError = action.payload;
+    },
+    login: (state, action) => {
+      state.isLogin = true;
+      state.loginError = '';
+    },
+    loginSuccess: (state, action) => {
+      state.isLogin = false;
+      state.user = action.payload.user?.email.slice(
+        0,
+        action.payload.user?.email.indexOf('@')
+      );
+    },
+    loginError: (state, action: GetUserInfoErrorActionI) => {
+      state.isLogin = false;
+      state.loginError = action.payload;
     },
   },
 });
@@ -56,9 +79,12 @@ export const {
   getUserInfo,
   getUserInfoSuccess,
   getUserInfoError,
-  setUserInfo,
-  setUserInfoSuccess,
-  setUserInfoError,
+  createUser,
+  createUserSuccess,
+  createUserError,
+  login,
+  loginSuccess,
+  loginError,
 } = slice.actions;
 
 export default slice.reducer;
