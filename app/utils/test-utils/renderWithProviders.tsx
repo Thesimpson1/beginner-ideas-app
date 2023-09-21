@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
+import { NavigationContainer } from '@react-navigation/native';
 import type { PreloadedState } from '@reduxjs/toolkit';
 import type { RenderOptions } from '@testing-library/react-native';
 import { render } from '@testing-library/react-native';
@@ -30,7 +31,11 @@ export function renderWithProviders(
 ) {
   function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
     sagaMiddleware.run(rootSaga);
-    return <Provider store={store}>{children}</Provider>;
+    return (
+      <NavigationContainer>
+        <Provider store={store}>{children}</Provider>
+      </NavigationContainer>
+    );
   }
 
   return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
