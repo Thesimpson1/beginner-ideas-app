@@ -11,7 +11,12 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { api } from 'app/api';
 import { createUserApi, loginApi } from 'app/api/auth';
-
+interface SetUserPayloadI {
+  [key: string]: { email: string; password: string };
+}
+type SetUserInfoSagaPropsType = SetUserPayloadI & {
+  type: string;
+};
 export function* getUserSaga(): unknown {
   try {
     const user = yield call(api.getUserInfoApi);
@@ -22,12 +27,7 @@ export function* getUserSaga(): unknown {
     errorHandler(e.code);
   }
 }
-interface SetUserPayloadI {
-  [key: string]: { email: string; password: string };
-}
-type SetUserInfoSagaPropsType = SetUserPayloadI & {
-  type: string;
-};
+
 export function* createUserSaga({
   payload: { email, password },
 }: SetUserInfoSagaPropsType) {

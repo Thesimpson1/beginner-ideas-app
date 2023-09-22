@@ -25,6 +25,7 @@ module.exports = {
     '!app/**/*.navigator.tsx',
     '!app/**/rootNavigation.ts',
     '!app/**/utils/test-utils/**',
+    '!app/api/**',
   ],
   setupFiles: ['<rootDir>/jest.setup.js'],
 };

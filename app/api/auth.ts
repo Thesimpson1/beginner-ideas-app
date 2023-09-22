@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
 
 export const getUserInfoApi = () => auth().currentUser;
-interface setUserApiI {
+export interface setUserApiI {
   email: string;
   password: string;
 }
