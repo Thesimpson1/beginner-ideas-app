@@ -5,6 +5,8 @@ import {
   getUserInfoSuccess,
   loginError,
   loginSuccess,
+  logoutError,
+  logoutSuccess,
 } from 'app/redux/auth/slice';
 import { errorHandler } from 'app/redux/utils/utils';
 import { call, put, takeLatest } from 'redux-saga/effects';
@@ -58,8 +60,19 @@ export function* loginSaga({
     errorHandler(e.code);
   }
 }
+export function* logoutSaga(): unknown {
+  try {
+    yield call(api.logoutApi);
+    yield put(logoutSuccess());
+    // @ts-ignore
+  } catch (e: never) {
+    yield put(logoutError(e.message));
+    errorHandler(e.code);
+  }
+}
 export function* authListener() {
   yield takeLatest('auth/getUserInfo', getUserSaga);
   yield takeLatest('auth/createUser', createUserSaga);
   yield takeLatest('auth/login', loginSaga);
+  yield takeLatest('auth/logout', logoutSaga);
 }

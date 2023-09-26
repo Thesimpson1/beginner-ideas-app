@@ -3,4 +3,5 @@ export enum HomeStackScreenName {
   CALENDAR = 'Calendar',
   NOTES = 'Notes',
   HOME = 'Home',
+  LOGIN_FROM_HOME = 'LOGIN_FROM_HOME',
 }

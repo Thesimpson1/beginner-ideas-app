@@ -8,6 +8,8 @@ export interface AuthState {
   createUserError: string;
   isLogin: boolean;
   loginError: string;
+  isLogout: boolean;
+  logoutError: string;
 }
 interface GetUserInfoErrorActionI {
   type: string;
@@ -21,6 +23,8 @@ const initialState: AuthState = {
   createUserError: '',
   isLogin: false,
   loginError: '',
+  isLogout: false,
+  logoutError: '',
 };
 
 export const slice = createSlice({
@@ -71,6 +75,21 @@ export const slice = createSlice({
       state.isLogin = false;
       state.loginError = action.payload;
     },
+    logout: (state) => {
+      state.isLogout = true;
+      state.logoutError = '';
+    },
+    logoutSuccess: (state) => {
+      state.isLogout = false;
+      state.user = null;
+    },
+    logoutError: (state, action: GetUserInfoErrorActionI) => {
+      state.isLogout = false;
+      state.logoutError = action.payload;
+    },
+    skipLogin: (state) => {
+      state.user = 'Guest';
+    },
   },
 });
 
@@ -85,6 +104,10 @@ export const {
   login,
   loginSuccess,
   loginError,
+  logout,
+  logoutSuccess,
+  logoutError,
+  skipLogin,
 } = slice.actions;
 
 export default slice.reducer;

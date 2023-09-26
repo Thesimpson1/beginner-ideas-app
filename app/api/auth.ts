@@ -9,3 +9,4 @@ export const createUserApi = ({ email, password }: setUserApiI) =>
   auth().createUserWithEmailAndPassword(email, password);
 export const loginApi = ({ email, password }: setUserApiI) =>
   auth().signInWithEmailAndPassword(email, password);
+export const logoutApi = () => auth().signOut();

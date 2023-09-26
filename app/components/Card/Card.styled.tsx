@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
-import {StyledTextH1, StyledTextH3} from 'app/utils/common-styled-components';
-import { calcFontSize, calcHeight, calcWidth } from 'app/utils/scaling-system';
+import { StyledTextH1 } from 'app/utils/common-styled-components';
+import { calcHeight, calcWidth } from 'app/utils/scaling-system';
 import { colors, MainColorName } from 'app/constants/color';
 
 export const StyledCardWrapper = styled.TouchableOpacity`
@@ -20,12 +20,4 @@ export const StyledIconWrapper = styled.View`
 export const StyledCardTitleText = styled(StyledTextH1)`
   font-size: 20px;
   color: ${colors[MainColorName.BLACK]};
-`;
-export const StyledSimpleButtonTitle = styled(StyledTextH3)<{
-  color?: string;
-  fontSize?: number;
-}>`
-  color: ${({ color }) => (color ? color : colors.WHITE)};
-  font-size: ${({ fontSize }) =>
-    fontSize ? calcFontSize(fontSize) : calcFontSize(16)}px;
 `;
