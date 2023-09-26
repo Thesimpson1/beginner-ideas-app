@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg version="1.1" id="Layer_1" width="75" height="75" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	 viewBox="0 0 512 512" xml:space="preserve">
+<circle style="fill:#FFD15D;" cx="256" cy="256" r="256"/>
+<path style="fill:#F9B54C;" d="M511.447,272.639L354.995,116.188l-125.43,170.267l-73.164,108.809l116.184,116.184
+	C400.736,503.253,503.224,400.78,511.447,272.639z"/>
+<path style="fill:#324A5E;" d="M343.187,400.258H168.813c-9.925,0-17.972-8.045-17.972-17.972V129.712
+	c0-9.925,8.045-17.972,17.972-17.972h174.373c9.925,0,17.972,8.045,17.972,17.972v252.575
+	C361.158,392.213,353.113,400.258,343.187,400.258z"/>
+<path style="fill:#2B3B4E;" d="M343.187,111.742h-86.899V400.26h86.899c9.925,0,17.972-8.045,17.972-17.972V129.712
+	C361.158,119.787,353.113,111.742,343.187,111.742z"/>
+<rect x="167.839" y="138.447" style="fill:#84DBFF;" width="176.321" height="76.743"/>
+<rect x="256.293" y="138.447" style="fill:#31BAFD;" width="87.871" height="76.743"/>
+<g>
+	<rect x="169.546" y="239.64" style="fill:#FC6F58;" width="31.737" height="31.56"/>
+	<rect x="217.143" y="239.64" style="fill:#FC6F58;" width="31.737" height="31.56"/>
+</g>
+<g>
+	<rect x="264.757" y="239.64" style="fill:#F1543F;" width="31.737" height="31.56"/>
+	<rect x="310.717" y="239.64" style="fill:#F1543F;" width="31.737" height="31.56"/>
+</g>
+<rect x="310.717" y="290.616" style="fill:#90DFAA;" width="31.737" height="79.851"/>
+<g>
+	<rect x="169.546" y="290.616" style="fill:#FC6F58;" width="31.737" height="31.56"/>
+	<rect x="217.143" y="290.616" style="fill:#FC6F58;" width="31.737" height="31.56"/>
+</g>
+<rect x="264.757" y="290.616" style="fill:#F1543F;" width="31.737" height="31.56"/>
+<g>
+	<rect x="169.546" y="338.92" style="fill:#FC6F58;" width="31.737" height="31.56"/>
+	<rect x="217.143" y="338.92" style="fill:#FC6F58;" width="31.737" height="31.56"/>
+</g>
+<rect x="264.757" y="338.92" style="fill:#F1543F;" width="31.737" height="31.56"/>
+</svg>

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { createUser, login } from 'app/redux/auth/slice';
-import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
+import { useAppSelector } from 'app/redux/hooks';
 import { RootState } from 'app/redux/store';
 import { useFormik } from 'formik';
 
@@ -50,12 +48,6 @@ export function LoginScreen() {
       navigation.navigate(MainStackScreenName.Home);
     }
   }, [navigation, user]);
-  // const userData = useAppSelector(
-  //   (state: RootState) => state.auth.isLoginError
-  // );
-  // const userFetchStatus = useAppSelector(
-  //   (state: RootState) => state.auth.isFetchUserInfo
-  // );
 
   const {
     errors,
@@ -84,7 +76,6 @@ export function LoginScreen() {
   return (
     <StyledLoginScreenContainer testID={'LoginWrapperTestID'}>
       <StyledLoginScreenTopContainer>
-        {/*<Text testID={'someTest'}>{`${currentIndex}`}</Text>*/}
         <Tabs
           buttonList={buttonList}
           currentIndex={currentIndex}
@@ -130,19 +121,8 @@ export function LoginScreen() {
           />
           <StyledLine />
         </StyledSimpleButtonContainer>
-
-        {/*<Button onPress={handleSubmit} title="Submit" />*/}
       </StyledLoginScreenCenterContainer>
       <StyledLoginScreenBottomContainer />
-      {/*<Text>Hello My Start Screen</Text>*/}
-      {/*<Text testID={'userFetchStatus'}>{JSON.stringify(userFetchStatus)}</Text>*/}
-      {/*<Text testID={'UserDataTestID'}>{JSON.stringify(userData)}</Text>*/}
-      {/*<Button*/}
-      {/*  title={'lclick me'}*/}
-      {/*  testID={'ButtonTestId'}*/}
-      {/*  onPress={() => dispatch(getUserInfo())}*/}
-      {/*/>*/}
-      {/*{userFetchStatus && <Text>Fetching user...</Text>}*/}
     </StyledLoginScreenContainer>
   );
 }

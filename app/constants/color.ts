@@ -1,5 +1,6 @@
 export enum MainColorName {
   BLUE = 'BLUE',
+  GRAY_BLUE = 'GRAY_BLUE',
   LIGHT_GRAY = 'LIGHT_GRAY',
   GREY = 'GREY',
   BLACK = 'BLACK',
@@ -11,6 +12,7 @@ export enum MainColorName {
 }
 export const colors = {
   [MainColorName.BLUE]: '#2f95dc',
+  [MainColorName.GRAY_BLUE]: '#80c4f2',
   [MainColorName.BLACK]: '#1D1617',
   [MainColorName.LIGHT_GRAY]: '#F5F5F5',
   [MainColorName.GREY]: '#F5F5F5',
