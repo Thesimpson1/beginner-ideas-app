@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useAppSelector } from 'app/redux/hooks';
+import { skipLogin } from 'app/redux/auth/slice';
+import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
 import { RootState } from 'app/redux/store';
 import { useFormik } from 'formik';
 
 import { EmailIcon, PasswordIcon } from 'app/assets/icon';
+import { StyledAnimatedWrapper } from 'app/utils/common-styled-components';
 import { CustomInput } from 'app/components/CustomInput/CustomInput';
 import { RoundButton } from 'app/components/RoundButton/RoundButton';
 import { SimpleButton } from 'app/components/SimpleButton/SimpleButton';
@@ -37,17 +39,14 @@ const loginScreenTitles = {
 export function LoginScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigation = useNavigation<StackNavigationProp<MainStackParamList>>();
-
+  const dispatch = useAppDispatch();
   const { isCreateUserFetch, isLogin, user, createUserError, loginError } =
     useAppSelector((state: RootState) => state.auth);
   const isLoading = isCreateUserFetch || isLogin;
   const onSubmit = useOnSubmit({ currentIndex });
-  const onSkipStep = () => navigation.navigate(MainStackScreenName.Home);
-  useEffect(() => {
-    if (user) {
-      navigation.navigate(MainStackScreenName.Home);
-    }
-  }, [navigation, user]);
+  const onSkipStep = () => {
+    dispatch(skipLogin());
+  };
 
   const {
     errors,
@@ -66,6 +65,12 @@ export function LoginScreen() {
     validate,
   });
   useEffect(() => {
+    if (user) {
+      resetForm();
+      navigation.navigate(MainStackScreenName.Home);
+    }
+  }, [dispatch, navigation, resetForm, user]);
+  useEffect(() => {
     resetForm();
   }, [currentIndex]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -73,56 +78,66 @@ export function LoginScreen() {
       resetForm();
     }
   }, [loginError, createUserError]); // eslint-disable-line react-hooks/exhaustive-deps
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setCurrentIndex(0);
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
   return (
-    <StyledLoginScreenContainer testID={'LoginWrapperTestID'}>
-      <StyledLoginScreenTopContainer>
-        <Tabs
-          buttonList={buttonList}
-          currentIndex={currentIndex}
-          setCurrentIndex={setCurrentIndex}
-        />
-      </StyledLoginScreenTopContainer>
-      <StyledLoginScreenCenterContainer>
-        <StyledLoginScreenCenterTitle testID={'StyledLoginScreenCenterTitle'}>
-          {currentIndex === 0
-            ? loginScreenTitles.signUpTitle
-            : loginScreenTitles.signInTitle}
-        </StyledLoginScreenCenterTitle>
-        <CustomInput
-          onChangeText={handleChange('email')}
-          value={values.email}
-          icon={<EmailIcon />}
-          error={touched?.email ? errors.email : undefined}
-          placeholder={'Email'}
-          onBlur={handleBlur('email')}
-        />
-        <CustomInput
-          onChangeText={handleChange('password')}
-          value={values.password}
-          error={touched.password ? errors.password : undefined}
-          icon={<PasswordIcon />}
-          isPassword={true}
-          placeholder={'Password'}
-          onBlur={handleBlur('password')}
-        />
-        <RoundButton
-          onPress={handleSubmit}
-          title={'Submit'}
-          isLoading={isLoading}
-          onPressTestID={'HandleSubmitTestID'}
-        />
-        <StyledSimpleButtonContainer>
-          <StyledLine />
-          <SimpleButton
-            onPress={onSkipStep}
-            onPressTestID={'OnSkipStepTestID'}
-            title={'Or skip this step'}
-            color={colors[MainColorName.BLACK]}
+    <StyledAnimatedWrapper>
+      <StyledLoginScreenContainer testID={'LoginWrapperTestID'}>
+        <StyledLoginScreenTopContainer>
+          <Tabs
+            buttonList={buttonList}
+            currentIndex={currentIndex}
+            setCurrentIndex={setCurrentIndex}
           />
-          <StyledLine />
-        </StyledSimpleButtonContainer>
-      </StyledLoginScreenCenterContainer>
-      <StyledLoginScreenBottomContainer />
-    </StyledLoginScreenContainer>
+        </StyledLoginScreenTopContainer>
+        <StyledLoginScreenCenterContainer>
+          <StyledLoginScreenCenterTitle testID={'StyledLoginScreenCenterTitle'}>
+            {currentIndex === 0
+              ? loginScreenTitles.signUpTitle
+              : loginScreenTitles.signInTitle}
+          </StyledLoginScreenCenterTitle>
+          <CustomInput
+            onChangeText={handleChange('email')}
+            value={values.email}
+            icon={<EmailIcon />}
+            error={touched?.email ? errors.email : undefined}
+            placeholder={'Email'}
+            onBlur={handleBlur('email')}
+          />
+          <CustomInput
+            onChangeText={handleChange('password')}
+            value={values.password}
+            error={touched.password ? errors.password : undefined}
+            icon={<PasswordIcon />}
+            isPassword={true}
+            placeholder={'Password'}
+            onBlur={handleBlur('password')}
+          />
+          <RoundButton
+            onPress={handleSubmit}
+            title={'Submit'}
+            isLoading={isLoading}
+            onPressTestID={'HandleSubmitTestID'}
+          />
+          <StyledSimpleButtonContainer>
+            <StyledLine />
+            <SimpleButton
+              onPress={onSkipStep}
+              onPressTestID={'OnSkipStepTestID'}
+              title={'Or skip this step'}
+              color={colors[MainColorName.BLACK]}
+            />
+            <StyledLine />
+          </StyledSimpleButtonContainer>
+        </StyledLoginScreenCenterContainer>
+        <StyledLoginScreenBottomContainer />
+      </StyledLoginScreenContainer>
+    </StyledAnimatedWrapper>
   );
 }
