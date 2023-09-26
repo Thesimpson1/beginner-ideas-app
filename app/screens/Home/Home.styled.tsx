@@ -6,7 +6,7 @@ import { colors, MainColorName } from 'app/constants/color';
 
 export const StyledHomeScreenContainer = styled.View`
   background-color: ${colors[MainColorName.BLUE]};
-  padding: ${calcHeight(130)}px ${calcWidth(15)}px 0;
+  padding: ${calcHeight(80)}px ${calcWidth(15)}px 0;
   flex: 1;
 `;
 export const StyledHomeTextWrapper = styled.View`
@@ -16,7 +16,7 @@ export const StyledHomeTextWrapper = styled.View`
 `;
 export const StyledTopWrapper = styled.View`
   flex-direction: column;
-  margin-bottom: ${calcHeight(30)}px;
+  margin-bottom: ${calcHeight(80)}px;
 `;
 export const StyledHomeText = styled(StyledTextH3)`
   font-size: 14px;

@@ -1,14 +1,13 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useAppSelector } from 'app/redux/hooks';
 import { RootState } from 'app/redux/store';
 
+import { HomeStack } from 'app/navigation/app/HomeStack.navigator';
 import { LoginScreen } from 'app/screens/Authentication';
-import { HomeScreen } from 'app/screens/Home/Home';
 
 export enum MainStackScreenName {
-  Home = 'Home',
+  Home = 'MainStackHome',
   Login = 'Login',
 }
 export type MainStackParamList = {
@@ -31,7 +30,7 @@ export const MainStack = () => {
       />
       <Stack.Screen
         name={MainStackScreenName.Home}
-        component={HomeScreen}
+        component={HomeStack}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

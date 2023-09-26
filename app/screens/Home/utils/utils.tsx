@@ -1,18 +1,18 @@
 import React from 'react';
-import { CardTitleType } from 'app/types';
+import { HomeStackScreenName } from 'app/types';
 
 import { CalculatorIcon, CalendarIcon, NoteIcon } from 'app/assets/icon';
 
-export const setIcon = (title: CardTitleType) => {
+export const setIcon = (title: HomeStackScreenName) => {
   let icon = <NoteIcon />;
   switch (title) {
-    case CardTitleType.CALCULATOR:
+    case HomeStackScreenName.CALCULATOR:
       icon = <CalculatorIcon />;
       break;
-    case CardTitleType.CALENDAR:
+    case HomeStackScreenName.CALENDAR:
       icon = <CalendarIcon />;
       break;
-    case CardTitleType.NOTES:
+    case HomeStackScreenName.NOTES:
       icon = <NoteIcon />;
       break;
   }

@@ -1,7 +1,7 @@
 import React, { JSXElementConstructor, ReactElement } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { CardTitleType } from 'app/types';
+import { HomeStackScreenName } from 'app/types';
 
 import { NoteIcon } from 'app/assets/icon';
 import {
@@ -9,18 +9,18 @@ import {
   StyledCardWrapper,
   StyledIconWrapper,
 } from 'app/components/Card/Card.styled';
-import { MainStackParamList } from 'app/navigation/app/MainStack.navigator';
+import { HomeStackParamList } from 'app/navigation/app/HomeStack.navigator';
 
 interface CardPropsI {
   icon?: ReactElement<unknown, string | JSXElementConstructor<unknown>>;
-  title: CardTitleType;
+  title: HomeStackScreenName;
   testID?: 'CardTestID';
 }
 export function Card({
   icon = <NoteIcon testID={'NoteIconTest'} />,
-  title,
+  title = HomeStackScreenName.HOME,
 }: CardPropsI) {
-  const navigation = useNavigation<StackNavigationProp<MainStackParamList>>();
+  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
   const onPress = () => navigation.navigate(title);
   const Icon = () => icon;
   return (
