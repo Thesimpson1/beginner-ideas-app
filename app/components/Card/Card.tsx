@@ -13,22 +13,25 @@ import { HomeStackParamList } from 'app/navigation/app/HomeStack.navigator';
 
 interface CardPropsI {
   icon?: ReactElement<unknown, string | JSXElementConstructor<unknown>>;
-  title: HomeStackScreenName;
-  testID?: 'CardTestID';
+  title?: HomeStackScreenName;
+  testID?: string;
 }
 export function Card({
   icon = <NoteIcon testID={'NoteIconTest'} />,
   title = HomeStackScreenName.HOME,
+  testID = 'CardTestID',
 }: CardPropsI) {
   const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
   const onPress = () => navigation.navigate(title);
   const Icon = () => icon;
   return (
-    <StyledCardWrapper onPress={onPress}>
+    <StyledCardWrapper onPress={onPress} testID={testID}>
       <StyledIconWrapper>
         <Icon />
       </StyledIconWrapper>
-      <StyledCardTitleText>{title}</StyledCardTitleText>
+      <StyledCardTitleText testID={'StyledCardTitleTextTestID'}>
+        {title}
+      </StyledCardTitleText>
     </StyledCardWrapper>
   );
 }
