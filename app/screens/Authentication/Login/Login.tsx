@@ -66,24 +66,24 @@ export function LoginScreen() {
   });
   useEffect(() => {
     if (user) {
-      resetForm();
       navigation.navigate(MainStackScreenName.Home);
     }
   }, [dispatch, navigation, resetForm, user]);
+
   useEffect(() => {
     resetForm();
   }, [currentIndex]); // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     if (createUserError || loginError) {
       resetForm();
     }
   }, [loginError, createUserError]); // eslint-disable-line react-hooks/exhaustive-deps
-  React.useEffect(() => {
+
+  useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       setCurrentIndex(0);
     });
-
-    // Return the function to unsubscribe from the event so it gets removed on unmount
     return unsubscribe;
   }, [navigation]);
   return (

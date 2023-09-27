@@ -10,6 +10,10 @@ import reducer, {
   login,
   loginError,
   loginSuccess,
+  logout,
+  logoutError,
+  logoutSuccess,
+  skipLogin,
 } from './slice';
 
 describe('Auth slice', () => {
@@ -93,5 +97,28 @@ describe('Auth slice', () => {
       mockInitialState
     );
     mockInitialState.loginError = '';
+  });
+  it('should handle a logout', () => {
+    mockInitialState.isLogout = true;
+    expect(reducer(initState, logout())).toStrictEqual(mockInitialState);
+    mockInitialState.isLogout = false;
+  });
+  it('should handle a logoutSuccess', () => {
+    mockInitialState.user = null;
+    expect(reducer(initState, logoutSuccess())).toStrictEqual(mockInitialState);
+    mockInitialState.user = '';
+  });
+  it('should handle a logoutError', () => {
+    mockInitialState.logoutError = mockErrorText;
+    expect(reducer(initState, logoutError(mockErrorText))).toStrictEqual(
+      mockInitialState
+    );
+    mockInitialState.logoutError = '';
+  });
+
+  it('should handle a skipLogin', () => {
+    mockInitialState.user = 'Guest';
+    expect(reducer(initState, skipLogin())).toStrictEqual(mockInitialState);
+    mockInitialState.user = '';
   });
 });

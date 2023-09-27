@@ -1,10 +1,17 @@
 import { mockInitialState } from 'app/mocks';
-import { createUserSaga, getUserSaga, loginSaga } from 'app/redux/auth/saga';
+import {
+  createUserSaga,
+  getUserSaga,
+  loginSaga,
+  logoutSaga,
+} from 'app/redux/auth/saga';
 import {
   createUserError,
   createUserSuccess,
   getUserInfoError,
-  getUserInfoSuccess, loginError, loginSuccess,
+  getUserInfoSuccess,
+  loginError,
+  loginSuccess, logoutError, logoutSuccess,
 } from 'app/redux/auth/slice';
 
 import { api } from 'app/api';
@@ -106,5 +113,32 @@ describe('loginSaga handler', () => {
     expect(loginApi).toHaveBeenCalledTimes(1);
     expect(dispatched).toEqual([loginError('error')]);
     loginApi.mockRestore();
+  });
+  it('logoutSaga success case', async () => {
+    const logoutApi = jest
+      .spyOn(api, 'logoutApi')
+      .mockImplementation(() => Promise.resolve(successResponse));
+    const dispatched = await runTestSaga({
+      state: mockInitialState,
+      saga: logoutSaga,
+      params: { payload: successResponse },
+    });
+    expect(logoutApi).toHaveBeenCalledTimes(1);
+    expect(dispatched).toEqual([logoutSuccess()]);
+    logoutApi.mockRestore();
+  });
+  it('logoutSaga error case', async () => {
+    const logoutApi = jest
+      .spyOn(api, 'logoutApi')
+      // @ts-ignore
+      .mockImplementation(() => Promise.reject(error));
+    const dispatched = await runTestSaga({
+      state: mockInitialState,
+      saga: logoutSaga,
+      params: { payload: successResponse },
+    });
+    expect(logoutApi).toHaveBeenCalledTimes(1);
+    expect(dispatched).toEqual([logoutError('error')]);
+    logoutApi.mockRestore();
   });
 });

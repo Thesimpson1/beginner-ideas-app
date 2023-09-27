@@ -8,4 +8,6 @@ export const mockInitialState: AuthState = {
   createUserError: '',
   isLogin: false,
   loginError: '',
+  isLogout: false,
+  logoutError: '',
 };

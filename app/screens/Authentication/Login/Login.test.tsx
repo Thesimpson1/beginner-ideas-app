@@ -8,12 +8,14 @@ import { MainStackScreenName } from 'app/navigation/app/MainStack.navigator';
 import { LoginScreen } from 'app/screens/Authentication';
 
 const mockedNavigate = jest.fn();
+const mockedAddListener = jest.fn();
 jest.mock('@react-navigation/native', () => {
   const actualNav = jest.requireActual('@react-navigation/native');
   return {
     ...actualNav,
     useNavigation: () => ({
       navigate: mockedNavigate,
+      addListener: mockedAddListener,
     }),
   };
 });
@@ -46,19 +48,22 @@ describe('Login screen', () => {
     const StyledLoginScreenCenterTitle = screen.getByTestId(
       'StyledLoginScreenCenterTitle'
     );
-
+    expect(mockedAddListener).toHaveBeenCalledTimes(2);
     expect(StyledErrorTextTest1.props.children).toBeUndefined();
     expect(StyledErrorTextTest2.props.children).toBeUndefined();
 
-    fireEvent.press(OnSkipStepTestID);
     expect(LoginWrapperTestID.props.children).toBeTruthy();
     expect(StyledLoginScreenCenterTitle.props.children).toBe(
       'Create An Account'
     );
+
     fireEvent.press(TabsSimpleButton);
+
     expect(StyledLoginScreenCenterTitle.props.children).toBe('Welcome Back');
+    fireEvent.press(OnSkipStepTestID);
     expect(mockedNavigate).toHaveBeenCalledTimes(1);
     expect(mockedNavigate).toHaveBeenCalledWith(MainStackScreenName.Home);
+    expect(mockedAddListener).toHaveBeenCalledTimes(5);
   });
   it('Check screen with exist user', async () => {
     mockInitialState.user = 'mock user';
