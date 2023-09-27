@@ -29,14 +29,14 @@ const renderItem = ({ item }: { item: HomeStackScreenName }) => {
   const icon = setIcon(item);
   return (
     <>
-      <Card title={item} icon={icon} />
+      <Card title={item} icon={icon} testID={'CardFromHomeTestID'} />
     </>
   );
 };
 export function HomeScreen() {
   const { user, isLogout } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const [localUser] = useState(user);
+  const [localUser] = useState(user === '' ? 'Guest' : user);
   const [isShowLoading, setIsShowLoading] = useState(false);
   const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
   const onSignOut = () => {
@@ -72,14 +72,17 @@ export function HomeScreen() {
 
   return (
     <StyledAnimatedWrapper>
-      <StyledHomeScreenContainer>
+      <StyledHomeScreenContainer testID={'StyledHomeScreenContainerTestID'}>
         <StyledTopWrapper>
           <StyledHomeTextWrapper>
-            <StyledUserText>{localUser}</StyledUserText>
+            <StyledUserText testID={'StyledUserTextTestID'}>
+              {localUser}
+            </StyledUserText>
             <SimpleButton
               onPress={simpleButtonPress}
               title={simpleButtonTitle}
               size={14}
+              onPressTestID={'HomeRightButtonTestID'}
             />
           </StyledHomeTextWrapper>
           <StyledHomeText>Home</StyledHomeText>
