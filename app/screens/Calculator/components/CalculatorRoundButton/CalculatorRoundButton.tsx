@@ -11,14 +11,17 @@ interface CalculatorRoundButtonI {
   color?: string;
   isLong?: boolean;
   onPress: () => void;
+  isClicked?: boolean;
   testID?: string;
 }
+
 export function CalculatorRoundButton({
   text,
   backgroundColor,
   color,
   isLong = false,
   onPress,
+  isClicked = false,
   testID = 'StyledCalculatorRoundButtonContainerTestID',
 }: CalculatorRoundButtonI) {
   return (
@@ -26,6 +29,7 @@ export function CalculatorRoundButton({
       backgroundColor={backgroundColor}
       isLong={isLong}
       onPress={onPress}
+      isClicked={isClicked}
       testID={testID}
     >
       <StyledCalculatorRoundButtonText
