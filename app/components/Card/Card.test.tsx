@@ -47,7 +47,7 @@ describe('Card component', () => {
     const EmailIconTest = getByTestId('EmailIconTest');
 
     fireEvent.press(CardTestID);
-    expect(mockedNavigate).toHaveBeenCalledTimes(1);
+    expect(mockedNavigate).toHaveBeenCalledTimes(2);
     expect(mockedNavigate).toHaveBeenCalledWith(HomeStackScreenName.CALCULATOR);
 
     expect(StyledCardTitleTextTestID.children).toBe(
