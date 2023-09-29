@@ -12,6 +12,7 @@ interface SetCalculatedValueI {
 interface CheckIsClickedI {
   text: string;
 }
+//ui function, return different backrgound
 export const getBackgroundColor = ({ item, index }: RenderPropsI) => {
   let backgroundColor = colors[MainColorName.GRAY_BLUE];
   switch (true) {
@@ -24,7 +25,7 @@ export const getBackgroundColor = ({ item, index }: RenderPropsI) => {
   }
   return backgroundColor;
 };
-
+//checks strings, this function needs for display a chosen  operators
 export const checkSigns = ({ text }: CheckIsClickedI) => {
   let isRightSign = false;
   switch (true) {
@@ -43,6 +44,7 @@ export const checkSigns = ({ text }: CheckIsClickedI) => {
   }
   return isRightSign;
 };
+//return number or operator
 export const setCurrentValueInnerLogic = ({
   prevState,
   item,
@@ -64,7 +66,7 @@ export const setCurrentValueInnerLogic = ({
   //return only numbers
   return prevState + item;
 };
-
+//calculate the equation
 export const setCalculatedValue = ({
   sign,
   prevValue,
@@ -78,6 +80,14 @@ export const setCalculatedValue = ({
     }
     case sign === '+': {
       calculatedValue = +prevValue + +currentValue;
+      break;
+    }
+    case sign === 'X': {
+      calculatedValue = +prevValue * +currentValue;
+      break;
+    }
+    case sign === '/': {
+      calculatedValue = +prevValue / +currentValue;
       break;
     }
   }
