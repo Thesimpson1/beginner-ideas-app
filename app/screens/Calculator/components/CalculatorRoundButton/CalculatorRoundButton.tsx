@@ -50,11 +50,22 @@ export function CalculatorRoundButton({
       isLong={isLong}
       onPress={() =>
         onPress((prevState) => {
-          if (prevState !== text) {
-            return text;
-          } else {
-            return '';
+          //not number
+          if (!isFinite(+text)) {
+            //first time, return sign
+            if (prevState !== text) {
+              return text;
+            } else {
+              //second, empty string
+              return '';
+            }
           }
+          //begin calculator and check after sign
+          if (prevState === '0' || !isFinite(+prevState)) {
+            return text;
+          }
+          //return only numbers
+          return prevState + text;
         })
       }
       isClicked={currentValue === text && checkSigns({ text })}
