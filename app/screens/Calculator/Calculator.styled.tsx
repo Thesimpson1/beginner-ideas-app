@@ -4,7 +4,7 @@ import {
   StyledAnimatedWrapper,
   StyledTextH1,
 } from 'app/utils/common-styled-components';
-import {calcFontSize, calcHeight} from 'app/utils/scaling-system';
+import { calcFontSize, calcHeight } from 'app/utils/scaling-system';
 import { colors, MainColorName } from 'app/constants/color';
 
 export const StyledCalculatorScreenContainer = styled(StyledAnimatedWrapper)`
