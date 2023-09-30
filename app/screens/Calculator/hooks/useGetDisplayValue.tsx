@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { setCalculatedValue } from 'app/screens/Calculator/utils/utils';
+import {
+  handleAnotherSigns,
+  setCalculatedValue,
+  setIsAnotherSign,
+} from 'app/screens/Calculator/utils/utils';
 
 interface SetDisplayedValueI {
   value: string;
@@ -16,6 +20,18 @@ export const useGetDisplayedValue = ({ value }: SetDisplayedValueI) => {
     if (value && isFinite(+value)) {
       setCurrentDisplayedValue(value);
     } else {
+      //blue operators logic
+      const isBlueSign = setIsAnotherSign({ sign: value });
+      if (isBlueSign) {
+        const calculated = handleAnotherSigns({
+          sign: value,
+          currentValue: currentDisplayedValue,
+        });
+        setCurrentDisplayedValue(calculated);
+        return;
+      }
+
+      //yellow operators logic
       //if isn't number but there is no operator , then operator is taken down
       if (!existOperator) {
         setExistOperator(value);
@@ -39,6 +55,7 @@ export const useGetDisplayedValue = ({ value }: SetDisplayedValueI) => {
         setPrevDisplayedValue(calculatedValue);
         setCurrentDisplayedValue(calculatedValue);
       }
+      //
     }
   }, [value]); // eslint-disable-line react-hooks/exhaustive-deps
 

@@ -12,6 +12,10 @@ interface SetCalculatedValueI {
 interface CheckIsClickedI {
   text: string;
 }
+interface HandleAnotherSignsI {
+  sign: string;
+  currentValue: string;
+}
 //ui function, return different backrgound
 export const getBackgroundColor = ({ item, index }: RenderPropsI) => {
   let backgroundColor = colors[MainColorName.GRAY_BLUE];
@@ -51,6 +55,11 @@ export const setCurrentValueInnerLogic = ({
 }: SetCurrentValueInnerLogicI) => {
   //not number
   if (!isFinite(+item)) {
+    // define blue signs
+    if (setIsAnotherSign({ sign: item })) {
+      //when sign doesn't change this can call rerender
+      return `${item} ${Math.random()}`;
+    }
     //first time, return sign
     if (prevState !== item) {
       return item;
@@ -88,6 +97,47 @@ export const setCalculatedValue = ({
     }
     case sign === '/': {
       calculatedValue = +prevValue / +currentValue;
+      break;
+    }
+  }
+  return calculatedValue + '';
+};
+//function for checking another signs
+export const setIsAnotherSign = ({ sign }: { sign: string }) => {
+  let isAnotherSign = false;
+  switch (true) {
+    case sign.includes('C'): {
+      isAnotherSign = true;
+      break;
+    }
+    case sign.includes('+/-'): {
+      isAnotherSign = true;
+      break;
+    }
+    case sign.includes('%'): {
+      isAnotherSign = true;
+      break;
+    }
+  }
+  return isAnotherSign;
+};
+//function for handling another signs
+export const handleAnotherSigns = ({
+  sign,
+  currentValue,
+}: HandleAnotherSignsI) => {
+  let calculatedValue = 0;
+  switch (true) {
+    case sign.includes('C'): {
+      calculatedValue = 0;
+      break;
+    }
+    case sign.includes('+/-'): {
+      calculatedValue = -currentValue;
+      break;
+    }
+    case sign.includes('%'): {
+      calculatedValue = +currentValue / 100;
       break;
     }
   }
