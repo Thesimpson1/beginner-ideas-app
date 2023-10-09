@@ -16,6 +16,14 @@ interface HandleAnotherSignsI {
   sign: string;
   currentValue: string;
 }
+// delete .00 after
+const returnedValueHandler = (value: string) => {
+  if (value.includes('.00')) {
+    return value.slice(0, value.indexOf('.00'));
+  } else {
+    return value;
+  }
+};
 //ui function, return different backrgound
 export const getBackgroundColor = ({ item, index }: RenderPropsI) => {
   let backgroundColor = colors[MainColorName.GRAY_BLUE];
@@ -23,7 +31,7 @@ export const getBackgroundColor = ({ item, index }: RenderPropsI) => {
     case index === 3 || item === '=': {
       return (backgroundColor = colors[MainColorName.ORANGE]);
     }
-    case isFinite(+item) || item === ',': {
+    case isFinite(+item) || item === '.': {
       return (backgroundColor = colors[MainColorName.GREY]);
     }
   }
@@ -53,6 +61,14 @@ export const setCurrentValueInnerLogic = ({
   prevState,
   item,
 }: SetCurrentValueInnerLogicI) => {
+  //not an integer number
+  if (item === '.') {
+    if (prevState !== '.') {
+      return prevState + item;
+    } else {
+      return prevState;
+    }
+  }
   //not number
   if (!isFinite(+item)) {
     // define blue signs
@@ -73,6 +89,9 @@ export const setCurrentValueInnerLogic = ({
     return item;
   }
   //return only numbers
+  if (prevState.length > 7) {
+    return prevState;
+  }
   return prevState + item;
 };
 //calculate the equation
@@ -100,7 +119,9 @@ export const setCalculatedValue = ({
       break;
     }
   }
-  return calculatedValue + '';
+  const returnedValue = calculatedValue.toFixed(2) + '';
+
+  return returnedValueHandler(returnedValue);
 };
 //function for checking another signs
 export const setIsAnotherSign = ({ sign }: { sign: string }) => {
@@ -141,5 +162,7 @@ export const handleAnotherSigns = ({
       break;
     }
   }
-  return calculatedValue + '';
+  const returnedValue = calculatedValue.toFixed(2) + '';
+
+  return returnedValueHandler(returnedValue);
 };
