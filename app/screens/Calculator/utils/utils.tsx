@@ -17,14 +17,17 @@ interface HandleAnotherSignsI {
   currentValue: string;
 }
 // delete .00 after
-const returnedValueHandler = (value: string) => {
+const returnedValueHandler = (value: string): string => {
   if (value.includes('.00')) {
-    return value.slice(0, value.indexOf('.00'));
+    return returnedValueHandler(value.slice(0, value.indexOf('.00')));
   } else {
+    if (value.length > 6) {
+      return value.slice(0, 7);
+    }
     return value;
   }
 };
-//ui function, return different backrgound
+//ui function, return different background
 export const getBackgroundColor = ({ item, index }: RenderPropsI) => {
   let backgroundColor = colors[MainColorName.GRAY_BLUE];
   switch (true) {
@@ -89,7 +92,7 @@ export const setCurrentValueInnerLogic = ({
     return item;
   }
   //return only numbers
-  if (prevState.length > 7) {
+  if (prevState.length > 6) {
     return prevState;
   }
   return prevState + item;

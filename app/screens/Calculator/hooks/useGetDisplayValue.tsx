@@ -37,11 +37,6 @@ export const useGetDisplayedValue = ({ value }: SetDisplayedValueI) => {
         setExistOperator(value);
         setPrevDisplayedValue(currentDisplayedValue);
       } else {
-        //are there prev value, current value ?
-        if (currentDisplayedValue === '0' && prevDisplayedValue === '0') {
-          return;
-        }
-        //if there is operator , start to calculate
         const calculatedValue = setCalculatedValue({
           sign: existOperator,
           prevValue: prevDisplayedValue,
