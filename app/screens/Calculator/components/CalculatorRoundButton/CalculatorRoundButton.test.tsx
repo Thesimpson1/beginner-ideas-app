@@ -27,6 +27,9 @@ describe('Calculator Round Button', () => {
     expect(StyledCalculatorRoundButtonContainerTestID.props.style.width).toBe(
       calcWidth(70)
     );
+    expect(StyledCalculatorRoundButtonContainerTestID.props.style.opacity).toBe(
+      1
+    );
     expect(
       StyledCalculatorRoundButtonContainerTestID.props.style.backgroundColor
     ).toBe(colors[MainColorName.WHITE]);
@@ -69,6 +72,46 @@ describe('Calculator Round Button', () => {
     expect(StyledCalculatorRoundButtonTextTestID.children).toBe(testText);
     expect(StyledCalculatorRoundButtonTextTestID.style.color).toBe(color);
 
-    expect(mockOnPress).toHaveBeenCalledTimes(1);
+    expect(mockOnPress).toHaveBeenCalledTimes(2);
+  });
+  it('Yellow buttons opacity should be less than 1', () => {
+    const { getByTestId } = render(
+      <CalculatorRoundButton
+        text={'-'}
+        onPress={mockOnPress}
+        currentValue={'-'}
+      />
+    );
+
+    const StyledCalculatorRoundButtonContainerTestID = getByTestId(
+      'StyledCalculatorRoundButtonContainerTestID'
+    );
+
+    fireEvent.press(StyledCalculatorRoundButtonContainerTestID);
+
+    expect(StyledCalculatorRoundButtonContainerTestID.props.style.opacity).toBe(
+      0.5
+    );
+    expect(mockOnPress).toHaveBeenCalledTimes(3);
+  });
+  it('Yellow buttons opacity should be  1', () => {
+    const { getByTestId } = render(
+      <CalculatorRoundButton
+        text={'-'}
+        onPress={mockOnPress}
+        currentValue={'10'}
+      />
+    );
+
+    const StyledCalculatorRoundButtonContainerTestID = getByTestId(
+      'StyledCalculatorRoundButtonContainerTestID'
+    );
+
+    fireEvent.press(StyledCalculatorRoundButtonContainerTestID);
+
+    expect(StyledCalculatorRoundButtonContainerTestID.props.style.opacity).toBe(
+      1
+    );
+    expect(mockOnPress).toHaveBeenCalledTimes(4);
   });
 });
