@@ -56,15 +56,20 @@ export function CalculatorScreen() {
         renderItem={renderItem}
         horizontal={true}
         scrollEnabled={false}
+        testID={'RenderItemWrapperTestID'}
         key={item.toString()}
       />
     );
   };
   return (
     <StyledCalculatorScreenContainer>
-      <StyledCalculatorContentContainer>
+      <StyledCalculatorContentContainer
+        testID={'StyledCalculatorContentContainerTestID'}
+      >
         <StyledVisibleNumberContainer>
-          <StyledCalculatorRoundButtonText>
+          <StyledCalculatorRoundButtonText
+            testID={'StyledCalculatorRoundButtonTextTestID1'}
+          >
             {currentDisplayedValue}
           </StyledCalculatorRoundButtonText>
         </StyledVisibleNumberContainer>
