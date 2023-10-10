@@ -16,8 +16,8 @@ interface HandleAnotherSignsI {
   sign: string;
   currentValue: string;
 }
-// delete .00 after
-const returnedValueHandler = (value: string): string => {
+// delete .00 after and control length
+export const returnedValueHandler = (value: string): string => {
   if (value.includes('.00')) {
     return returnedValueHandler(value.slice(0, value.indexOf('.00')));
   } else {
