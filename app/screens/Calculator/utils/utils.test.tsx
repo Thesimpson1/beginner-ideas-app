@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { colors, MainColorName } from 'app/constants/color';
 import {
   checkSigns,
@@ -158,6 +156,12 @@ describe('Calculator utils', () => {
       sign: '/',
     });
     expect(functionResult5).toBe('0.94');
+    const functionResult6 = setCalculatedValue({
+      prevValue: '0',
+      currentValue: '0',
+      sign: '/',
+    });
+    expect(functionResult6).toBe('0');
   });
   it('setIsAnotherSign should work correct', () => {
     const functionResult0 = setIsAnotherSign({ sign: '-' });

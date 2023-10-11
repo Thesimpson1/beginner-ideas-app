@@ -119,11 +119,13 @@ export const setCalculatedValue = ({
     }
     case sign === '/': {
       calculatedValue = +prevValue / +currentValue;
+      if (isNaN(calculatedValue)) {
+        calculatedValue = 0;
+      }
       break;
     }
   }
   const returnedValue = calculatedValue.toFixed(2) + '';
-
   return returnedValueHandler(returnedValue);
 };
 //function for checking another signs
