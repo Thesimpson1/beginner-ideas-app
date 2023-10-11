@@ -22,8 +22,9 @@ import { setIcon } from 'app/screens/Home/utils/utils';
 
 const homeData: Array<HomeStackScreenName> = [
   HomeStackScreenName.CALCULATOR,
-  HomeStackScreenName.CALENDAR,
+  HomeStackScreenName.TIMER,
   HomeStackScreenName.NOTES,
+  HomeStackScreenName.CALENDAR,
 ];
 const renderItem = ({ item }: { item: HomeStackScreenName }) => {
   const icon = setIcon(item);

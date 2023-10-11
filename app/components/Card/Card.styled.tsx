@@ -6,8 +6,8 @@ import { colors, MainColorName } from 'app/constants/color';
 
 export const StyledCardWrapper = styled.TouchableOpacity`
   background-color: ${colors[MainColorName.GRAY_BLUE]};
-  height: ${150}px;
-  margin: ${calcHeight(10)}px 0;
+  height: ${110}px;
+  margin: ${calcHeight(12)}px 0;
   padding: 0 ${calcWidth(15)}px;
   border-radius: ${calcWidth(15)}px;
   flex-direction: row;

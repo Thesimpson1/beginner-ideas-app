@@ -1,7 +1,12 @@
 import React from 'react';
 import { HomeStackScreenName } from 'app/types';
 
-import { CalculatorIcon, CalendarIcon, NoteIcon } from 'app/assets/icon';
+import {
+  CalculatorIcon,
+  CalendarIcon,
+  NoteIcon,
+  TimerIcon,
+} from 'app/assets/icon';
 
 export const setIcon = (title?: HomeStackScreenName) => {
   let icon = <NoteIcon testID={'DefaultNoteIconTestID'} />;
@@ -14,6 +19,9 @@ export const setIcon = (title?: HomeStackScreenName) => {
       break;
     case HomeStackScreenName.NOTES:
       icon = <NoteIcon testID={'NoteIconTestID'} />;
+      break;
+    case HomeStackScreenName.TIMER:
+      icon = <TimerIcon testID={'TimerIconTestID'} />;
       break;
   }
   return icon;

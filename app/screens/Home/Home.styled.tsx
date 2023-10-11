@@ -16,7 +16,7 @@ export const StyledHomeTextWrapper = styled.View`
 `;
 export const StyledTopWrapper = styled.View`
   flex-direction: column;
-  margin-bottom: ${calcHeight(80)}px;
+  margin-bottom: ${calcHeight(40)}px;
 `;
 export const StyledHomeText = styled(StyledTextH3)`
   font-size: 14px;

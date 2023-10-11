@@ -1,8 +1,12 @@
 import React from 'react';
 import { HomeStackScreenName } from 'app/types';
 
-import { CalculatorIcon, CalendarIcon, NoteIcon } from 'app/assets/icon';
-import { validate } from 'app/screens/Authentication/Login/utils/utils';
+import {
+  CalculatorIcon,
+  CalendarIcon,
+  NoteIcon,
+  TimerIcon,
+} from 'app/assets/icon';
 import { setIcon } from 'app/screens/Home/utils/utils';
 
 jest.mock('app/screens/Home/utils/utils', () => {
@@ -30,6 +34,10 @@ describe('Home utils', () => {
     const functionResult3 = setIcon(HomeStackScreenName.NOTES);
     expect(functionResult3).toStrictEqual(
       <NoteIcon testID={'NoteIconTestID'} />
+    );
+    const functionResult4 = setIcon(HomeStackScreenName.TIMER);
+    expect(functionResult4).toStrictEqual(
+      <TimerIcon testID={'TimerIconTestID'} />
     );
   });
 });
