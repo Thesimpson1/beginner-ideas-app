@@ -1,37 +1,34 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 
-import { calcWidth } from 'app/utils/scaling-system';
-import { RoundButton } from 'app/components/RoundButton/RoundButton';
+import { CircleButton } from 'app/components/CircleButton/CircleButton';
 import { colors, MainColorName } from 'app/constants/color';
 
-describe('Round Button', () => {
+describe('Circle Button', () => {
   const testTitle = 'Test title';
   const mockOnPress = jest.fn();
-  const width = 25;
   const color = colors.RED;
   const backgroundColor = colors[MainColorName.GREEN];
   const isDisabled = true;
   it('Should render component with required props', () => {
     const { getByTestId } = render(
-      <RoundButton title={testTitle} onPress={mockOnPress} />
+      <CircleButton title={testTitle} onPress={mockOnPress} />
     );
 
     const StyledRoundButtonWrapperTest = getByTestId(
-      'StyledRoundButtonWrapperTest'
+      'StyledCircleButtonWrapperTest'
     );
     const StyledRoundButtonTitleTest = getByTestId(
-      'StyledRoundButtonTitleTest'
+      'StyledCircleButtonTitleTest'
     ).props;
 
     fireEvent.press(StyledRoundButtonWrapperTest);
 
-    expect(StyledRoundButtonWrapperTest.props.style.width).toBe(calcWidth(250));
-    expect(StyledRoundButtonWrapperTest.props.style.backgroundColor).toBe(
-      colors[MainColorName.BLUE]
-    );
     expect(StyledRoundButtonWrapperTest.props.accessibilityState.disabled).toBe(
       false
+    );
+    expect(StyledRoundButtonWrapperTest.props.style.backgroundColor).toBe(
+      colors[MainColorName.GRAY_BLUE]
     );
 
     expect(StyledRoundButtonTitleTest.children).toBe(testTitle);
@@ -41,23 +38,21 @@ describe('Round Button', () => {
   });
   it('All correct works with all props ', () => {
     const { getByTestId } = render(
-      <RoundButton
+      <CircleButton
         title={testTitle}
         onPress={mockOnPress}
         color={color}
-        width={width}
         backgroundColor={backgroundColor}
         isDisabled={isDisabled}
       />
     );
     const StyledRoundButtonWrapperTest = getByTestId(
-      'StyledRoundButtonWrapperTest'
+      'StyledCircleButtonWrapperTest'
     ).props;
     const StyledRoundButtonTitleTest = getByTestId(
-      'StyledRoundButtonTitleTest'
+      'StyledCircleButtonTitleTest'
     ).props;
 
-    expect(StyledRoundButtonWrapperTest.style.width).toBe(calcWidth(25));
     expect(StyledRoundButtonWrapperTest.style.backgroundColor).toBe(
       backgroundColor
     );
@@ -67,19 +62,5 @@ describe('Round Button', () => {
 
     expect(StyledRoundButtonTitleTest.children).toBe(testTitle);
     expect(StyledRoundButtonTitleTest.style.color).toBe(color);
-  });
-  it('Should display loading state', () => {
-    const { getByTestId } = render(
-      <RoundButton title={testTitle} onPress={mockOnPress} isLoading={true} />
-    );
-
-    const StyledActivityIndicatorWrapperTest = getByTestId(
-      'StyledActivityIndicatorWrapperTest'
-    ).props;
-    const ActivityIndicatorTest = getByTestId('ActivityIndicatorTest').props;
-
-    expect(StyledActivityIndicatorWrapperTest.children).toBeTruthy();
-    expect(ActivityIndicatorTest.color).toBe(colors[MainColorName.WHITE]);
-    expect(ActivityIndicatorTest.size).toBe('large');
   });
 });
