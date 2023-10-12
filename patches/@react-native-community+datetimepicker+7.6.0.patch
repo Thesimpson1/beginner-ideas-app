@@ -1,0 +1,13 @@
+diff --git a/node_modules/@react-native-community/datetimepicker/src/index.d.ts b/node_modules/@react-native-community/datetimepicker/src/index.d.ts
+index a3c346a..dd37473 100644
+--- a/node_modules/@react-native-community/datetimepicker/src/index.d.ts
++++ b/node_modules/@react-native-community/datetimepicker/src/index.d.ts
+@@ -2,7 +2,7 @@ import {FC, Ref, SyntheticEvent} from 'react';
+ import {ColorValue, NativeMethods, ViewProps} from 'react-native';
+ 
+ type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
+-type AndroidMode = 'date' | 'time';
++export type AndroidMode = 'date' | 'time';
+ type Display = 'spinner' | 'default' | 'clock' | 'calendar';
+ type IOSDisplay = 'default' | 'compact' | 'inline' | 'spinner';
+ type MinuteInterval = 1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30;

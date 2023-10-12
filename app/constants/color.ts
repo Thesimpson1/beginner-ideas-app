@@ -1,18 +1,22 @@
 export enum MainColorName {
   BLUE = 'BLUE',
   GRAY_BLUE = 'GRAY_BLUE',
+  LIGHT_BLUE = 'LIGHT_BLUE',
   LIGHT_GRAY = 'LIGHT_GRAY',
   GREY = 'GREY',
   BLACK = 'BLACK',
   WHITE = 'WHITE',
   DARK_GREY = 'DARK_GREY',
+  DARK_BLUE = 'DARK_BLUE',
   GREEN = 'GREEN',
   ORANGE = 'ORANGE',
   RED = 'RED',
 }
 export const colors = {
   [MainColorName.BLUE]: '#2f95dc',
+  [MainColorName.DARK_BLUE]: '#175785',
   [MainColorName.GRAY_BLUE]: '#80c4f2',
+  [MainColorName.LIGHT_BLUE]: '#4da0db',
   [MainColorName.BLACK]: '#1D1617',
   [MainColorName.LIGHT_GRAY]: '#F5F5F5',
   [MainColorName.GREY]: '#F5F5F5',

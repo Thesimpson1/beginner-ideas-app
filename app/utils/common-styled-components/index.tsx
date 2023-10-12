@@ -18,6 +18,9 @@ export const StyledAnimatedWrapper = styled(Animated.View).attrs({
 })`
   flex: 1;
 `;
+export const StyledAnimatedSimpleViewWrapper = styled(Animated.View).attrs({
+  entering: FadeIn.duration(1000),
+})``;
 export const StyledTextH1 = styled.Text<TextProps>`
   font-family: Inter-Bold;
 `;

@@ -19,7 +19,7 @@ export function CircleButton({
   onPress,
   title,
   color,
-  backgroundColor = colors[MainColorName.GRAY_BLUE],
+  backgroundColor = colors[MainColorName.LIGHT_BLUE],
   isDisabled = false,
   onPressTestID = 'StyledCircleButtonWrapperTest',
 }: CircleButtonPropsI) {

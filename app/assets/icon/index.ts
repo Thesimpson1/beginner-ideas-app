@@ -7,3 +7,5 @@ export { default as NoteIcon } from './NoteIcon.svg';
 export { default as CalculatorIcon } from './CalculatorIcon.svg';
 export { default as CalendarIcon } from './CalendarIcon.svg';
 export { default as TimerIcon } from './TimerIcon.svg';
+export { default as BellIcon } from './BellIcon.svg';
+export { default as RightArrowIcon } from './RightArrowIcon.svg';

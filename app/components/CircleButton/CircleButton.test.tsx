@@ -28,7 +28,7 @@ describe('Circle Button', () => {
       false
     );
     expect(StyledRoundButtonWrapperTest.props.style.backgroundColor).toBe(
-      colors[MainColorName.GRAY_BLUE]
+      colors[MainColorName.LIGHT_BLUE]
     );
 
     expect(StyledRoundButtonTitleTest.children).toBe(testTitle);
