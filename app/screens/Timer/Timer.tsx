@@ -20,6 +20,7 @@ import {
   StyledTimerNumbers,
   StyledTimerScreenContainer,
 } from 'app/screens/Timer/Timer.styled';
+import {CircleProgressBar} from "app/components/CircleProgressBar/CircleProgressBar";
 
 const TimerIcon = () => <BellIcon />;
 const TimerRightArrowIcon = () => <RightArrowIcon />;
@@ -45,26 +46,27 @@ export function TimerScreen() {
 
   return (
     <StyledTimerScreenContainer>
-      <StyledTimerCircleContainer>
-        <StyledTimerCircleContentWrapper isShowTimePicker={isShowTimePicker}>
-          <StyledTimerNumbers>{'4:55:20'}</StyledTimerNumbers>
-          <StyledEndFinishNumberContainer>
-            <TimerIcon />
-            <StyledEndFinishNumber>{'22:22'}</StyledEndFinishNumber>
-          </StyledEndFinishNumberContainer>
-        </StyledTimerCircleContentWrapper>
-        <StyledDataPickerWrapper isShowTimePicker={isShowTimePicker}>
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            locale="en_GB"
-            display={'spinner'}
-            mode={timePickerMode}
-            is24Hour={true}
-            onChange={onChange}
-          />
-        </StyledDataPickerWrapper>
-      </StyledTimerCircleContainer>
+      <CircleProgressBar />
+      {/*<StyledTimerCircleContainer>*/}
+      {/*  <StyledTimerCircleContentWrapper isShowTimePicker={isShowTimePicker}>*/}
+      {/*    <StyledTimerNumbers>{'4:55:20'}</StyledTimerNumbers>*/}
+      {/*    <StyledEndFinishNumberContainer>*/}
+      {/*      <TimerIcon />*/}
+      {/*      <StyledEndFinishNumber>{'22:22'}</StyledEndFinishNumber>*/}
+      {/*    </StyledEndFinishNumberContainer>*/}
+      {/*  </StyledTimerCircleContentWrapper>*/}
+      {/*  <StyledDataPickerWrapper isShowTimePicker={isShowTimePicker}>*/}
+      {/*    <DateTimePicker*/}
+      {/*      testID="dateTimePicker"*/}
+      {/*      value={date}*/}
+      {/*      locale="en_GB"*/}
+      {/*      display={'spinner'}*/}
+      {/*      mode={timePickerMode}*/}
+      {/*      is24Hour={true}*/}
+      {/*      onChange={onChange}*/}
+      {/*    />*/}
+      {/*  </StyledDataPickerWrapper>*/}
+      {/*</StyledTimerCircleContainer>*/}
       <StyledButtonsContainer>
         <CircleButton onPress={() => {}} title={'Cancel'} />
         <CircleButton
