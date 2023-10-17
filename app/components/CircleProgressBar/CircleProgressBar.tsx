@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button } from 'react-native';
+import React, { ReactNode } from 'react';
+import { Button, Text, View } from 'react-native';
 import {
   Extrapolation,
   interpolate,
@@ -9,9 +9,12 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 
+import { width } from 'app/utils/scaling-system';
 import {
   StyledAnimatedPart,
   StyledBottomCircleProgressBarWrapper,
+  StyledBottomCircleTextWrapper,
+  StyledCircleProgressBarContainer,
   StyledCircleProgressBarWrapper,
   StyledTopCircleProgressBarWrapper,
 } from 'app/components/CircleProgressBar/CircleProgressBar.styled';
@@ -19,12 +22,14 @@ import { HalfCircleWrapper } from 'app/components/CircleProgressBar/componets/Ha
 import { PI, RADIUS } from 'app/components/CircleProgressBar/constants';
 import { colors, MainColorName } from 'app/constants/color';
 
-interface CircleProgressBarI {}
-export function CircleProgressBar({}: CircleProgressBarI) {
-  const progress = useSharedValue(0);
+interface CircleProgressBarI {
+  children: ReactNode;
+}
+export function CircleProgressBar({ children }: CircleProgressBarI) {
+  const progress = useSharedValue(360);
 
   const styleTop = useAnimatedStyle(() => {
-    const rotate = interpolate(progress.value, [0, PI], [0, PI], {
+    const rotate = interpolate(progress.value, [0, PI], [0, 180], {
       extrapolateRight: Extrapolation.CLAMP,
     });
     const opacity = interpolate(
@@ -37,48 +42,52 @@ export function CircleProgressBar({}: CircleProgressBarI) {
     );
     return {
       transform: [
-        { translateY: RADIUS / 2 },
+        { translateX: RADIUS / 2 },
         { rotate: `${rotate}deg` },
-        { translateY: -RADIUS / 2 },
+        { translateX: -RADIUS / 2 },
       ],
       opacity,
     };
   });
   const styleBottom = useAnimatedStyle(() => {
-    const rotate = interpolate(progress.value, [0, PI, PI * 2], [0, 0, PI], {
+    console.log('111', progress.value);
+    const rotate = interpolate(progress.value, [0, PI, PI * 2], [0, 0, 180], {
       extrapolateRight: Extrapolation.CLAMP,
     });
     return {
       transform: [
-        { translateY: RADIUS / 2 },
+        { translateX: RADIUS / 2 },
         { rotate: `${rotate}deg` },
-        { translateY: -RADIUS / 2 },
+        { translateX: -RADIUS / 2 },
       ],
     };
   });
   const onHandle = () => {
     progress.value = withSequence(
-      withTiming(PI * 2, { duration: 10000 }),
-      withTiming(0, { duration: 0 })
+      withTiming(0, { duration: 10000 }),
+      withTiming(360, { duration: 0 })
     );
   };
 
   return (
     <StyledCircleProgressBarWrapper>
-      <StyledTopCircleProgressBarWrapper>
-        <HalfCircleWrapper backgroundColor={colors[MainColorName.BLACK]} />
-        <StyledAnimatedPart style={styleTop}>
-          <HalfCircleWrapper backgroundColor={colors[MainColorName.ORANGE]} />
-        </StyledAnimatedPart>
-      </StyledTopCircleProgressBarWrapper>
-      <StyledBottomCircleProgressBarWrapper>
-        <HalfCircleWrapper backgroundColor={colors[MainColorName.BLACK]} />
+      <StyledCircleProgressBarContainer>
+        <StyledTopCircleProgressBarWrapper>
+          <HalfCircleWrapper color={colors[MainColorName.ORANGE]} />
+          <StyledAnimatedPart style={styleBottom}>
+            <HalfCircleWrapper color={colors[MainColorName.GRAY_BLUE]} />
+          </StyledAnimatedPart>
+        </StyledTopCircleProgressBarWrapper>
+        <StyledBottomCircleProgressBarWrapper>
+          <HalfCircleWrapper color={colors[MainColorName.ORANGE]} />
+          <StyledAnimatedPart style={styleTop}>
+            <HalfCircleWrapper color={colors[MainColorName.GRAY_BLUE]} />
+          </StyledAnimatedPart>
+        </StyledBottomCircleProgressBarWrapper>
+      </StyledCircleProgressBarContainer>
 
-        <StyledAnimatedPart style={styleBottom}>
-          <HalfCircleWrapper backgroundColor={colors[MainColorName.ORANGE]} />
-        </StyledAnimatedPart>
-      </StyledBottomCircleProgressBarWrapper>
-      <Button title="shake" onPress={onHandle} />
+      {/*<Button title="shake" onPress={onHandle} />*/}
+      <StyledBottomCircleTextWrapper>{children}</StyledBottomCircleTextWrapper>
     </StyledCircleProgressBarWrapper>
   );
 }

@@ -6,12 +6,13 @@ import {
 } from 'app/components/CircleProgressBar/componets/HalfCircle/HalfCircle.styled';
 
 interface HalfCircleWrapperI {
-  backgroundColor: string;
+  color: string;
 }
-export function HalfCircleWrapper({ backgroundColor }: HalfCircleWrapperI) {
+
+export function HalfCircleWrapper({ color }: HalfCircleWrapperI) {
   return (
     <StyledHalfCircleWrapper>
-      <StyledHalfCircle backgroundColor={backgroundColor} />
+      <StyledHalfCircle color={color} />
     </StyledHalfCircleWrapper>
   );
 }

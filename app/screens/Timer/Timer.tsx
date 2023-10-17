@@ -5,6 +5,7 @@ import DateTimePicker, {
 
 import { BellIcon, RightArrowIcon } from 'app/assets/icon';
 import { CircleButton } from 'app/components/CircleButton/CircleButton';
+import { CircleProgressBar } from 'app/components/CircleProgressBar/CircleProgressBar';
 import { colors, MainColorName } from 'app/constants/color';
 import {
   StyledBottomContainer,
@@ -20,7 +21,7 @@ import {
   StyledTimerNumbers,
   StyledTimerScreenContainer,
 } from 'app/screens/Timer/Timer.styled';
-import {CircleProgressBar} from "app/components/CircleProgressBar/CircleProgressBar";
+import {height} from "app/utils/scaling-system";
 
 const TimerIcon = () => <BellIcon />;
 const TimerRightArrowIcon = () => <RightArrowIcon />;
@@ -43,30 +44,30 @@ export function TimerScreen() {
   const showTimepicker = () => {
     showMode('time');
   };
-
+console.log('111', height)
   return (
     <StyledTimerScreenContainer>
-      <CircleProgressBar />
-      {/*<StyledTimerCircleContainer>*/}
-      {/*  <StyledTimerCircleContentWrapper isShowTimePicker={isShowTimePicker}>*/}
-      {/*    <StyledTimerNumbers>{'4:55:20'}</StyledTimerNumbers>*/}
-      {/*    <StyledEndFinishNumberContainer>*/}
-      {/*      <TimerIcon />*/}
-      {/*      <StyledEndFinishNumber>{'22:22'}</StyledEndFinishNumber>*/}
-      {/*    </StyledEndFinishNumberContainer>*/}
-      {/*  </StyledTimerCircleContentWrapper>*/}
-      {/*  <StyledDataPickerWrapper isShowTimePicker={isShowTimePicker}>*/}
-      {/*    <DateTimePicker*/}
-      {/*      testID="dateTimePicker"*/}
-      {/*      value={date}*/}
-      {/*      locale="en_GB"*/}
-      {/*      display={'spinner'}*/}
-      {/*      mode={timePickerMode}*/}
-      {/*      is24Hour={true}*/}
-      {/*      onChange={onChange}*/}
-      {/*    />*/}
-      {/*  </StyledDataPickerWrapper>*/}
-      {/*</StyledTimerCircleContainer>*/}
+      <CircleProgressBar>
+        <StyledTimerCircleContentWrapper isShowTimePicker={isShowTimePicker}>
+          <StyledTimerNumbers>{'4:55:20'}</StyledTimerNumbers>
+          <StyledEndFinishNumberContainer>
+            <TimerIcon />
+            <StyledEndFinishNumber>{'22:22'}</StyledEndFinishNumber>
+          </StyledEndFinishNumberContainer>
+        </StyledTimerCircleContentWrapper>
+        <StyledDataPickerWrapper isShowTimePicker={isShowTimePicker}>
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            locale="en_GB"
+            display={'spinner'}
+            mode={timePickerMode}
+            is24Hour={true}
+            onChange={onChange}
+          />
+        </StyledDataPickerWrapper>
+      </CircleProgressBar>
+
       <StyledButtonsContainer>
         <CircleButton onPress={() => {}} title={'Cancel'} />
         <CircleButton
