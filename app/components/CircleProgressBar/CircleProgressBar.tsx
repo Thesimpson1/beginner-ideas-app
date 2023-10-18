@@ -50,7 +50,6 @@ export function CircleProgressBar({ children }: CircleProgressBarI) {
     };
   });
   const styleBottom = useAnimatedStyle(() => {
-    console.log('111', progress.value);
     const rotate = interpolate(progress.value, [0, PI, PI * 2], [0, 0, 180], {
       extrapolateRight: Extrapolation.CLAMP,
     });
@@ -62,6 +61,7 @@ export function CircleProgressBar({ children }: CircleProgressBarI) {
       ],
     };
   });
+
   const onHandle = () => {
     progress.value = withSequence(
       withTiming(0, { duration: 10000 }),

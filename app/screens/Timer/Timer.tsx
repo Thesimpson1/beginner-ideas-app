@@ -18,6 +18,7 @@ import { height } from 'app/utils/scaling-system';
 import { CircleButton } from 'app/components/CircleButton/CircleButton';
 import { CircleProgressBar } from 'app/components/CircleProgressBar/CircleProgressBar';
 import { colors, MainColorName } from 'app/constants/color';
+import { useGetSecondsMinutesHours } from 'app/screens/Timer/hooks/useGetSecondsMinuteHours';
 import {
   StyledBottomContainer,
   StyledBottomLeftText,
@@ -27,6 +28,7 @@ import {
   StyledDataPickerWrapper,
   StyledEndFinishNumber,
   StyledEndFinishNumberContainer,
+  StyledNumbersWrapper,
   StyledTimerCircleContainer,
   StyledTimerCircleContentWrapper,
   StyledTimerNumbers,
@@ -35,22 +37,24 @@ import {
 
 const TimerIcon = () => <BellIcon />;
 const TimerRightArrowIcon = () => <RightArrowIcon />;
-
 export function TimerScreen() {
   const [date, setDate] = useState(new Date());
   const [changedDate, setChangedDate] = useState(0);
   const [displayedValue, setDisplayedValue] = useState(0);
   const [timePickerMode, setTimePickerMode] = useState<AndroidMode>('time');
   const [isShowTimePicker, setIsShowTimePicker] = useState(false);
-
+  const { secondsMinutesAndHours } = useGetSecondsMinutesHours({ changedDate });
+  const { minutes, seconds, hours } = secondsMinutesAndHours;
   const onChange = (event, selectedDate) => {
     const currentDate = moment(selectedDate).format('HH:mm');
-
     // setIsShowTimePicker(false);
     setDate(selectedDate);
   };
-  const startAnimation = () => {
+  const startTimer = () => {
     setChangedDate(36000000);
+  };
+  const cancelTimer = () => {
+    setChangedDate(0);
   };
   useEffect(() => {
     let timeOut: ReturnType<typeof setTimeout>;
@@ -67,38 +71,6 @@ export function TimerScreen() {
     setIsShowTimePicker(true);
     setTimePickerMode(currentMode);
   };
-  const secondsMinutesAndHours = useMemo(() => {
-    let time = changedDate / 1000;
-    let seconds = '00',
-      minutes = '00',
-      hours = '0';
-    //hours
-
-    if (time > 3600) {
-      const amountOfHours = Math.floor(time / 3600);
-      hours = `${amountOfHours}`;
-      time = time - amountOfHours * 3600;
-    }
-    //minutes
-    if (time > 60 && time < 3600) {
-      const amountOfMinutes = Math.floor(time / 60);
-      if (amountOfMinutes < 10) {
-        minutes = `0${amountOfMinutes}`;
-      } else {
-        minutes = `${amountOfMinutes}`;
-      }
-      time = time - amountOfMinutes * 60;
-    }
-    //seconds
-    if (time < 60) {
-      if (time < 10) {
-        seconds = `0${time}`;
-      } else {
-        seconds = `${time}`;
-      }
-    }
-    return `${hours}:${minutes}:${seconds}`;
-  }, [changedDate]);
   const showTimepicker = () => {
     showMode('time');
   };
@@ -107,8 +79,12 @@ export function TimerScreen() {
     <StyledTimerScreenContainer>
       <CircleProgressBar>
         <StyledTimerCircleContentWrapper isShowTimePicker={isShowTimePicker}>
-          <Text>{secondsMinutesAndHours}</Text>
-          <StyledTimerNumbers>{'4:55:20'}</StyledTimerNumbers>
+          <StyledNumbersWrapper>
+            <StyledTimerNumbers>{`${hours}:`}</StyledTimerNumbers>
+            <StyledTimerNumbers>{`${minutes}:`}</StyledTimerNumbers>
+            <StyledTimerNumbers>{seconds}</StyledTimerNumbers>
+          </StyledNumbersWrapper>
+          {/*<StyledTimerNumbers >{secondsMinutesAndHours}</StyledTimerNumbers>*/}
           <StyledEndFinishNumberContainer>
             <TimerIcon />
             <StyledEndFinishNumber>{'22:22'}</StyledEndFinishNumber>
@@ -129,14 +105,14 @@ export function TimerScreen() {
       </CircleProgressBar>
 
       <StyledButtonsContainer>
-        <CircleButton onPress={() => {}} title={'Cancel'} />
+        <CircleButton onPress={cancelTimer} title={'Cancel'} />
         <CircleButton
-          onPress={startAnimation}
-          title={isShowTimePicker ? 'Pause' : 'Continue'}
+          onPress={startTimer}
+          title={isShowTimePicker ? 'Start' : 'Pause'}
           color={
             isShowTimePicker
-              ? colors[MainColorName.ORANGE]
-              : colors[MainColorName.GREEN]
+              ? colors[MainColorName.GREEN]
+              : colors[MainColorName.ORANGE]
           }
         />
       </StyledButtonsContainer>
