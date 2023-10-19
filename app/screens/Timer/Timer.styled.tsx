@@ -44,12 +44,11 @@ export const StyledTimerNumbers = styled(StyledTextH4)<{
 }>`
   color: ${({ color }) => (color ? color : colors[MainColorName.WHITE])};
   font-size: ${calcFontSize(62)}px;
-  text-align: left;
-  flex-wrap: nowrap;
-  width: 110px;
 `;
 export const StyledNumbersWrapper = styled.View`
   flex-direction: row;
+  justify-content: left;
+  width: ${calcWidth(240)}px;
   margin-left: ${calcWidth(10)}px;
 `;
 export const StyledEndFinishNumberContainer = styled.View`

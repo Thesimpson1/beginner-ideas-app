@@ -32,18 +32,64 @@ import {
   StyledTimerCircleContainer,
   StyledTimerCircleContentWrapper,
   StyledTimerNumbers,
+  StyledTimerNumbersDots,
   StyledTimerScreenContainer,
 } from 'app/screens/Timer/Timer.styled';
 
+interface GetRightButtonInfoI {
+  isShowTimePicker: boolean;
+  isRunTimer: boolean;
+  startTimer: () => void;
+  pauseTimer: () => void;
+}
+
 const TimerIcon = () => <BellIcon />;
 const TimerRightArrowIcon = () => <RightArrowIcon />;
+const getRightButtonInfo = ({
+  isShowTimePicker,
+  isRunTimer,
+  startTimer,
+  pauseTimer,
+}: GetRightButtonInfoI) => {
+  switch (true) {
+    case isShowTimePicker: {
+      return {
+        rightButtonNameColor: colors[MainColorName.GREEN],
+        rightButtonName: 'Start',
+        rightButtonOnPress: startTimer,
+      };
+    }
+    case !isShowTimePicker && isRunTimer: {
+      return {
+        rightButtonNameColor: colors[MainColorName.ORANGE],
+        rightButtonName: 'Pause',
+        rightButtonOnPress: pauseTimer,
+      };
+    }
+    case !isShowTimePicker && !isRunTimer: {
+      return {
+        rightButtonNameColor: colors[MainColorName.ORANGE],
+        rightButtonName: 'Continue',
+        rightButtonOnPress: startTimer,
+      };
+    }
+    default: {
+      return {
+        rightButtonNameColor: colors[MainColorName.GREEN],
+        rightButtonName: 'Start',
+        rightButtonOnPress: startTimer,
+      };
+    }
+  }
+};
 export function TimerScreen() {
   const [date, setDate] = useState(new Date());
   const [changedDate, setChangedDate] = useState(0);
-  const [displayedValue, setDisplayedValue] = useState(0);
+  const [isRunTimer, setIsRunTimer] = useState(false);
   const [timePickerMode, setTimePickerMode] = useState<AndroidMode>('time');
   const [isShowTimePicker, setIsShowTimePicker] = useState(false);
-  const { secondsMinutesAndHours } = useGetSecondsMinutesHours({ changedDate });
+  const { secondsMinutesAndHours, getTimeWhenTimerFinish } =
+    useGetSecondsMinutesHours({ changedDate });
   const { minutes, seconds, hours } = secondsMinutesAndHours;
   const onChange = (event, selectedDate) => {
     const currentDate = moment(selectedDate).format('HH:mm');
@@ -51,21 +97,32 @@ export function TimerScreen() {
     setDate(selectedDate);
   };
   const startTimer = () => {
-    setChangedDate(36000000);
+    if (changedDate === 0) {
+      setChangedDate(36000000);
+    }
+    setIsRunTimer(true);
+  };
+  const pauseTimer = () => {
+    setIsRunTimer(false);
   };
   const cancelTimer = () => {
     setChangedDate(0);
   };
   useEffect(() => {
     let timeOut: ReturnType<typeof setTimeout>;
-    if (changedDate !== 0) {
+    if (changedDate !== 0 && isRunTimer) {
       timeOut = setTimeout(() => {
-        setDisplayedValue(changedDate / 1000);
-        setChangedDate((prevState) => prevState - 1000);
+        setChangedDate((prevState) => {
+          const newReturnValue = prevState - 1000;
+          if (newReturnValue === 0) {
+            setIsRunTimer(false);
+          }
+          return newReturnValue;
+        });
       }, 1000);
     }
     return () => clearTimeout(timeOut);
-  }, [changedDate]);
+  }, [changedDate, isRunTimer]);
 
   const showMode = (currentMode: AndroidMode) => {
     setIsShowTimePicker(true);
@@ -75,6 +132,13 @@ export function TimerScreen() {
     showMode('time');
   };
 
+  const { rightButtonNameColor, rightButtonOnPress, rightButtonName } =
+    getRightButtonInfo({
+      isShowTimePicker,
+      isRunTimer,
+      startTimer,
+      pauseTimer,
+    });
   return (
     <StyledTimerScreenContainer>
       <CircleProgressBar>
@@ -84,10 +148,11 @@ export function TimerScreen() {
             <StyledTimerNumbers>{`${minutes}:`}</StyledTimerNumbers>
             <StyledTimerNumbers>{seconds}</StyledTimerNumbers>
           </StyledNumbersWrapper>
-          {/*<StyledTimerNumbers >{secondsMinutesAndHours}</StyledTimerNumbers>*/}
           <StyledEndFinishNumberContainer>
             <TimerIcon />
-            <StyledEndFinishNumber>{'22:22'}</StyledEndFinishNumber>
+            <StyledEndFinishNumber>
+              {getTimeWhenTimerFinish}
+            </StyledEndFinishNumber>
           </StyledEndFinishNumberContainer>
         </StyledTimerCircleContentWrapper>
         <StyledDataPickerWrapper isShowTimePicker={isShowTimePicker}>
@@ -107,13 +172,9 @@ export function TimerScreen() {
       <StyledButtonsContainer>
         <CircleButton onPress={cancelTimer} title={'Cancel'} />
         <CircleButton
-          onPress={startTimer}
-          title={isShowTimePicker ? 'Start' : 'Pause'}
-          color={
-            isShowTimePicker
-              ? colors[MainColorName.GREEN]
-              : colors[MainColorName.ORANGE]
-          }
+          onPress={rightButtonOnPress}
+          title={rightButtonName}
+          color={rightButtonNameColor}
         />
       </StyledButtonsContainer>
       <StyledBottomContainer>

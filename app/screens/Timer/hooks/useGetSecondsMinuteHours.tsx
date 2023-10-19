@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import moment from 'moment/moment';
 
 interface SecondsMinutesHoursI {
   changedDate: number;
@@ -41,9 +42,16 @@ export const useGetSecondsMinutesHours = ({
       }
     }
     return { seconds, hours, minutes };
-    // return `${hours}:${minutes}:${seconds}`;
   }, [changedDate]);
+
+  const getTimeWhenTimerFinish = useMemo(() => {
+    return moment()
+      .add(`${secondsMinutesAndHours.hours}:${secondsMinutesAndHours.minutes}`)
+      .format('HH:mm');
+  }, [secondsMinutesAndHours.hours, secondsMinutesAndHours.minutes]);
+
   return {
     secondsMinutesAndHours,
+    getTimeWhenTimerFinish,
   };
 };
