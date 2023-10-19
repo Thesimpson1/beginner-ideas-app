@@ -6,14 +6,13 @@ import { colors, MainColorName } from 'app/constants/color';
 
 export const StyledCircleButtonWrapper = styled.TouchableOpacity<{
   backgroundColor: string;
-  isDisabled?: boolean;
 }>`
   width: ${calcWidth(80)}px;
   background-color: ${({ backgroundColor }) => backgroundColor};
   justify-content: center;
   align-items: center;
   align-self: center;
-  opacity: ${({ isDisabled }) => (isDisabled ? 0.5 : 1)};
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   height: ${calcWidth(80)}px;
   border-radius: ${calcWidth(80)}px;
 `;

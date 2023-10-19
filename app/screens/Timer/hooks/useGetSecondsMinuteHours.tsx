@@ -14,7 +14,7 @@ export const useGetSecondsMinutesHours = ({
       hours = '00';
     //hours
 
-    if (time > 3600) {
+    if (time >= 3600) {
       const amountOfHours = Math.floor(time / 3600);
       if (amountOfHours < 10) {
         hours = `0${amountOfHours}`;
@@ -24,7 +24,7 @@ export const useGetSecondsMinutesHours = ({
       time = time - amountOfHours * 3600;
     }
     //minutes
-    if (time > 60 && time < 3600) {
+    if (time >= 60 && time < 3600) {
       const amountOfMinutes = Math.floor(time / 60);
       if (amountOfMinutes < 10) {
         minutes = `0${amountOfMinutes}`;

@@ -136,14 +136,6 @@ export function TimerScreen() {
     return () => clearTimeout(timeOut);
   }, [changedDate, isRunTimer]);
 
-  const showMode = (currentMode: AndroidMode) => {
-    setIsShowTimePicker(true);
-    setTimePickerMode(currentMode);
-  };
-  const showTimepicker = () => {
-    showMode('time');
-  };
-
   const { rightButtonNameColor, rightButtonOnPress, rightButtonName } =
     getRightButtonInfo({
       isShowTimePicker,
@@ -182,7 +174,11 @@ export function TimerScreen() {
       </CircleProgressBar>
 
       <StyledButtonsContainer>
-        <CircleButton onPress={cancelTimer} title={'Cancel'} />
+        <CircleButton
+          onPress={cancelTimer}
+          title={'Cancel'}
+          isDisabled={isShowTimePicker}
+        />
         <CircleButton
           onPress={rightButtonOnPress}
           title={rightButtonName}
