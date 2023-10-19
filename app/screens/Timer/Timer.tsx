@@ -84,9 +84,12 @@ const getRightButtonInfo = ({
 };
 export function TimerScreen() {
   const [date, setDate] = useState(new Date());
+  const [animationTime, setAnimationTime] = useState(0);
   const [changedDate, setChangedDate] = useState(0);
   const [isRunTimer, setIsRunTimer] = useState(false);
   const [timePickerMode, setTimePickerMode] = useState<AndroidMode>('time');
+
+  const paused = useSharedValue(false);
   const [isShowTimePicker, setIsShowTimePicker] = useState(true);
   const { secondsMinutesAndHours, getTimeWhenTimerFinish } =
     useGetSecondsMinutesHours({ changedDate });
@@ -109,16 +112,20 @@ export function TimerScreen() {
         currentDate = currentDate + minutesFromPicker * 60000;
       }
       setIsShowTimePicker(false);
+      setAnimationTime(currentDate);
       setChangedDate(currentDate);
     }
     setIsRunTimer(true);
+    paused.value = false;
   };
   const pauseTimer = () => {
     setIsRunTimer(false);
+    paused.value = true;
   };
   const cancelTimer = () => {
     setChangedDate(0);
     setIsShowTimePicker(true);
+    paused.value = false;
   };
   useEffect(() => {
     let timeOut: ReturnType<typeof setTimeout>;
@@ -131,7 +138,7 @@ export function TimerScreen() {
           }
           return newReturnValue;
         });
-      }, 1000);
+      }, 915);
     }
     return () => clearTimeout(timeOut);
   }, [changedDate, isRunTimer]);
@@ -143,9 +150,14 @@ export function TimerScreen() {
       startTimer,
       pauseTimer,
     });
+
   return (
     <StyledTimerScreenContainer>
-      <CircleProgressBar isShowTimePicker={isShowTimePicker}>
+      <CircleProgressBar
+        isShowTimePicker={isShowTimePicker}
+        animationDuration={animationTime}
+        pause={paused}
+      >
         <StyledTimerCircleContentWrapper isShowTimePicker={isShowTimePicker}>
           <StyledNumbersWrapper>
             <StyledTimerNumbers>{`${hours}:`}</StyledTimerNumbers>

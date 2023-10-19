@@ -1,13 +1,15 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { Button, Text, View } from 'react-native';
 import {
   Extrapolation,
   interpolate,
+  SharedValue,
   useAnimatedStyle,
   useSharedValue,
   withSequence,
   withTiming,
 } from 'react-native-reanimated';
+import { withPause } from 'react-native-redash';
 
 import { width } from 'app/utils/scaling-system';
 import {
@@ -25,9 +27,17 @@ import { colors, MainColorName } from 'app/constants/color';
 interface CircleProgressBarI {
   children: ReactNode;
   isShowTimePicker: boolean;
+  animationDuration: number;
+  pause: SharedValue<boolean>;
 }
-export function CircleProgressBar({ children, isShowTimePicker }: CircleProgressBarI) {
+export function CircleProgressBar({
+  children,
+  isShowTimePicker,
+  animationDuration,
+  pause,
+}: CircleProgressBarI) {
   const progress = useSharedValue(360);
+  // const paused = useSharedValue(false);
 
   const styleTop = useAnimatedStyle(() => {
     const rotate = interpolate(progress.value, [0, PI], [0, 180], {
@@ -63,9 +73,17 @@ export function CircleProgressBar({ children, isShowTimePicker }: CircleProgress
     };
   });
 
+  useEffect(() => {
+    if (animationDuration) {
+      progress.value = withPause(
+        withTiming(0, { duration: animationDuration }),
+        pause
+      );
+    }
+  }, [animationDuration, pause]); // eslint-disable-line react-hooks/exhaustive-deps
   const onHandle = () => {
     progress.value = withSequence(
-      withTiming(0, { duration: 10000 }),
+      withTiming(0, { duration: animationDuration }),
       withTiming(360, { duration: 0 })
     );
   };
