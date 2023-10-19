@@ -87,18 +87,29 @@ export function TimerScreen() {
   const [changedDate, setChangedDate] = useState(0);
   const [isRunTimer, setIsRunTimer] = useState(false);
   const [timePickerMode, setTimePickerMode] = useState<AndroidMode>('time');
-  const [isShowTimePicker, setIsShowTimePicker] = useState(false);
+  const [isShowTimePicker, setIsShowTimePicker] = useState(true);
   const { secondsMinutesAndHours, getTimeWhenTimerFinish } =
     useGetSecondsMinutesHours({ changedDate });
   const { minutes, seconds, hours } = secondsMinutesAndHours;
   const onChange = (event, selectedDate) => {
-    const currentDate = moment(selectedDate).format('HH:mm');
-    // setIsShowTimePicker(false);
     setDate(selectedDate);
+    // setChangedDate(currentDate);
+    // const currentDate = moment(selectedDate).get('minutes');
   };
+
   const startTimer = () => {
     if (changedDate === 0) {
-      setChangedDate(36000000);
+      const minutesFromPicker = moment(date).get('minutes');
+      const hoursFromPicker = moment(date).get('hours');
+      let currentDate = 0;
+      if (hoursFromPicker > 0) {
+        currentDate = hoursFromPicker * 3600000;
+      }
+      if (minutesFromPicker > 0) {
+        currentDate = currentDate + minutesFromPicker * 60000;
+      }
+      setIsShowTimePicker(false);
+      setChangedDate(currentDate);
     }
     setIsRunTimer(true);
   };
@@ -107,6 +118,7 @@ export function TimerScreen() {
   };
   const cancelTimer = () => {
     setChangedDate(0);
+    setIsShowTimePicker(true);
   };
   useEffect(() => {
     let timeOut: ReturnType<typeof setTimeout>;
@@ -141,7 +153,7 @@ export function TimerScreen() {
     });
   return (
     <StyledTimerScreenContainer>
-      <CircleProgressBar>
+      <CircleProgressBar isShowTimePicker={isShowTimePicker}>
         <StyledTimerCircleContentWrapper isShowTimePicker={isShowTimePicker}>
           <StyledNumbersWrapper>
             <StyledTimerNumbers>{`${hours}:`}</StyledTimerNumbers>

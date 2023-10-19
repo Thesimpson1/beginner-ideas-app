@@ -24,8 +24,9 @@ import { colors, MainColorName } from 'app/constants/color';
 
 interface CircleProgressBarI {
   children: ReactNode;
+  isShowTimePicker: boolean;
 }
-export function CircleProgressBar({ children }: CircleProgressBarI) {
+export function CircleProgressBar({ children, isShowTimePicker }: CircleProgressBarI) {
   const progress = useSharedValue(360);
 
   const styleTop = useAnimatedStyle(() => {
@@ -87,7 +88,9 @@ export function CircleProgressBar({ children }: CircleProgressBarI) {
       </StyledCircleProgressBarContainer>
 
       {/*<Button title="shake" onPress={onHandle} />*/}
-      <StyledBottomCircleTextWrapper>{children}</StyledBottomCircleTextWrapper>
+      <StyledBottomCircleTextWrapper isShowTimePicker={isShowTimePicker}>
+        {children}
+      </StyledBottomCircleTextWrapper>
     </StyledCircleProgressBarWrapper>
   );
 }
