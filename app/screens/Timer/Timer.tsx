@@ -9,6 +9,7 @@ import { Text } from 'react-native';
 import Animated, { useSharedValue, withTiming } from 'react-native-reanimated';
 import DateTimePicker, {
   AndroidMode,
+  DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import { clearTimeout } from '@testing-library/react-native/build/helpers/timers';
 import moment from 'moment';
@@ -87,17 +88,14 @@ export function TimerScreen() {
   const [animationTime, setAnimationTime] = useState(0);
   const [changedDate, setChangedDate] = useState(0);
   const [isRunTimer, setIsRunTimer] = useState(false);
-  const [timePickerMode, setTimePickerMode] = useState<AndroidMode>('time');
 
   const paused = useSharedValue(false);
   const [isShowTimePicker, setIsShowTimePicker] = useState(true);
   const { secondsMinutesAndHours, getTimeWhenTimerFinish } =
     useGetSecondsMinutesHours({ changedDate });
   const { minutes, seconds, hours } = secondsMinutesAndHours;
-  const onChange = (event, selectedDate) => {
-    setDate(selectedDate);
-    // setChangedDate(currentDate);
-    // const currentDate = moment(selectedDate).get('minutes');
+  const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+    selectedDate && setDate(selectedDate);
   };
 
   const startTimer = () => {
@@ -124,6 +122,7 @@ export function TimerScreen() {
   };
   const cancelTimer = () => {
     setChangedDate(0);
+    setAnimationTime(0);
     setIsShowTimePicker(true);
     paused.value = false;
   };
@@ -138,7 +137,10 @@ export function TimerScreen() {
           }
           return newReturnValue;
         });
-      }, 915);
+      }, 940);
+    }
+    if (changedDate === 0) {
+      setIsShowTimePicker(true);
     }
     return () => clearTimeout(timeOut);
   }, [changedDate, isRunTimer]);
@@ -177,7 +179,7 @@ export function TimerScreen() {
             value={date}
             locale="en_GB"
             display={'spinner'}
-            mode={timePickerMode}
+            mode={'time'}
             is24Hour={true}
             timeZoneName={'Europe/Berlin'}
             onChange={onChange}

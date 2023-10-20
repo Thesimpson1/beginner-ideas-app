@@ -11,7 +11,6 @@ import {
 } from 'react-native-reanimated';
 import { withPause } from 'react-native-redash';
 
-import { width } from 'app/utils/scaling-system';
 import {
   StyledAnimatedPart,
   StyledBottomCircleProgressBarWrapper,
@@ -36,11 +35,10 @@ export function CircleProgressBar({
   animationDuration,
   pause,
 }: CircleProgressBarI) {
-  const progress = useSharedValue(360);
-  // const paused = useSharedValue(false);
+  const progress = useSharedValue(0);
 
   const styleTop = useAnimatedStyle(() => {
-    const rotate = interpolate(progress.value, [0, PI], [0, 180], {
+    const rotate = interpolate(progress.value, [0, PI], [0, PI], {
       extrapolateRight: Extrapolation.CLAMP,
     });
     const opacity = interpolate(
@@ -61,7 +59,7 @@ export function CircleProgressBar({
     };
   });
   const styleBottom = useAnimatedStyle(() => {
-    const rotate = interpolate(progress.value, [0, PI, PI * 2], [0, 0, 180], {
+    const rotate = interpolate(progress.value, [0, PI, PI * 2], [0, 0, PI], {
       extrapolateRight: Extrapolation.CLAMP,
     });
     return {
@@ -72,6 +70,11 @@ export function CircleProgressBar({
       ],
     };
   });
+  useEffect(() => {
+    if (isShowTimePicker) {
+      progress.value = 360;
+    }
+  }, [isShowTimePicker]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (animationDuration) {
@@ -81,31 +84,26 @@ export function CircleProgressBar({
       );
     }
   }, [animationDuration, pause]); // eslint-disable-line react-hooks/exhaustive-deps
-  const onHandle = () => {
-    progress.value = withSequence(
-      withTiming(0, { duration: animationDuration }),
-      withTiming(360, { duration: 0 })
-    );
-  };
+  const circleColor = isShowTimePicker
+    ? colors[MainColorName.GRAY_BLUE]
+    : colors[MainColorName.ORANGE];
 
   return (
     <StyledCircleProgressBarWrapper>
       <StyledCircleProgressBarContainer>
         <StyledTopCircleProgressBarWrapper>
-          <HalfCircleWrapper color={colors[MainColorName.ORANGE]} />
+          <HalfCircleWrapper color={circleColor} />
           <StyledAnimatedPart style={styleBottom}>
             <HalfCircleWrapper color={colors[MainColorName.GRAY_BLUE]} />
           </StyledAnimatedPart>
         </StyledTopCircleProgressBarWrapper>
         <StyledBottomCircleProgressBarWrapper>
-          <HalfCircleWrapper color={colors[MainColorName.ORANGE]} />
+          <HalfCircleWrapper color={circleColor} />
           <StyledAnimatedPart style={styleTop}>
             <HalfCircleWrapper color={colors[MainColorName.GRAY_BLUE]} />
           </StyledAnimatedPart>
         </StyledBottomCircleProgressBarWrapper>
       </StyledCircleProgressBarContainer>
-
-      {/*<Button title="shake" onPress={onHandle} />*/}
       <StyledBottomCircleTextWrapper isShowTimePicker={isShowTimePicker}>
         {children}
       </StyledBottomCircleTextWrapper>
