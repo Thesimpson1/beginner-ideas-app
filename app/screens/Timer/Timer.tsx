@@ -134,6 +134,7 @@ export function TimerScreen() {
           const newReturnValue = prevState - 1000;
           if (newReturnValue === 0) {
             setIsRunTimer(false);
+            setAnimationTime(0);
           }
           return newReturnValue;
         });

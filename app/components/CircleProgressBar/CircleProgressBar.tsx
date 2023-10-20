@@ -5,7 +5,7 @@ import {
   interpolate,
   SharedValue,
   useAnimatedStyle,
-  useSharedValue,
+  useSharedValue, withDelay,
   withSequence,
   withTiming,
 } from 'react-native-reanimated';
@@ -71,10 +71,10 @@ export function CircleProgressBar({
     };
   });
   useEffect(() => {
-    if (isShowTimePicker) {
-      progress.value = 360;
+    if (isShowTimePicker && animationDuration === 0) {
+      progress.value = withDelay(100, withTiming(360));
     }
-  }, [isShowTimePicker]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isShowTimePicker, animationDuration]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (animationDuration) {
