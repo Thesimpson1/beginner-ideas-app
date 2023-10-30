@@ -6995,6 +6995,11 @@ react-native-gesture-handler@^2.13.0:
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
+react-native-notification-sounds@^0.5.8:
+  version "0.5.8"
+  resolved "https://registry.yarnpkg.com/react-native-notification-sounds/-/react-native-notification-sounds-0.5.8.tgz#f65f6da1a7c453a3a4f5212629cbe97731d305fb"
+  integrity sha512-pvqJPwCGMvJzeCXMGlkIfbZP3t5vVJw2+8H83SN08g9L3l528BMnlRf99MArJN0qJwusxGFvKat6srNzPayAnA==
+
 react-native-reanimated@^3.4.2:
   version "3.4.2"
   resolved "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-3.4.2.tgz"

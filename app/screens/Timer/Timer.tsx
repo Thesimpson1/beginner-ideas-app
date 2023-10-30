@@ -6,7 +6,11 @@ import React, {
   useState,
 } from 'react';
 import { Text } from 'react-native';
+import NotificationSounds, {
+  playSampleSound,
+} from 'react-native-notification-sounds';
 import Animated, { useSharedValue, withTiming } from 'react-native-reanimated';
+import Sound from 'react-native-sound';
 import DateTimePicker, {
   AndroidMode,
   DateTimePickerEvent,
@@ -19,6 +23,7 @@ import { height } from 'app/utils/scaling-system';
 import { CircleButton } from 'app/components/CircleButton/CircleButton';
 import { CircleProgressBar } from 'app/components/CircleProgressBar/CircleProgressBar';
 import { colors, MainColorName } from 'app/constants/color';
+import { ChangeSoundModal } from 'app/screens/Timer/components/ChangeSoundModal';
 import { useGetSecondsMinutesHours } from 'app/screens/Timer/hooks/useGetSecondsMinuteHours';
 import {
   StyledBottomContainer,
@@ -36,7 +41,6 @@ import {
   StyledTimerNumbersDots,
   StyledTimerScreenContainer,
 } from 'app/screens/Timer/Timer.styled';
-
 interface GetRightButtonInfoI {
   isShowTimePicker: boolean;
   isRunTimer: boolean;
@@ -97,6 +101,7 @@ export function TimerScreen() {
   const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
     selectedDate && setDate(selectedDate);
   };
+  const [sounds, setSounds] = useState<Sound[] | null>(null);
 
   const startTimer = () => {
     if (changedDate === 0) {
@@ -138,10 +143,11 @@ export function TimerScreen() {
           }
           return newReturnValue;
         });
-      }, 940);
+      }, 930);
     }
     if (changedDate === 0) {
       setIsShowTimePicker(true);
+      sounds !== null && playSampleSound(sounds[1]);
     }
     return () => clearTimeout(timeOut);
   }, [changedDate, isRunTimer]);
@@ -154,6 +160,21 @@ export function TimerScreen() {
       pauseTimer,
     });
 
+  NotificationSounds.getNotifications('ringtone').then((soundsList) => {
+    console.warn('SOUNDS', JSON.stringify(soundsList));
+    /*
+    Play the notification sound.
+    pass the complete sound object.
+    This function can be used for playing the sample sound
+    */
+    if (sounds === null) {
+      setSounds(soundsList);
+    }
+    // setSounds(soundsList);
+    // playSampleSound(soundsList[1]);
+    // if you want to stop any playing sound just call:
+    // stopSampleSound();
+  });
   return (
     <StyledTimerScreenContainer>
       <CircleProgressBar
@@ -207,6 +228,7 @@ export function TimerScreen() {
           <TimerRightArrowIcon />
         </StyledBottomRightContainer>
       </StyledBottomContainer>
+      <ChangeSoundModal />
     </StyledTimerScreenContainer>
   );
 }
