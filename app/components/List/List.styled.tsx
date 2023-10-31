@@ -9,7 +9,6 @@ export const StyledListWrapper = styled.View`
   margin-top: ${calcHeight(20)}px;
   border-radius: ${calcHeight(10)}px;
 `;
-export const StyledList = styled.FlatList``;
 export const StyledListItemWrapper = styled.View`
   flex-direction: row;
   align-items: center;
@@ -28,5 +27,6 @@ export const StyledListItemText = styled(StyledTextH3)`
   font-size: ${calcFontSize(16)}px;
 `;
 export const StyledListItemIcon = styled.TouchableOpacity`
-  margin: ${calcHeight(10)}px ${calcWidth(10)}px;
+  width: ${calcHeight(30)}px;
+  align-items: center;
 `;

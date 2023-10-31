@@ -11,11 +11,15 @@ import NotificationSounds, {
 } from 'react-native-notification-sounds';
 import Animated, { useSharedValue, withTiming } from 'react-native-reanimated';
 import Sound from 'react-native-sound';
+import { useDispatch, useSelector } from 'react-redux';
 import DateTimePicker, {
   AndroidMode,
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import { clearTimeout } from '@testing-library/react-native/build/helpers/timers';
+import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
+import { RootState } from 'app/redux/store';
+import { clearSounds, getSounds } from 'app/redux/timer/slice';
 import moment from 'moment';
 
 import { BellIcon, RightArrowIcon } from 'app/assets/icon';
@@ -89,20 +93,28 @@ const getRightButtonInfo = ({
 };
 export function TimerScreen() {
   const [date, setDate] = useState(new Date());
+  const [isShowChangeSoundsModal, setIsShowChangeSoundsModal] = useState(false);
   const [animationTime, setAnimationTime] = useState(0);
   const [changedDate, setChangedDate] = useState(0);
   const [isRunTimer, setIsRunTimer] = useState(false);
 
+  const { currentSound } = useAppSelector((state: RootState) => state.timer);
+  const dispatch = useAppDispatch();
   const paused = useSharedValue(false);
   const [isShowTimePicker, setIsShowTimePicker] = useState(true);
   const { secondsMinutesAndHours, getTimeWhenTimerFinish } =
     useGetSecondsMinutesHours({ changedDate });
   const { minutes, seconds, hours } = secondsMinutesAndHours;
+  const showModal = () => {
+    setIsShowChangeSoundsModal(true);
+  };
   const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
     selectedDate && setDate(selectedDate);
   };
-  const [sounds, setSounds] = useState<Sound[] | null>(null);
 
+  useEffect(() => {
+    dispatch(getSounds());
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const startTimer = () => {
     if (changedDate === 0) {
       const minutesFromPicker = moment(date).get('minutes');
@@ -147,10 +159,10 @@ export function TimerScreen() {
     }
     if (changedDate === 0) {
       setIsShowTimePicker(true);
-      sounds !== null && playSampleSound(sounds[1]);
+      // currentSound !== null && playSampleSound(currentSound);
     }
     return () => clearTimeout(timeOut);
-  }, [changedDate, isRunTimer]);
+  }, [changedDate, isRunTimer]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const { rightButtonNameColor, rightButtonOnPress, rightButtonName } =
     getRightButtonInfo({
@@ -160,21 +172,6 @@ export function TimerScreen() {
       pauseTimer,
     });
 
-  NotificationSounds.getNotifications('ringtone').then((soundsList) => {
-    console.warn('SOUNDS', JSON.stringify(soundsList));
-    /*
-    Play the notification sound.
-    pass the complete sound object.
-    This function can be used for playing the sample sound
-    */
-    if (sounds === null) {
-      setSounds(soundsList);
-    }
-    // setSounds(soundsList);
-    // playSampleSound(soundsList[1]);
-    // if you want to stop any playing sound just call:
-    // stopSampleSound();
-  });
   return (
     <StyledTimerScreenContainer>
       <CircleProgressBar
@@ -221,14 +218,17 @@ export function TimerScreen() {
           color={rightButtonNameColor}
         />
       </StyledButtonsContainer>
-      <StyledBottomContainer>
+      <StyledBottomContainer onPress={showModal}>
         <StyledBottomLeftText>{'When finish'}</StyledBottomLeftText>
         <StyledBottomRightContainer>
-          <StyledBottomRightText>{'Radar'}</StyledBottomRightText>
+          <StyledBottomRightText>{currentSound?.title}</StyledBottomRightText>
           <TimerRightArrowIcon />
         </StyledBottomRightContainer>
       </StyledBottomContainer>
-      <ChangeSoundModal />
+      <ChangeSoundModal
+        isVisible={isShowChangeSoundsModal}
+        onClose={setIsShowChangeSoundsModal}
+      />
     </StyledTimerScreenContainer>
   );
 }

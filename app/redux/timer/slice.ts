@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export interface SoundsItem {
   title: string;
   url: string;
-  soundID: number;
+  soundID: string;
 }
 export interface TimerState {
   isFetchNotificationSounds: boolean;
@@ -32,7 +32,8 @@ export const slice = createSlice({
     getSoundsSuccess: (state, action) => {
       state.isFetchNotificationSounds = false;
       state.notificationSounds = action.payload;
-      state.currentSound = action.payload[0];
+      state.currentSound =
+        state.currentSound === null ? action.payload[0] : state.currentSound;
     },
     getSoundsError: (state, action) => {
       state.isFetchNotificationSounds = false;
@@ -41,8 +42,8 @@ export const slice = createSlice({
     setCurrentSound: (state, action) => {
       state.currentSound = action.payload;
     },
-    clearSounds: (state, action) => {
-      state.currentSound = action.payload;
+    clearSounds: (state) => {
+      state.notificationSounds = null;
     },
     clearAll: () => initialState,
   },

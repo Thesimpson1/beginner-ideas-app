@@ -66,7 +66,7 @@ export const StyledButtonsContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
 `;
-export const StyledBottomContainer = styled.View`
+export const StyledBottomContainer = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

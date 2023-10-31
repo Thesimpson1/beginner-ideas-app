@@ -1,52 +1,54 @@
-import React, { JSXElementConstructor, ReactElement } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import {
+  FlatList,
+  GestureResponderEvent,
+  ListRenderItem,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackScreenName } from 'app/types';
+import { SoundsItem } from 'app/redux/timer/slice';
 
-import { CheckMarkIcon, NoteIcon } from 'app/assets/icon';
+import { CheckMarkIcon } from 'app/assets/icon';
 import {
-  StyledCardTitleText,
-  StyledCardWrapper,
-  StyledIconWrapper,
-} from 'app/components/Card/Card.styled';
-import {
-  StyledList,
   StyledListItemIcon,
   StyledListItemText,
   StyledListItemTextWrapper,
   StyledListItemWrapper,
   StyledListWrapper,
 } from 'app/components/List/List.styled';
-import { HomeStackParamList } from 'app/navigation/app/HomeStack.navigator';
 
-interface CardPropsI {
-  icon?: ReactElement<unknown, string | JSXElementConstructor<unknown>>;
-  testID?: string;
+interface ListPropsI {
+  current: number;
+  data?: Array<SoundsItem>;
+  setCurrent: (index: number) => void;
 }
-const data = [
-  { title: 'first' },
-  { title: 'second' },
-  { title: 'therd' },
-  { title: 'fourth' },
-  { title: 'sixth' },
-];
-export function List({
-  icon = <CheckMarkIcon testID={'CheckMarkIconTest'} />,
-  testID = 'CardTestID',
-}: CardPropsI) {
-  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
-  // const onPress = () => navigation.navigate(title);
-  const Icon = () => icon;
-  const renderItem = ({ item, index }) => {
+interface RenderItemI {
+  item: SoundsItem;
+  index: number;
+}
+// const data = [
+//   { title: 'first' },
+//   { title: 'second' },
+//   { title: 'therd' },
+//   { title: 'fourth' },
+//   { title: 'sixth' },
+// ];
+export function List({ current, data = [], setCurrent }: ListPropsI) {
+  const Icon = () => <CheckMarkIcon testID={'CheckMarkIconTest'} />;
+
+  const renderItem = ({ item, index }: RenderItemI) => {
     const { title } = item;
+    const onPress = () => setCurrent(index);
     return (
       <StyledListItemWrapper>
-        <StyledListItemIcon>
-          <Icon />
+        <StyledListItemIcon onPress={onPress}>
+          {current === index && <Icon />}
         </StyledListItemIcon>
-        <StyledListItemTextWrapper isLastIndex={index === data.length - 1}>
-          <TouchableOpacity>
+        <StyledListItemTextWrapper isLastIndex={index === data?.length - 1}>
+          <TouchableOpacity onPress={onPress}>
             <StyledListItemText>{title}</StyledListItemText>
           </TouchableOpacity>
         </StyledListItemTextWrapper>
@@ -56,7 +58,7 @@ export function List({
 
   return (
     <StyledListWrapper>
-      <StyledList data={data} renderItem={renderItem} />
+      <FlatList data={data} renderItem={renderItem} />
     </StyledListWrapper>
   );
 }
