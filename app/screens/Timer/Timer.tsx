@@ -1,29 +1,16 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { Text } from 'react-native';
-import NotificationSounds, {
-  playSampleSound,
-} from 'react-native-notification-sounds';
-import Animated, { useSharedValue, withTiming } from 'react-native-reanimated';
-import Sound from 'react-native-sound';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { playSampleSound } from 'react-native-notification-sounds';
+import { useSharedValue } from 'react-native-reanimated';
 import DateTimePicker, {
-  AndroidMode,
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import { clearTimeout } from '@testing-library/react-native/build/helpers/timers';
 import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
 import { RootState } from 'app/redux/store';
-import { clearSounds, getSounds } from 'app/redux/timer/slice';
+import { getSounds } from 'app/redux/timer/slice';
 import moment from 'moment';
 
 import { BellIcon, RightArrowIcon } from 'app/assets/icon';
-import { height } from 'app/utils/scaling-system';
 import { CircleButton } from 'app/components/CircleButton/CircleButton';
 import { CircleProgressBar } from 'app/components/CircleProgressBar/CircleProgressBar';
 import { colors, MainColorName } from 'app/constants/color';
@@ -39,10 +26,8 @@ import {
   StyledEndFinishNumber,
   StyledEndFinishNumberContainer,
   StyledNumbersWrapper,
-  StyledTimerCircleContainer,
   StyledTimerCircleContentWrapper,
   StyledTimerNumbers,
-  StyledTimerNumbersDots,
   StyledTimerScreenContainer,
 } from 'app/screens/Timer/Timer.styled';
 interface GetRightButtonInfoI {
@@ -97,6 +82,7 @@ export function TimerScreen() {
   const [animationTime, setAnimationTime] = useState(0);
   const [changedDate, setChangedDate] = useState(0);
   const [isRunTimer, setIsRunTimer] = useState(false);
+  const [isRunSound, setIsRunSound] = useState(false);
 
   const { currentSound } = useAppSelector((state: RootState) => state.timer);
   const dispatch = useAppDispatch();
@@ -150,6 +136,7 @@ export function TimerScreen() {
         setChangedDate((prevState) => {
           const newReturnValue = prevState - 1000;
           if (newReturnValue === 0) {
+            setIsRunSound(true);
             setIsRunTimer(false);
             setAnimationTime(0);
           }
@@ -157,12 +144,13 @@ export function TimerScreen() {
         });
       }, 930);
     }
-    if (changedDate === 0) {
+    if (isRunSound) {
       setIsShowTimePicker(true);
-      // currentSound !== null && playSampleSound(currentSound);
+      currentSound !== null && playSampleSound(currentSound);
+      setIsRunSound(false);
     }
     return () => clearTimeout(timeOut);
-  }, [changedDate, isRunTimer]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [changedDate, isRunTimer, isRunSound]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const { rightButtonNameColor, rightButtonOnPress, rightButtonName } =
     getRightButtonInfo({
