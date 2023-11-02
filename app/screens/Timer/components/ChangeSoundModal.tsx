@@ -38,7 +38,7 @@ export function ChangeSoundModal({ isVisible, onClose }: ChangeSoundModalI) {
     return currentIndex;
   };
   const [current, setCurrent] = useState(getIndex());
-  
+
   const dispatch = useAppDispatch();
   const onClosePress = () => {
     stopSampleSound();

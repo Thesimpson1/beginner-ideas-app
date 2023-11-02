@@ -38,7 +38,7 @@ export const StyledDataPickerWrapper = styled(StyledAnimatedSimpleViewWrapper)<{
   isShowTimePicker?: boolean;
 }>`
   display: ${({ isShowTimePicker }) => (isShowTimePicker ? 'flex' : 'none')};
-  margin-bottom: 50px;
+  margin-bottom: ${calcHeight(50)}px;
 `;
 export const StyledTimerNumbers = styled(StyledTextH4)<{
   color?: string;

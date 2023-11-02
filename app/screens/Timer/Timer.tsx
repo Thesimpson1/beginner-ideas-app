@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { playSampleSound } from 'react-native-notification-sounds';
+import { Platform } from 'react-native';
+import {
+  playSampleSound,
+  stopSampleSound,
+} from 'react-native-notification-sounds';
 import { useSharedValue } from 'react-native-reanimated';
 import DateTimePicker, {
+  DateTimePickerAndroid,
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { clearTimeout } from '@testing-library/react-native/build/helpers/timers';
 import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
 import { RootState } from 'app/redux/store';
@@ -13,6 +20,7 @@ import moment from 'moment';
 import { BellIcon, RightArrowIcon } from 'app/assets/icon';
 import { CircleButton } from 'app/components/CircleButton/CircleButton';
 import { CircleProgressBar } from 'app/components/CircleProgressBar/CircleProgressBar';
+import { HomeStackParamList } from 'app/navigation/app/HomeStack.navigator';
 import { colors, MainColorName } from 'app/constants/color';
 import { ChangeSoundModal } from 'app/screens/Timer/components/ChangeSoundModal';
 import { useGetSecondsMinutesHours } from 'app/screens/Timer/hooks/useGetSecondsMinuteHours';
@@ -82,7 +90,9 @@ export function TimerScreen() {
   const [animationTime, setAnimationTime] = useState(0);
   const [changedDate, setChangedDate] = useState(0);
   const [isRunTimer, setIsRunTimer] = useState(false);
+  const [isRunAndroidTimer, setIsRunAndroidTimer] = useState(false);
   const [isRunSound, setIsRunSound] = useState(false);
+  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
 
   const { currentSound } = useAppSelector((state: RootState) => state.timer);
   const dispatch = useAppDispatch();
@@ -94,13 +104,7 @@ export function TimerScreen() {
   const showModal = () => {
     setIsShowChangeSoundsModal(true);
   };
-  const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
-    selectedDate && setDate(selectedDate);
-  };
-
-  useEffect(() => {
-    dispatch(getSounds());
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const isAndroid = Platform.OS === 'android';
   const startTimer = () => {
     if (changedDate === 0) {
       const minutesFromPicker = moment(date).get('minutes');
@@ -119,6 +123,46 @@ export function TimerScreen() {
     setIsRunTimer(true);
     paused.value = false;
   };
+  const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+    selectedDate && setDate(selectedDate);
+    //logic for android
+    if (isAndroid) {
+      if (event.type === 'dismissed') {
+        if (navigation.canGoBack()) {
+          navigation.goBack();
+        }
+      } else {
+        setIsRunAndroidTimer(true);
+      }
+    }
+  };
+  //logic for android
+  useEffect(() => {
+    if (isRunAndroidTimer) {
+      startTimer();
+      setIsRunAndroidTimer(false);
+    }
+  }, [isRunAndroidTimer]); // eslint-disable-line react-hooks/exhaustive-deps
+  ///
+  const setAndroidPicker = () => {
+    return DateTimePickerAndroid.open({
+      testID: 'dateTimePicker',
+      value: date,
+      display: 'spinner',
+      mode: 'time',
+      is24Hour: true,
+      timeZoneName: 'Europe/Berlin',
+      onChange: onChange,
+    });
+  };
+
+  useEffect(() => {
+    dispatch(getSounds());
+    if (isAndroid) {
+      setAndroidPicker();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const pauseTimer = () => {
     setIsRunTimer(false);
     paused.value = true;
@@ -128,6 +172,7 @@ export function TimerScreen() {
     setAnimationTime(0);
     setIsShowTimePicker(true);
     paused.value = false;
+    isAndroid && setAndroidPicker();
   };
   useEffect(() => {
     let timeOut: ReturnType<typeof setTimeout>;
@@ -142,12 +187,17 @@ export function TimerScreen() {
           }
           return newReturnValue;
         });
-      }, 930);
+      }, 910);
     }
     if (isRunSound) {
       setIsShowTimePicker(true);
       currentSound !== null && playSampleSound(currentSound);
       setIsRunSound(false);
+      ////logic for android
+      if (isAndroid) {
+        setTimeout(() => stopSampleSound(), 5000);
+        setAndroidPicker();
+      }
     }
     return () => clearTimeout(timeOut);
   }, [changedDate, isRunTimer, isRunSound]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -159,7 +209,6 @@ export function TimerScreen() {
       startTimer,
       pauseTimer,
     });
-
   return (
     <StyledTimerScreenContainer>
       <CircleProgressBar
@@ -181,16 +230,18 @@ export function TimerScreen() {
           </StyledEndFinishNumberContainer>
         </StyledTimerCircleContentWrapper>
         <StyledDataPickerWrapper isShowTimePicker={isShowTimePicker}>
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            locale="en_GB"
-            display={'spinner'}
-            mode={'time'}
-            is24Hour={true}
-            timeZoneName={'Europe/Berlin'}
-            onChange={onChange}
-          />
+          {!isAndroid && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              locale="en_GB"
+              display={'spinner'}
+              mode={'time'}
+              is24Hour={true}
+              timeZoneName={'Europe/Berlin'}
+              onChange={onChange}
+            />
+          )}
         </StyledDataPickerWrapper>
       </CircleProgressBar>
 
