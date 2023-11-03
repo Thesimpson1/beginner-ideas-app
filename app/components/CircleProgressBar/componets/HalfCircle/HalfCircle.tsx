@@ -11,8 +11,8 @@ interface HalfCircleWrapperI {
 
 export function HalfCircleWrapper({ color }: HalfCircleWrapperI) {
   return (
-    <StyledHalfCircleWrapper>
-      <StyledHalfCircle color={color} />
+    <StyledHalfCircleWrapper testID={'StyledHalfCircleWrapperTestID'}>
+      <StyledHalfCircle color={color} testID={'StyledHalfCircleTestID'} />
     </StyledHalfCircleWrapper>
   );
 }

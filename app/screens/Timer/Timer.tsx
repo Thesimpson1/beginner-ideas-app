@@ -191,7 +191,7 @@ export function TimerScreen() {
     }
     if (isRunSound) {
       setIsShowTimePicker(true);
-      currentSound !== null && playSampleSound(currentSound);
+      currentSound && playSampleSound(currentSound);
       setIsRunSound(false);
       ////logic for android
       if (isAndroid) {

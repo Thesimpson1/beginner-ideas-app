@@ -2,8 +2,9 @@ import Animated from 'react-native-reanimated';
 import styled from 'styled-components/native';
 
 import { calcHeight, calcWidth, height } from 'app/utils/scaling-system';
-const isBigHeight = height > 790;
-const top = isBigHeight
+
+export const isBigHeight = height > 790;
+export const top = isBigHeight
   ? height / 3 - calcHeight(30)
   : height / 2.6 - calcHeight(30);
 export const StyledCircleProgressBarWrapper = styled.View`

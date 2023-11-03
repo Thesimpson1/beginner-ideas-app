@@ -1,66 +1,129 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react-native';
+import { Text, View } from 'react-native';
+import { SharedValue } from 'react-native-reanimated';
+import { render } from '@testing-library/react-native';
 
-import { CircleButton } from 'app/components/CircleButton/CircleButton';
+import { calcWidth } from 'app/utils/scaling-system';
+import { CircleProgressBar } from 'app/components/CircleProgressBar/CircleProgressBar';
+import { top } from 'app/components/CircleProgressBar/CircleProgressBar.styled';
 import { colors, MainColorName } from 'app/constants/color';
+const mockWithPause = jest.fn();
 
-describe('Circle Button', () => {
-  const testTitle = 'Test title';
-  const mockOnPress = jest.fn();
-  const color = colors.RED;
-  const backgroundColor = colors[MainColorName.GREEN];
-  const isDisabled = true;
+jest.mock('react-native-redash', () => ({
+  ...jest.requireActual('react-native-redash'),
+  withPause: () => mockWithPause(),
+}));
+describe('Circle Progress Bar', () => {
+  // @ts-ignore
+  let testsPause = false as SharedValue<boolean>;
   it('Should render component with required props', () => {
-    const { getByTestId } = render(
-      <CircleButton title={testTitle} onPress={mockOnPress} />
+    const { getByTestId, getAllByTestId } = render(
+      <CircleProgressBar
+        isShowTimePicker={true}
+        animationDuration={0}
+        pause={testsPause}
+      >
+        <View>
+          <Text>Test</Text>
+        </View>
+      </CircleProgressBar>
     );
 
-    const StyledRoundButtonWrapperTest = getByTestId(
-      'StyledCircleButtonWrapperTest'
+    const StyledCircleProgressBarWrapperTestID = getByTestId(
+      'StyledCircleProgressBarWrapperTestID'
     );
-    const StyledRoundButtonTitleTest = getByTestId(
-      'StyledCircleButtonTitleTest'
-    ).props;
+    const StyledHalfCircleTestID = getAllByTestId('StyledHalfCircleTestID')[0];
+    const StyledAnimatedRightPartTestID = getByTestId(
+      'StyledAnimatedRightPartTestID'
+    );
+    const StyledAnimatedLeftPartTestID = getByTestId(
+      'StyledAnimatedLeftPartTestID'
+    );
+    const StyledHalfCircleTestID1 = getAllByTestId('StyledHalfCircleTestID')[1];
+    const StyledHalfCircleTestID2 = getAllByTestId('StyledHalfCircleTestID')[2];
+    const StyledHalfCircleTestID3 = getAllByTestId('StyledHalfCircleTestID')[3];
+    const StyledBottomCircleTextWrapperTestID = getByTestId(
+      'StyledBottomCircleTextWrapperTestID'
+    );
 
-    fireEvent.press(StyledRoundButtonWrapperTest);
+    expect(StyledCircleProgressBarWrapperTestID.props).toBeTruthy();
+    expect(StyledHalfCircleTestID.props.style.borderBottomColor).toBe(
+      colors[MainColorName.GRAY_BLUE]
+    );
+    expect(
+      StyledAnimatedRightPartTestID.props.animatedStyle.value.transform[1]
+        .rotate
+    ).toBe('0deg');
+    expect(
+      StyledAnimatedLeftPartTestID.props.animatedStyle.value.transform[1].rotate
+    ).toBe('0deg');
+    expect(StyledHalfCircleTestID1.props.style.borderBottomColor).toBe(
+      colors[MainColorName.GRAY_BLUE]
+    );
+    expect(StyledHalfCircleTestID2.props.style.borderBottomColor).toBe(
+      colors[MainColorName.GRAY_BLUE]
+    );
+    expect(StyledHalfCircleTestID3.props.style.borderBottomColor).toBe(
+      colors[MainColorName.GRAY_BLUE]
+    );
+    expect(StyledBottomCircleTextWrapperTestID.props.isShowTimePicker).toBe(
+      true
+    );
+    expect(StyledBottomCircleTextWrapperTestID.props.style.top).toBe(
+      -(top + calcWidth(25))
+    );
+  });
+  it('Should render component with isShowTimePicker = false', () => {
+    const { getByTestId, getAllByTestId } = render(
+      <CircleProgressBar
+        isShowTimePicker={false}
+        animationDuration={0}
+        pause={testsPause}
+      >
+        <View>
+          <Text>Test</Text>
+        </View>
+      </CircleProgressBar>
+    );
 
-    expect(StyledRoundButtonWrapperTest.props.accessibilityState.disabled).toBe(
+    const StyledHalfCircleTestID = getAllByTestId('StyledHalfCircleTestID')[0];
+    const StyledHalfCircleTestID1 = getAllByTestId('StyledHalfCircleTestID')[1];
+    const StyledHalfCircleTestID2 = getAllByTestId('StyledHalfCircleTestID')[2];
+    const StyledHalfCircleTestID3 = getAllByTestId('StyledHalfCircleTestID')[3];
+    const StyledBottomCircleTextWrapperTestID = getByTestId(
+      'StyledBottomCircleTextWrapperTestID'
+    );
+
+    expect(StyledHalfCircleTestID.props.style.borderBottomColor).toBe(
+      colors[MainColorName.ORANGE]
+    );
+    expect(StyledHalfCircleTestID1.props.style.borderBottomColor).toBe(
+      colors[MainColorName.GRAY_BLUE]
+    );
+    expect(StyledHalfCircleTestID2.props.style.borderBottomColor).toBe(
+      colors[MainColorName.ORANGE]
+    );
+    expect(StyledHalfCircleTestID3.props.style.borderBottomColor).toBe(
+      colors[MainColorName.GRAY_BLUE]
+    );
+    expect(StyledBottomCircleTextWrapperTestID.props.isShowTimePicker).toBe(
       false
     );
-    expect(StyledRoundButtonWrapperTest.props.style.backgroundColor).toBe(
-      colors[MainColorName.LIGHT_BLUE]
-    );
-
-    expect(StyledRoundButtonTitleTest.children).toBe(testTitle);
-    expect(StyledRoundButtonTitleTest.style.color).toBe(colors.WHITE);
-
-    expect(mockOnPress).toHaveBeenCalledTimes(1);
+    expect(StyledBottomCircleTextWrapperTestID.props.style.top).toBe(-top);
   });
-  it('All correct works with all props ', () => {
-    const { getByTestId } = render(
-      <CircleButton
-        title={testTitle}
-        onPress={mockOnPress}
-        color={color}
-        backgroundColor={backgroundColor}
-        isDisabled={isDisabled}
-      />
-    );
-    const StyledRoundButtonWrapperTest = getByTestId(
-      'StyledCircleButtonWrapperTest'
-    ).props;
-    const StyledRoundButtonTitleTest = getByTestId(
-      'StyledCircleButtonTitleTest'
-    ).props;
-
-    expect(StyledRoundButtonWrapperTest.style.backgroundColor).toBe(
-      backgroundColor
-    );
-    expect(StyledRoundButtonWrapperTest.accessibilityState.disabled).toBe(
-      isDisabled
+  it('Should render component with required props', () => {
+    const { getByTestId, getAllByTestId } = render(
+      <CircleProgressBar
+        isShowTimePicker={false}
+        animationDuration={30}
+        pause={testsPause}
+      >
+        <View>
+          <Text>Test</Text>
+        </View>
+      </CircleProgressBar>
     );
 
-    expect(StyledRoundButtonTitleTest.children).toBe(testTitle);
-    expect(StyledRoundButtonTitleTest.style.color).toBe(color);
+    expect(mockWithPause).toHaveBeenCalledTimes(1);
   });
 });

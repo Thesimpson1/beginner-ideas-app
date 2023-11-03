@@ -1,12 +1,8 @@
 import React, { ReactNode, useEffect } from 'react';
-import { Button, Text, View } from 'react-native';
 import {
-  Extrapolation,
-  interpolate,
   SharedValue,
-  useAnimatedStyle,
-  useSharedValue, withDelay,
-  withSequence,
+  useSharedValue,
+  withDelay,
   withTiming,
 } from 'react-native-reanimated';
 import { withPause } from 'react-native-redash';
@@ -20,7 +16,7 @@ import {
   StyledTopCircleProgressBarWrapper,
 } from 'app/components/CircleProgressBar/CircleProgressBar.styled';
 import { HalfCircleWrapper } from 'app/components/CircleProgressBar/componets/HalfCircle/HalfCircle';
-import { PI, RADIUS } from 'app/components/CircleProgressBar/constants';
+import { useGetAnimatedStyle } from 'app/components/CircleProgressBar/hooks/getAnimatedStyle';
 import { colors, MainColorName } from 'app/constants/color';
 
 interface CircleProgressBarI {
@@ -36,40 +32,8 @@ export function CircleProgressBar({
   pause,
 }: CircleProgressBarI) {
   const progress = useSharedValue(0);
+  const { styleLeft, styleRight } = useGetAnimatedStyle({ progress });
 
-  const styleTop = useAnimatedStyle(() => {
-    const rotate = interpolate(progress.value, [0, PI], [0, PI], {
-      extrapolateRight: Extrapolation.CLAMP,
-    });
-    const opacity = interpolate(
-      progress.value,
-      [0, PI - 1, PI, 2 * PI],
-      [1, 1, 0, 0],
-      {
-        extrapolateRight: Extrapolation.CLAMP,
-      }
-    );
-    return {
-      transform: [
-        { translateX: RADIUS / 2 },
-        { rotate: `${rotate}deg` },
-        { translateX: -RADIUS / 2 },
-      ],
-      opacity,
-    };
-  });
-  const styleBottom = useAnimatedStyle(() => {
-    const rotate = interpolate(progress.value, [0, PI, PI * 2], [0, 0, PI], {
-      extrapolateRight: Extrapolation.CLAMP,
-    });
-    return {
-      transform: [
-        { translateX: RADIUS / 2 },
-        { rotate: `${rotate}deg` },
-        { translateX: -RADIUS / 2 },
-      ],
-    };
-  });
   useEffect(() => {
     if (isShowTimePicker && animationDuration === 0) {
       progress.value = withDelay(100, withTiming(360));
@@ -89,22 +53,33 @@ export function CircleProgressBar({
     : colors[MainColorName.ORANGE];
 
   return (
-    <StyledCircleProgressBarWrapper>
+    <StyledCircleProgressBarWrapper
+      testID={'StyledCircleProgressBarWrapperTestID'}
+    >
       <StyledCircleProgressBarContainer>
         <StyledTopCircleProgressBarWrapper>
           <HalfCircleWrapper color={circleColor} />
-          <StyledAnimatedPart style={styleBottom}>
+          <StyledAnimatedPart
+            style={styleRight}
+            testID={'StyledAnimatedRightPartTestID'}
+          >
             <HalfCircleWrapper color={colors[MainColorName.GRAY_BLUE]} />
           </StyledAnimatedPart>
         </StyledTopCircleProgressBarWrapper>
         <StyledBottomCircleProgressBarWrapper>
           <HalfCircleWrapper color={circleColor} />
-          <StyledAnimatedPart style={styleTop}>
+          <StyledAnimatedPart
+            style={styleLeft}
+            testID={'StyledAnimatedLeftPartTestID'}
+          >
             <HalfCircleWrapper color={colors[MainColorName.GRAY_BLUE]} />
           </StyledAnimatedPart>
         </StyledBottomCircleProgressBarWrapper>
       </StyledCircleProgressBarContainer>
-      <StyledBottomCircleTextWrapper isShowTimePicker={isShowTimePicker}>
+      <StyledBottomCircleTextWrapper
+        isShowTimePicker={isShowTimePicker}
+        testID={'StyledBottomCircleTextWrapperTestID'}
+      >
         {children}
       </StyledBottomCircleTextWrapper>
     </StyledCircleProgressBarWrapper>

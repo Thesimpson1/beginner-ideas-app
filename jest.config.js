@@ -13,7 +13,7 @@ module.exports = {
   collectCoverageFrom: [
     'app/**/*.{js,ts,jsx,tsx}',
     '!app/redux/store.ts',
-    '!app/**/index.ts',
+    '!app/**/getAnimatedStyle.tsx',
     '!app/**/types.{ts,tsx}',
     '!app/**/*.types.{ts,tsx}',
     '!app/**/*.styled.{ts,tsx}',
