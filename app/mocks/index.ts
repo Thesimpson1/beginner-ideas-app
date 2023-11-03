@@ -1,4 +1,5 @@
 import { AuthState } from 'app/redux/auth/slice';
+import { TimerState } from 'app/redux/timer/slice';
 
 export const mockInitialState: AuthState = {
   isFetchUserInfo: false,
@@ -10,4 +11,11 @@ export const mockInitialState: AuthState = {
   loginError: '',
   isLogout: false,
   logoutError: '',
+};
+export const mockInitialTimerState: TimerState = {
+  isFetchNotificationSounds: false,
+  notificationSounds: null,
+  fetchNotificationSoundsError: '',
+
+  currentSound: null,
 };
