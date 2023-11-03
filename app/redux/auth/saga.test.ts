@@ -11,7 +11,9 @@ import {
   getUserInfoError,
   getUserInfoSuccess,
   loginError,
-  loginSuccess, logoutError, logoutSuccess,
+  loginSuccess,
+  logoutError,
+  logoutSuccess,
 } from 'app/redux/auth/slice';
 
 import { api } from 'app/api';

@@ -1,144 +1,40 @@
-import { mockInitialState } from 'app/mocks';
-import {
-  createUserSaga,
-  getUserSaga,
-  loginSaga,
-  logoutSaga,
-} from 'app/redux/auth/saga';
-import {
-  createUserError,
-  createUserSuccess,
-  getUserInfoError,
-  getUserInfoSuccess,
-  loginError,
-  loginSuccess, logoutError, logoutSuccess,
-} from 'app/redux/auth/slice';
+import { Sound } from 'react-native-notification-sounds';
+import { mockInitialTimerState } from 'app/mocks';
+import { getSoundsSaga } from 'app/redux/timer/saga';
+import { getSoundsError, getSoundsSuccess } from 'app/redux/timer/slice';
 
 import { api } from 'app/api';
 import { runTestSaga } from 'app/utils/test-utils/saga-test-configs';
 
-describe('Get User Saga handler', () => {
+describe('get Sounds Saga handler', () => {
   const error = { message: 'error' };
-  it('getUserInfoApi success case', async () => {
-    const getUserInfoApi = jest
-      .spyOn(api, 'getUserInfoApi')
-      .mockImplementation(() => null);
+  const mockResponse: () => Promise<Sound[]> = async () => {
+    return [{ title: 'test' }] as Sound[];
+  };
+  it('getSoundsSaga success case', async () => {
+    const getSoundsApi = jest
+      .spyOn(api, 'fetchSounds')
+      .mockImplementation(mockResponse);
     const dispatched = await runTestSaga({
-      state: mockInitialState,
-      saga: getUserSaga,
+      state: mockInitialTimerState,
+      saga: getSoundsSaga,
     });
-    expect(getUserInfoApi).toHaveBeenCalledTimes(1);
-    expect(dispatched).toEqual([getUserInfoSuccess(null)]);
-    getUserInfoApi.mockRestore();
+    expect(getSoundsApi).toHaveBeenCalledTimes(1);
+    expect(dispatched).toEqual([getSoundsSuccess([{ title: 'test' }])]);
+    getSoundsApi.mockRestore();
   });
-  it('getUserInfoApi error case', async () => {
-    const getUserInfoApi = jest
-      .spyOn(api, 'getUserInfoApi')
-      // @ts-ignore
-      .mockImplementation(() => Promise.reject(error));
-    const dispatched = await runTestSaga({
-      state: mockInitialState,
-      saga: getUserSaga,
-    });
-    expect(getUserInfoApi).toHaveBeenCalledTimes(1);
-    expect(dispatched).toEqual([getUserInfoError('error')]);
-    getUserInfoApi.mockRestore();
-  });
-});
-describe('createUserSaga handler', () => {
-  const error = { message: 'error' };
-  const successResponse = {
-    email: 'test email',
-    password: 'test password ',
-  } as never;
 
-  it('createUserSaga success case', async () => {
-    const createUserMockApi = jest
-      .spyOn(api, 'createUserApi')
-      .mockImplementation(() => Promise.resolve(successResponse));
-    const dispatched = await runTestSaga({
-      state: mockInitialState,
-      saga: createUserSaga,
-      params: { payload: successResponse },
-    });
-    expect(createUserMockApi).toHaveBeenCalledTimes(1);
-    expect(dispatched).toEqual([createUserSuccess(successResponse)]);
-    createUserMockApi.mockRestore();
-  });
-  it('createUserSaga error case', async () => {
-    const createUserMockApi = jest
-      .spyOn(api, 'createUserApi')
+  it('getSoundsSaga error case', async () => {
+    const getSoundsApi = jest
+      .spyOn(api, 'fetchSounds')
       // @ts-ignore
       .mockImplementation(() => Promise.reject(error));
     const dispatched = await runTestSaga({
-      state: mockInitialState,
-      saga: createUserSaga,
-      params: { payload: successResponse },
+      state: mockInitialTimerState,
+      saga: getSoundsSaga,
     });
-    expect(createUserMockApi).toHaveBeenCalledTimes(1);
-    expect(dispatched).toEqual([createUserError('error')]);
-    createUserMockApi.mockRestore();
-  });
-});
-describe('loginSaga handler', () => {
-  const error = { message: 'error' };
-  const successResponse = {
-    email: 'test email',
-    password: 'test password ',
-  } as never;
-
-  it('loginSaga success case', async () => {
-    const loginApi = jest
-      .spyOn(api, 'loginApi')
-      .mockImplementation(() => Promise.resolve(successResponse));
-    const dispatched = await runTestSaga({
-      state: mockInitialState,
-      saga: loginSaga,
-      params: { payload: successResponse },
-    });
-    expect(loginApi).toHaveBeenCalledTimes(1);
-    expect(dispatched).toEqual([loginSuccess(successResponse)]);
-    loginApi.mockRestore();
-  });
-  it('loginSaga error case', async () => {
-    const loginApi = jest
-      .spyOn(api, 'loginApi')
-      // @ts-ignore
-      .mockImplementation(() => Promise.reject(error));
-    const dispatched = await runTestSaga({
-      state: mockInitialState,
-      saga: loginSaga,
-      params: { payload: successResponse },
-    });
-    expect(loginApi).toHaveBeenCalledTimes(1);
-    expect(dispatched).toEqual([loginError('error')]);
-    loginApi.mockRestore();
-  });
-  it('logoutSaga success case', async () => {
-    const logoutApi = jest
-      .spyOn(api, 'logoutApi')
-      .mockImplementation(() => Promise.resolve(successResponse));
-    const dispatched = await runTestSaga({
-      state: mockInitialState,
-      saga: logoutSaga,
-      params: { payload: successResponse },
-    });
-    expect(logoutApi).toHaveBeenCalledTimes(1);
-    expect(dispatched).toEqual([logoutSuccess()]);
-    logoutApi.mockRestore();
-  });
-  it('logoutSaga error case', async () => {
-    const logoutApi = jest
-      .spyOn(api, 'logoutApi')
-      // @ts-ignore
-      .mockImplementation(() => Promise.reject(error));
-    const dispatched = await runTestSaga({
-      state: mockInitialState,
-      saga: logoutSaga,
-      params: { payload: successResponse },
-    });
-    expect(logoutApi).toHaveBeenCalledTimes(1);
-    expect(dispatched).toEqual([logoutError('error')]);
-    logoutApi.mockRestore();
+    expect(getSoundsApi).toHaveBeenCalledTimes(1);
+    expect(dispatched).toEqual([getSoundsError('error')]);
+    getSoundsApi.mockRestore();
   });
 });
