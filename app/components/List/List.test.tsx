@@ -1,59 +1,83 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react-native';
-import { HomeStackScreenName } from 'app/types';
+import { fireEvent, render } from '@testing-library/react-native';
+import { SoundsItem } from 'app/redux/timer/slice';
 
-import { EmailIcon } from 'app/assets/icon';
-import { renderWithProviders } from 'app/utils/test-utils/renderWithProviders';
-import { Card } from 'app/components/Card/Card';
-const mockedNavigate = jest.fn();
-jest.mock('@react-navigation/native', () => {
-  const actualNav = jest.requireActual('@react-navigation/native');
-  return {
-    ...actualNav,
-    useNavigation: () => ({
-      navigate: mockedNavigate,
-    }),
-  };
-});
+import { List } from 'app/components/List/List';
+
 describe('List component', () => {
-  const mockTitle = HomeStackScreenName.CALCULATOR;
-  const mockIcon = <EmailIcon testID={'EmailIconTest'} />;
-  it('Should render correct', () => {
-    const { getByTestId } = renderWithProviders(<Card />);
+  const mockSetCurrent = jest.fn();
+  const mockData = [{ title: 'Test1' }, { title: 'Test2' }] as SoundsItem[];
+  it('Should render correct without data', () => {
+    const { getByTestId } = render(
+      <List current={1} setCurrent={mockSetCurrent} />
+    );
 
-    const CardTestID = getByTestId('CardTestID');
-    const StyledCardTitleTextTestID = getByTestId(
-      'StyledCardTitleTextTestID'
+    const StyledListWrapperTestID = getByTestId(
+      'StyledListWrapperTestID'
     ).props;
-    const NoteIconTest = getByTestId('NoteIconTest');
+    const FlatListTestID = getByTestId('FlatListTestID');
 
-    fireEvent.press(CardTestID);
-    expect(mockedNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedNavigate).toHaveBeenCalledWith(HomeStackScreenName.HOME);
-
-    expect(StyledCardTitleTextTestID.children).toBe(HomeStackScreenName.HOME);
-    // @ts-ignore
-    expect(NoteIconTest._fiber.type).toBe('NoteIcon.svg');
+    expect(StyledListWrapperTestID).toBeTruthy();
+    expect(FlatListTestID.props).toBeTruthy();
   });
-  it('Should render correct with props', () => {
-    const { getByTestId } = renderWithProviders(
-      <Card title={mockTitle} icon={mockIcon} />
+  it('Should render correct with data', () => {
+    const { getByTestId, getAllByTestId } = render(
+      <List current={1} setCurrent={mockSetCurrent} data={mockData} />
     );
 
-    const CardTestID = getByTestId('CardTestID');
-    const StyledCardTitleTextTestID = getByTestId(
-      'StyledCardTitleTextTestID'
+    const StyledListWrapperTestID = getByTestId(
+      'StyledListWrapperTestID'
     ).props;
-    const EmailIconTest = getByTestId('EmailIconTest');
+    const StyledListItemWrapperTestID = getAllByTestId(
+      'StyledListItemWrapperTestID'
+    )[0];
+    const StyledListItemIconTestID = getAllByTestId(
+      'StyledListItemIconTestID'
+    )[0];
+    const StyledListItemIconTestID1 = getAllByTestId(
+      'StyledListItemIconTestID'
+    )[1];
+    const TouchableOpacityTextTestID = getAllByTestId(
+      'TouchableOpacityTextTestID'
+    )[0];
+    const StyledNotLastListItemTextWrapperTestID = getAllByTestId(
+      'StyledListItemTextWrapperTestID'
+    )[0];
+    const StyledLastListItemTextWrapperTestID = getAllByTestId(
+      'StyledListItemTextWrapperTestID'
+    )[1];
+    const StyledListItemTextTestID = getAllByTestId(
+      'StyledListItemTextTestID'
+    )[0];
+    const CheckMarkIconTestID = getByTestId('CheckMarkIconTestID');
 
-    fireEvent.press(CardTestID);
-    expect(mockedNavigate).toHaveBeenCalledTimes(2);
-    expect(mockedNavigate).toHaveBeenCalledWith(HomeStackScreenName.CALCULATOR);
+    fireEvent.press(StyledListItemIconTestID);
+    expect(mockSetCurrent).toHaveBeenCalledTimes(1);
+    expect(mockSetCurrent).toHaveBeenCalledWith(0);
 
-    expect(StyledCardTitleTextTestID.children).toBe(
-      HomeStackScreenName.CALCULATOR
+    fireEvent.press(TouchableOpacityTextTestID);
+    expect(mockSetCurrent).toHaveBeenCalledTimes(2);
+    expect(mockSetCurrent).toHaveBeenCalledWith(0);
+
+    expect(StyledListWrapperTestID).toBeTruthy();
+    expect(StyledListItemWrapperTestID.props).toBeTruthy();
+
+    expect(StyledListItemIconTestID.props.children[0]).toBe(false);
+    expect(StyledListItemIconTestID1.props.children[0]).toBeTruthy();
+    expect(StyledNotLastListItemTextWrapperTestID.props.isLastIndex).toBe(
+      false
     );
+    expect(
+      StyledNotLastListItemTextWrapperTestID.props.style.borderBottomWidth
+    ).toBe(1);
+
+    expect(StyledLastListItemTextWrapperTestID.props.isLastIndex).toBe(true);
+    expect(
+      StyledLastListItemTextWrapperTestID.props.style.borderBottomWidth
+    ).toBe(0);
+
+    expect(StyledListItemTextTestID.props.children).toBe(mockData[0].title);
     // @ts-ignore
-    expect(EmailIconTest._fiber.type).toBe('EmailIcon.svg');
+    expect(CheckMarkIconTestID._fiber.type).toBe('CheckMarkIcon.svg');
   });
 });

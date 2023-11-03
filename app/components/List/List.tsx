@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  FlatList,
-  GestureResponderEvent,
-  ListRenderItem,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { FlatList, TouchableOpacity } from 'react-native';
 import { SoundsItem } from 'app/redux/timer/slice';
 
 import { CheckMarkIcon } from 'app/assets/icon';
@@ -29,27 +20,30 @@ interface RenderItemI {
   item: SoundsItem;
   index: number;
 }
-// const data = [
-//   { title: 'first' },
-//   { title: 'second' },
-//   { title: 'therd' },
-//   { title: 'fourth' },
-//   { title: 'sixth' },
-// ];
+const Icon = () => <CheckMarkIcon testID={'CheckMarkIconTestID'} />;
 export function List({ current, data = [], setCurrent }: ListPropsI) {
-  const Icon = () => <CheckMarkIcon testID={'CheckMarkIconTest'} />;
-
   const renderItem = ({ item, index }: RenderItemI) => {
     const { title } = item;
     const onPress = () => setCurrent(index);
     return (
-      <StyledListItemWrapper>
-        <StyledListItemIcon onPress={onPress}>
+      <StyledListItemWrapper testID={'StyledListItemWrapperTestID'}>
+        <StyledListItemIcon
+          onPress={onPress}
+          testID={'StyledListItemIconTestID'}
+        >
           {current === index && <Icon />}
         </StyledListItemIcon>
-        <StyledListItemTextWrapper isLastIndex={index === data?.length - 1}>
-          <TouchableOpacity onPress={onPress}>
-            <StyledListItemText>{title}</StyledListItemText>
+        <StyledListItemTextWrapper
+          isLastIndex={index === data?.length - 1}
+          testID={'StyledListItemTextWrapperTestID'}
+        >
+          <TouchableOpacity
+            onPress={onPress}
+            testID={'TouchableOpacityTextTestID'}
+          >
+            <StyledListItemText testID={'StyledListItemTextTestID'}>
+              {title}
+            </StyledListItemText>
           </TouchableOpacity>
         </StyledListItemTextWrapper>
       </StyledListItemWrapper>
@@ -57,8 +51,8 @@ export function List({ current, data = [], setCurrent }: ListPropsI) {
   };
 
   return (
-    <StyledListWrapper>
-      <FlatList data={data} renderItem={renderItem} />
+    <StyledListWrapper testID={'StyledListWrapperTestID'}>
+      <FlatList data={data} renderItem={renderItem} testID={'FlatListTestID'} />
     </StyledListWrapper>
   );
 }

@@ -111,8 +111,8 @@ describe('Circle Progress Bar', () => {
     );
     expect(StyledBottomCircleTextWrapperTestID.props.style.top).toBe(-top);
   });
-  it('Should render component with required props', () => {
-    const { getByTestId, getAllByTestId } = render(
+  it('Should check animation pause', () => {
+    render(
       <CircleProgressBar
         isShowTimePicker={false}
         animationDuration={30}
