@@ -22,7 +22,7 @@ import { CircleButton } from 'app/components/CircleButton/CircleButton';
 import { CircleProgressBar } from 'app/components/CircleProgressBar/CircleProgressBar';
 import { HomeStackParamList } from 'app/navigation/app/HomeStack.navigator';
 import { colors, MainColorName } from 'app/constants/color';
-import { ChangeSoundModal } from 'app/screens/Timer/components/ChangeSoundModal';
+import { ChangeSoundModal } from 'app/screens/Timer/components/ChangeSoundModal/ChangeSoundModal';
 import { useGetSecondsMinutesHours } from 'app/screens/Timer/hooks/useGetSecondsMinuteHours';
 import {
   StyledBottomContainer,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Text } from 'react-native';
+import { Modal } from 'react-native';
 import {
   playSampleSound,
   stopSampleSound,
@@ -14,30 +14,23 @@ import { colors, MainColorName } from 'app/constants/color';
 import {
   StyledButtonsWrapper,
   StyledModal,
-} from 'app/screens/Timer/components/ChangeSoundModal.styled';
+} from 'app/screens/Timer/components/ChangeSoundModal/ChangeSoundModal.styled';
+import { getIndex, handlePlayingSounds } from 'app/screens/Timer/utils/utils';
 
 interface ChangeSoundModalI {
   onClose: (value: boolean) => void;
   isVisible: boolean;
 }
+
 export function ChangeSoundModal({ isVisible, onClose }: ChangeSoundModalI) {
   const [isPlayCurrentSound, setIsPlayCurrentSound] = useState(false);
 
   const { currentSound, notificationSounds } = useAppSelector(
     (state: RootState) => state.timer
   );
-  const getIndex = () => {
-    let currentIndex = 0;
-    if (currentSound && notificationSounds) {
-      notificationSounds.forEach((item, index) => {
-        if (item.title === currentSound.title) {
-          currentIndex = index;
-        }
-      });
-    }
-    return currentIndex;
-  };
-  const [current, setCurrent] = useState(getIndex());
+  const [current, setCurrent] = useState(
+    getIndex({ currentSound, notificationSounds })
+  );
 
   const dispatch = useAppDispatch();
   const onClosePress = () => {
@@ -46,28 +39,35 @@ export function ChangeSoundModal({ isVisible, onClose }: ChangeSoundModalI) {
   };
   const onPress = () => {
     stopSampleSound();
-    return (
-      notificationSounds &&
-      dispatch(setCurrentSound(notificationSounds[current])) &&
-      onClose(false)
-    );
+    if (notificationSounds) {
+      dispatch(setCurrentSound(notificationSounds[current]));
+      onClose(false);
+    }
   };
 
   useEffect(() => {
     if (notificationSounds && isVisible) {
-      if (currentSound !== notificationSounds[current] || isPlayCurrentSound) {
-        setIsPlayCurrentSound(true);
-        stopSampleSound();
-        setTimeout(() => playSampleSound(notificationSounds[current]), 100);
-      }
+      handlePlayingSounds({
+        notificationSounds,
+        setIsPlayCurrentSound,
+        isPlayCurrentSound,
+        currentSound,
+        current,
+      });
     }
   }, [current]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Modal visible={isVisible} animationType="slide" transparent={true}>
+    <Modal
+      visible={isVisible}
+      animationType="slide"
+      transparent={true}
+      testID={'ModalTestID'}
+    >
       <StyledModal>
         <StyledButtonsWrapper>
           <SimpleButton
+            onPressTestID={'SimpleButtonClosedTestID'}
             onPress={onClosePress}
             title={'Closed'}
             color={colors[MainColorName.ORANGE]}
@@ -79,6 +79,7 @@ export function ChangeSoundModal({ isVisible, onClose }: ChangeSoundModalI) {
           />
           <SimpleButton
             onPress={onPress}
+            onPressTestID={'SimpleButtonSetTestID'}
             title={'Set'}
             color={colors[MainColorName.ORANGE]}
           />
