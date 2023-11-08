@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
-import {
-  playSampleSound,
-  stopSampleSound,
-} from 'react-native-notification-sounds';
+
 import { useSharedValue } from 'react-native-reanimated';
 import DateTimePicker, {
   DateTimePickerAndroid,
@@ -11,19 +8,17 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { clearTimeout } from '@testing-library/react-native/build/helpers/timers';
 import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
 import { RootState } from 'app/redux/store';
 import { getSounds } from 'app/redux/timer/slice';
-import moment from 'moment';
 
 import { BellIcon, RightArrowIcon } from 'app/assets/icon';
 import { CircleButton } from 'app/components/CircleButton/CircleButton';
 import { CircleProgressBar } from 'app/components/CircleProgressBar/CircleProgressBar';
 import { HomeStackParamList } from 'app/navigation/app/HomeStack.navigator';
-import { colors, MainColorName } from 'app/constants/color';
 import { ChangeSoundModal } from 'app/screens/Timer/components/ChangeSoundModal/ChangeSoundModal';
 import { useGetSecondsMinutesHours } from 'app/screens/Timer/hooks/useGetSecondsMinuteHours';
+import { useRunTimerLogic } from 'app/screens/Timer/hooks/useRunTimerLogic';
 import {
   StyledBottomContainer,
   StyledBottomLeftText,
@@ -38,54 +33,17 @@ import {
   StyledTimerNumbers,
   StyledTimerScreenContainer,
 } from 'app/screens/Timer/Timer.styled';
-interface GetRightButtonInfoI {
-  isShowTimePicker: boolean;
-  isRunTimer: boolean;
-  startTimer: () => void;
-  pauseTimer: () => void;
-}
+import {
+  getCurrentDate,
+  getRightButtonInfo,
+} from 'app/screens/Timer/utils/utils';
 
 const TimerIcon = () => <BellIcon />;
 const TimerRightArrowIcon = () => <RightArrowIcon />;
-const getRightButtonInfo = ({
-  isShowTimePicker,
-  isRunTimer,
-  startTimer,
-  pauseTimer,
-}: GetRightButtonInfoI) => {
-  switch (true) {
-    case isShowTimePicker: {
-      return {
-        rightButtonNameColor: colors[MainColorName.GREEN],
-        rightButtonName: 'Start',
-        rightButtonOnPress: startTimer,
-      };
-    }
-    case !isShowTimePicker && isRunTimer: {
-      return {
-        rightButtonNameColor: colors[MainColorName.ORANGE],
-        rightButtonName: 'Pause',
-        rightButtonOnPress: pauseTimer,
-      };
-    }
-    case !isShowTimePicker && !isRunTimer: {
-      return {
-        rightButtonNameColor: colors[MainColorName.ORANGE],
-        rightButtonName: 'Continue',
-        rightButtonOnPress: startTimer,
-      };
-    }
-    default: {
-      return {
-        rightButtonNameColor: colors[MainColorName.GREEN],
-        rightButtonName: 'Start',
-        rightButtonOnPress: startTimer,
-      };
-    }
-  }
-};
+export const initDate = new Date();
+
 export function TimerScreen() {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(initDate);
   const [isShowChangeSoundsModal, setIsShowChangeSoundsModal] = useState(false);
   const [animationTime, setAnimationTime] = useState(0);
   const [changedDate, setChangedDate] = useState(0);
@@ -98,24 +56,19 @@ export function TimerScreen() {
   const dispatch = useAppDispatch();
   const paused = useSharedValue(false);
   const [isShowTimePicker, setIsShowTimePicker] = useState(true);
+
   const { secondsMinutesAndHours, getTimeWhenTimerFinish } =
     useGetSecondsMinutesHours({ changedDate });
   const { minutes, seconds, hours } = secondsMinutesAndHours;
+  const isAndroid = Platform.OS === 'android';
+
   const showModal = () => {
     setIsShowChangeSoundsModal(true);
   };
-  const isAndroid = Platform.OS === 'android';
+
   const startTimer = () => {
     if (changedDate === 0) {
-      const minutesFromPicker = moment(date).get('minutes');
-      const hoursFromPicker = moment(date).get('hours');
-      let currentDate = 0;
-      if (hoursFromPicker > 0) {
-        currentDate = hoursFromPicker * 3600000;
-      }
-      if (minutesFromPicker > 0) {
-        currentDate = currentDate + minutesFromPicker * 60000;
-      }
+      const { currentDate } = getCurrentDate({ date });
       setIsShowTimePicker(false);
       setAnimationTime(currentDate);
       setChangedDate(currentDate);
@@ -123,11 +76,13 @@ export function TimerScreen() {
     setIsRunTimer(true);
     paused.value = false;
   };
+
   const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
     selectedDate && setDate(selectedDate);
+
     //logic for android
     if (isAndroid) {
-      if (event.type === 'dismissed') {
+      if (event?.type === 'dismissed') {
         if (navigation.canGoBack()) {
           navigation.goBack();
         }
@@ -136,6 +91,7 @@ export function TimerScreen() {
       }
     }
   };
+
   //logic for android
   useEffect(() => {
     if (isRunAndroidTimer) {
@@ -143,10 +99,10 @@ export function TimerScreen() {
       setIsRunAndroidTimer(false);
     }
   }, [isRunAndroidTimer]); // eslint-disable-line react-hooks/exhaustive-deps
-  ///
+
   const setAndroidPicker = () => {
     return DateTimePickerAndroid.open({
-      testID: 'dateTimePicker',
+      testID: 'DateTimeAndroidPicker',
       value: date,
       display: 'spinner',
       mode: 'time',
@@ -155,7 +111,6 @@ export function TimerScreen() {
       onChange: onChange,
     });
   };
-
   useEffect(() => {
     dispatch(getSounds());
     if (isAndroid) {
@@ -167,6 +122,7 @@ export function TimerScreen() {
     setIsRunTimer(false);
     paused.value = true;
   };
+
   const cancelTimer = () => {
     setChangedDate(0);
     setAnimationTime(0);
@@ -174,34 +130,21 @@ export function TimerScreen() {
     paused.value = false;
     isAndroid && setAndroidPicker();
   };
-  useEffect(() => {
-    let timeOut: ReturnType<typeof setTimeout>;
-    if (changedDate !== 0 && isRunTimer) {
-      timeOut = setTimeout(() => {
-        setChangedDate((prevState) => {
-          const newReturnValue = prevState - 1000;
-          if (newReturnValue === 0) {
-            setIsRunSound(true);
-            setIsRunTimer(false);
-            setAnimationTime(0);
-          }
-          return newReturnValue;
-        });
-      }, 910);
-    }
-    if (isRunSound) {
-      setIsShowTimePicker(true);
-      currentSound && playSampleSound(currentSound);
-      setIsRunSound(false);
-      ////logic for android
-      if (isAndroid) {
-        setTimeout(() => stopSampleSound(), 5000);
-        setAndroidPicker();
-      }
-    }
-    return () => clearTimeout(timeOut);
-  }, [changedDate, isRunTimer, isRunSound]); // eslint-disable-line react-hooks/exhaustive-deps
+  useRunTimerLogic({
+    changedDate,
+    setChangedDate,
+    isRunTimer,
+    setIsRunTimer,
+    isRunSound,
+    setIsRunSound,
+    setAndroidPicker,
+    setIsShowTimePicker,
+    setAnimationTime,
+    isAndroid,
+    currentSound,
+  });
 
+  //style and text for right button
   const { rightButtonNameColor, rightButtonOnPress, rightButtonName } =
     getRightButtonInfo({
       isShowTimePicker,
@@ -210,29 +153,41 @@ export function TimerScreen() {
       pauseTimer,
     });
   return (
-    <StyledTimerScreenContainer>
+    <StyledTimerScreenContainer testID={'StyledTimerScreenContainerTestID'}>
       <CircleProgressBar
         isShowTimePicker={isShowTimePicker}
         animationDuration={animationTime}
         pause={paused}
       >
-        <StyledTimerCircleContentWrapper isShowTimePicker={isShowTimePicker}>
+        <StyledTimerCircleContentWrapper
+          isShowTimePicker={isShowTimePicker}
+          testID={'StyledTimerCircleContentWrapperTestID'}
+        >
           <StyledNumbersWrapper>
-            <StyledTimerNumbers>{`${hours}:`}</StyledTimerNumbers>
-            <StyledTimerNumbers>{`${minutes}:`}</StyledTimerNumbers>
-            <StyledTimerNumbers>{seconds}</StyledTimerNumbers>
+            <StyledTimerNumbers
+              testID={'StyledTimerNumbersHoursTestID'}
+            >{`${hours}:`}</StyledTimerNumbers>
+            <StyledTimerNumbers
+              testID={'StyledTimerNumbersMinutesTestID'}
+            >{`${minutes}:`}</StyledTimerNumbers>
+            <StyledTimerNumbers testID={'StyledTimerNumbersSecondsTestID'}>
+              {seconds}
+            </StyledTimerNumbers>
           </StyledNumbersWrapper>
           <StyledEndFinishNumberContainer>
             <TimerIcon />
-            <StyledEndFinishNumber>
+            <StyledEndFinishNumber testID={'StyledEndFinishNumberTestID'}>
               {getTimeWhenTimerFinish}
             </StyledEndFinishNumber>
           </StyledEndFinishNumberContainer>
         </StyledTimerCircleContentWrapper>
-        <StyledDataPickerWrapper isShowTimePicker={isShowTimePicker}>
+        <StyledDataPickerWrapper
+          isShowTimePicker={isShowTimePicker}
+          testID={'StyledDataPickerWrapperTestID'}
+        >
           {!isAndroid && (
             <DateTimePicker
-              testID="dateTimePicker"
+              testID="DateTimePickerTestID"
               value={date}
               locale="en_GB"
               display={'spinner'}
@@ -250,17 +205,24 @@ export function TimerScreen() {
           onPress={cancelTimer}
           title={'Cancel'}
           isDisabled={isShowTimePicker}
+          onPressTestID={'CancelTimerTestID'}
         />
         <CircleButton
           onPress={rightButtonOnPress}
           title={rightButtonName}
           color={rightButtonNameColor}
+          onPressTestID={'RightButtonOnPressTestID'}
         />
       </StyledButtonsContainer>
-      <StyledBottomContainer onPress={showModal}>
+      <StyledBottomContainer
+        onPress={showModal}
+        testID={'StyledBottomContainerTestID'}
+      >
         <StyledBottomLeftText>{'When finish'}</StyledBottomLeftText>
         <StyledBottomRightContainer>
-          <StyledBottomRightText>{currentSound?.title}</StyledBottomRightText>
+          <StyledBottomRightText testID={'StyledBottomRightTextTestID'}>
+            {currentSound?.title}
+          </StyledBottomRightText>
           <TimerRightArrowIcon />
         </StyledBottomRightContainer>
       </StyledBottomContainer>

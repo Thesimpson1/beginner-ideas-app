@@ -1,9 +1,10 @@
-import { mockInitialState } from 'app/mocks';
+import { mockInitialState, mockInitialTimerState } from 'app/mocks';
 import { rootReducer } from 'app/redux/root-reducer';
 jest.mock('@react-native-async-storage/async-storage', () => 'AsyncStorage');
 describe('Root reducer', () => {
   const initState = {
     auth: mockInitialState,
+    timer: mockInitialTimerState,
   };
 
   it('should return the initial state', () => {
