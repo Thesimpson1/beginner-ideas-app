@@ -6,8 +6,9 @@ import {
 import { clearTimeout } from '@testing-library/react-native/build/helpers/timers';
 import { SoundsItem } from 'app/redux/timer/slice';
 
+import { runMainTimerLogic } from 'app/screens/Timer/utils/utils';
 
-interface UseRunTimerLogicI {
+export interface UseRunTimerLogicI {
   changedDate: number;
   isRunTimer: boolean;
   isRunSound: boolean;
@@ -20,6 +21,7 @@ interface UseRunTimerLogicI {
   setAndroidPicker: () => void;
   currentSound: SoundsItem | null;
 }
+
 export const useRunTimerLogic = ({
   changedDate,
   isRunSound,
@@ -39,20 +41,20 @@ export const useRunTimerLogic = ({
 
     if (changedDate !== 0 && isRunTimer) {
       timeOut = setTimeout(() => {
-        // setChangedDate(
-        //   runMainTimerLogic({ setIsRunTimer, setAnimationTime, setIsRunSound })
-        // );
+        setChangedDate(
+          runMainTimerLogic({ setIsRunTimer, setAnimationTime, setIsRunSound })
+        );
 
-        setChangedDate((prevState: number) => {
-          //
-          const newReturnValue = prevState - 1000;
-          if (newReturnValue === 0) {
-            setIsRunSound(true);
-            setIsRunTimer(false);
-            setAnimationTime(0);
-          }
-          return newReturnValue;
-        });
+        // setChangedDate((prevState: number) => {
+        //   //
+        //   const newReturnValue = prevState - 1000;
+        //   if (newReturnValue === 0) {
+        //     setIsRunSound(true);
+        //     setIsRunTimer(false);
+        //     setAnimationTime(0);
+        //   }
+        //   return newReturnValue;
+        // });
       }, 910);
     }
     return () => clearTimeout(timeOut);

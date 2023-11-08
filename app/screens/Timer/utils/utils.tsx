@@ -102,17 +102,17 @@ export const getCurrentDate = ({ date }: { date: Date }) => {
   return { currentDate };
 };
 
-// export const runMainTimerLogic =
-//   ({ setIsRunSound, setIsRunTimer, setAnimationTime }) =>
-//   (prevState: number) => {
-//     const newReturnValue = prevState - 1000;
-//     if (newReturnValue === 0) {
-//       setIsRunSound(true);
-//       setIsRunTimer(false);
-//       setAnimationTime(0);
-//     }
-//     return newReturnValue;
-//   };
+export const runMainTimerLogic =
+  ({ setIsRunSound, setIsRunTimer, setAnimationTime }) =>
+  (prevState: number) => {
+    const newReturnValue = prevState - 1000;
+    if (newReturnValue === 0) {
+      setIsRunSound(true);
+      setIsRunTimer(false);
+      setAnimationTime(0);
+    }
+    return newReturnValue;
+  };
 // export const runSound = ({
 //   setIsRunSound,
 //   setIsShowTimePicker,
