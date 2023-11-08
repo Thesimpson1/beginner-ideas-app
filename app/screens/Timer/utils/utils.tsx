@@ -24,6 +24,11 @@ interface GetRightButtonInfoI {
   startTimer: () => void;
   pauseTimer: () => void;
 }
+interface RunMainTimerLogicI {
+  setIsRunSound: (boll: boolean) => void;
+  setIsRunTimer: (boll: boolean) => void;
+  setAnimationTime: (n: number) => void;
+}
 //get current sounds index
 export const getIndex = ({ currentSound, notificationSounds }: GetIndexI) => {
   let currentIndex = 0;
@@ -56,9 +61,9 @@ export const getRightButtonInfo = ({
   isRunTimer,
   startTimer,
   pauseTimer,
-}: GetRightButtonInfoI) => {
+}: GetRightButtonInfoI)=> {
   switch (true) {
-    case isShowTimePicker: {
+    case isShowTimePicker && !isRunTimer: {
       return {
         rightButtonNameColor: colors[MainColorName.GREEN],
         rightButtonName: 'Start',
@@ -103,7 +108,7 @@ export const getCurrentDate = ({ date }: { date: Date }) => {
 };
 
 export const runMainTimerLogic =
-  ({ setIsRunSound, setIsRunTimer, setAnimationTime }) =>
+  ({ setIsRunSound, setIsRunTimer, setAnimationTime }: RunMainTimerLogicI) =>
   (prevState: number) => {
     const newReturnValue = prevState - 1000;
     if (newReturnValue === 0) {
@@ -113,19 +118,3 @@ export const runMainTimerLogic =
     }
     return newReturnValue;
   };
-// export const runSound = ({
-//   setIsRunSound,
-//   setIsShowTimePicker,
-//   currentSound,
-//   isAndroid,
-//   setAndroidPicker,
-// }) => {
-//   setIsShowTimePicker(true);
-//   currentSound && playSampleSound(currentSound);
-//   setIsRunSound(false);
-//   ////logic for android
-//   if (isAndroid) {
-//     setTimeout(() => stopSampleSound(), 5000);
-//     setAndroidPicker();
-//   }
-// };

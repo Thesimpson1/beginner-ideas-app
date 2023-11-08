@@ -1,6 +1,5 @@
 import { renderHook } from '@testing-library/react-native';
 import { SoundsItem } from 'app/redux/timer/slice';
-import moment from 'moment';
 
 import {
   useRunTimerLogic,
@@ -36,7 +35,6 @@ jest.mock('react-native-notification-sounds', () => ({
   playSampleSound: () => mockPlaySampleSound(),
 }));
 jest.useFakeTimers();
-// jest.spyOn(global, 'setTimeout');
 describe('Test useRunTimerLogic', () => {
   it('useRunTimerLogic has to be correct', async () => {
     const { rerender } = await renderHook(

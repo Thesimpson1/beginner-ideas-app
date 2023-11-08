@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import {
   playSampleSound,
   stopSampleSound,
@@ -44,17 +44,6 @@ export const useRunTimerLogic = ({
         setChangedDate(
           runMainTimerLogic({ setIsRunTimer, setAnimationTime, setIsRunSound })
         );
-
-        // setChangedDate((prevState: number) => {
-        //   //
-        //   const newReturnValue = prevState - 1000;
-        //   if (newReturnValue === 0) {
-        //     setIsRunSound(true);
-        //     setIsRunTimer(false);
-        //     setAnimationTime(0);
-        //   }
-        //   return newReturnValue;
-        // });
       }, 910);
     }
     return () => clearTimeout(timeOut);
@@ -70,13 +59,6 @@ export const useRunTimerLogic = ({
         setTimeout(() => stopSampleSound(), 5000);
         setAndroidPicker();
       }
-      // runSound({
-      //   setIsRunSound,
-      //   setIsShowTimePicker,
-      //   currentSound,
-      //   isAndroid,
-      //   setAndroidPicker,
-      // });
     }
   }, [changedDate, isRunTimer, isRunSound]); // eslint-disable-line react-hooks/exhaustive-deps
 };

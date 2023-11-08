@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
-
 import { useSharedValue } from 'react-native-reanimated';
 import DateTimePicker, {
   DateTimePickerAndroid,

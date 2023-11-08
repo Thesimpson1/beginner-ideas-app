@@ -1,192 +1,147 @@
+import { SoundsItem } from 'app/redux/timer/slice';
+import moment from 'moment';
+
 import { colors, MainColorName } from 'app/constants/color';
 import {
-  checkSigns,
-  getBackgroundColor,
-  handleAnotherSigns,
-  returnedValueHandler,
-  setCalculatedValue,
-  setCurrentValueInnerLogic,
-  setIsAnotherSign,
-} from 'app/screens/Calculator/utils/utils';
+  getCurrentDate,
+  getIndex,
+  getRightButtonInfo,
+  handlePlayingSounds,
+  runMainTimerLogic,
+} from 'app/screens/Timer/utils/utils';
 
-jest.mock('app/screens/Calculator/utils/utils', () => {
-  const originalModule = jest.requireActual(
-    'app/screens/Calculator/utils/utils'
-  );
+jest.mock('app/screens/Timer/utils/utils', () => {
+  const originalModule = jest.requireActual('app/screens/Timer/utils/utils');
 
   return {
     __esModule: true,
     ...originalModule,
   };
 });
-describe('Calculator utils', () => {
-  it('returnedValueHandler should work correct', () => {
-    //simple case
-    const functionResult0 = returnedValueHandler('10');
-    expect(functionResult0).toBe('10');
-    //case when there is .00
-    const functionResult1 = returnedValueHandler('10.00');
-    expect(functionResult1).toBe('10');
-    //case when there is .00 and a big number
-    const functionResult2 = returnedValueHandler('1000000.00');
-    expect(functionResult2).toBe('1000000');
-    //case when a very big number
-    const functionResult3 = returnedValueHandler('100000000');
-    expect(functionResult3).toBe('1000000');
+const mockPlaySampleSound = jest.fn();
+const mockStopSampleSound = jest.fn();
+jest.mock('react-native-notification-sounds', () => ({
+  ...jest.requireActual('react-native-notification-sounds'),
+  stopSampleSound: () => mockStopSampleSound(),
+  playSampleSound: () => mockPlaySampleSound(),
+}));
+describe('Timer utils', () => {
+  const setIsRunTimer = jest.fn();
+  const setIsRunSound = jest.fn();
+  const setAnimationTime = jest.fn();
+  const isShowTimePicker = true;
+  const isRunTimer = true;
+  const startTimer = jest.fn();
+  const pauseTimer = jest.fn();
+  const mockSounds = [{ title: 'Test1' }, { title: 'Test2' }] as SoundsItem[];
+  const current = 0;
+  const currentSound = mockSounds[1];
+  const isPlayCurrentSound = false;
+  const setIsPlayCurrentSound = jest.fn();
+  it('runMainTimerLogic should work correct', () => {
+    const functionResult0 = runMainTimerLogic({
+      setIsRunTimer,
+      setIsRunSound,
+      setAnimationTime,
+    });
+    const result0 = functionResult0(2000);
+    expect(result0).toBe(1000);
+    expect(setIsRunTimer).toHaveBeenCalledTimes(0);
+    expect(setIsRunSound).toHaveBeenCalledTimes(0);
+    expect(setAnimationTime).toHaveBeenCalledTimes(0);
+
+    const functionResult1 = runMainTimerLogic({
+      setIsRunTimer,
+      setIsRunSound,
+      setAnimationTime,
+    });
+    const result1 = functionResult1(1000);
+    expect(result1).toBe(0);
+    expect(setIsRunTimer).toHaveBeenCalledTimes(1);
+    expect(setIsRunSound).toHaveBeenCalledTimes(1);
+    expect(setAnimationTime).toHaveBeenCalledTimes(1);
   });
-  it('getBackgroundColor should work correct', () => {
-    //blue operators
-    const functionResult0 = getBackgroundColor({ item: 'C', index: 1 });
-    expect(functionResult0).toBe(colors[MainColorName.GRAY_BLUE]);
-    //gray numbers
-    const functionResult1 = getBackgroundColor({ item: '1', index: 1 });
-    expect(functionResult1).toBe(colors[MainColorName.GREY]);
-    const functionResult2 = getBackgroundColor({ item: '.', index: 1 });
-    expect(functionResult2).toBe(colors[MainColorName.GREY]);
-    //orange operators
-    const functionResult3 = getBackgroundColor({ item: '-', index: 3 });
-    expect(functionResult3).toBe(colors[MainColorName.ORANGE]);
-    const functionResult4 = getBackgroundColor({ item: '=', index: 1 });
-    expect(functionResult4).toBe(colors[MainColorName.ORANGE]);
+  it('getRightButtonInfo should work correct', () => {
+    const functionResult0 = getRightButtonInfo({
+      isShowTimePicker,
+      isRunTimer,
+      startTimer,
+      pauseTimer,
+    });
+    expect(functionResult0.rightButtonName).toBe('Start');
+    expect(functionResult0.rightButtonNameColor).toBe(
+      colors[MainColorName.GREEN]
+    );
+    functionResult0.rightButtonOnPress();
+    expect(startTimer).toHaveBeenCalledTimes(1);
   });
-  it('checkSigns should work correct', () => {
-    const functionResult0 = checkSigns({ text: '2' });
-    expect(functionResult0).toBeFalsy();
-    const functionResult1 = checkSigns({ text: '/' });
-    expect(functionResult1).toBeTruthy();
-    const functionResult2 = checkSigns({ text: 'X' });
-    expect(functionResult2).toBeTruthy();
-    const functionResult3 = checkSigns({ text: '-' });
-    expect(functionResult3).toBeTruthy();
-    const functionResult4 = checkSigns({ text: '+' });
-    expect(functionResult4).toBeTruthy();
+  it('handlePlayingSounds should work correct', () => {
+    //case 1
+    handlePlayingSounds({
+      notificationSounds: mockSounds,
+      currentSound,
+      isPlayCurrentSound,
+      setIsPlayCurrentSound,
+      current,
+    });
+    expect(setIsPlayCurrentSound).toHaveBeenCalledTimes(1);
+    expect(mockStopSampleSound).toHaveBeenCalledTimes(1);
+    //case 2
+    handlePlayingSounds({
+      notificationSounds: mockSounds,
+      currentSound: mockSounds[0],
+      isPlayCurrentSound: true,
+      setIsPlayCurrentSound,
+      current,
+    });
+    expect(setIsPlayCurrentSound).toHaveBeenCalledTimes(2);
+    expect(mockStopSampleSound).toHaveBeenCalledTimes(2);
+    //case 3
+    handlePlayingSounds({
+      notificationSounds: mockSounds,
+      currentSound: mockSounds[0],
+      isPlayCurrentSound: false,
+      setIsPlayCurrentSound,
+      current,
+    });
+    expect(setIsPlayCurrentSound).toHaveBeenCalledTimes(2);
+    expect(mockStopSampleSound).toHaveBeenCalledTimes(2);
   });
-  it('setCurrentValueInnerLogic should work correct', () => {
-    //not an integer number
-    const functionResult0 = setCurrentValueInnerLogic({
-      prevState: '.',
-      item: '.',
+  it('getCurrentDate should work correct', () => {
+    //tests minutes
+    const functionResult0 = getCurrentDate({
+      date: new Date('2023-11-07T23:40:38.000Z'),
     });
-    expect(functionResult0).toBe('.');
-    const functionResult1 = setCurrentValueInnerLogic({
-      prevState: '0',
-      item: '.',
+    const mockMinutes =
+      moment('2023-11-07T23:40:38.000Z').get('minutes') * 60000;
+
+    expect(functionResult0.currentDate).toBe(mockMinutes);
+    //tests hours
+    const functionResult1 = getCurrentDate({
+      date: new Date('2023-11-08T00:00:38.000Z'),
     });
-    expect(functionResult1).toBe('0.');
-    const functionResult2 = setCurrentValueInnerLogic({
-      prevState: '.',
-      item: '2',
+    const mockHours = moment('2023-11-08T00:00:38.000Z').get('hours') * 3600000;
+    expect(functionResult1.currentDate).toBe(mockHours);
+    //tests hours and minutes together
+    const functionResult2 = getCurrentDate({
+      date: new Date('2023-11-08T00:10:38.000Z'),
     });
-    expect(functionResult2).toBe('2');
-    //not number
-    const functionResult3 = setCurrentValueInnerLogic({
-      prevState: '10',
-      item: 'C',
-    });
-    expect(functionResult3.includes('C')).toBeTruthy();
-    const functionResult4 = setCurrentValueInnerLogic({
-      prevState: '10',
-      item: '-',
-    });
-    expect(functionResult4).toBe('-');
-    const functionResult41 = setCurrentValueInnerLogic({
-      prevState: '-',
-      item: '-',
-    });
-    expect(functionResult41).toBe('');
-    //begin calculator and check after operator
-    const functionResult5 = setCurrentValueInnerLogic({
-      prevState: '-',
-      item: '10',
-    });
-    expect(functionResult5).toBe('10');
-    const functionResult6 = setCurrentValueInnerLogic({
-      prevState: '0',
-      item: '2',
-    });
-    expect(functionResult6).toBe('2');
-    //only numbers
-    const functionResult7 = setCurrentValueInnerLogic({
-      prevState: '22222222',
-      item: '2',
-    });
-    expect(functionResult7).toBe('22222222');
-    const functionResult8 = setCurrentValueInnerLogic({
-      prevState: '2',
-      item: '2',
-    });
-    expect(functionResult8).toBe('22');
+    const mockHoursAndMinutes =
+      moment('2023-11-08T00:10:38.000Z').get('hours') * 3600000 +
+      moment('2023-11-08T00:10:38.000Z').get('minutes') * 60000;
+    expect(functionResult2.currentDate).toBe(mockHoursAndMinutes);
   });
-  it('setCalculatedValue should work correct', () => {
-    const prevValue = '10';
-    const currentValue = '20';
-    const functionResult0 = setCalculatedValue({
-      prevValue,
-      currentValue,
-      sign: '-',
+  it('getIndex should work correct', () => {
+    const functionResult0 = getIndex({
+      currentSound,
+      notificationSounds: mockSounds,
     });
-    expect(functionResult0).toBe('-10');
-    const functionResult1 = setCalculatedValue({
-      prevValue,
-      currentValue,
-      sign: '+',
+    expect(functionResult0).toBe(1);
+
+    const functionResult1 = getIndex({
+      currentSound: null,
+      notificationSounds: mockSounds,
     });
-    expect(functionResult1).toBe('30');
-    const functionResult2 = setCalculatedValue({
-      prevValue,
-      currentValue,
-      sign: 'X',
-    });
-    expect(functionResult2).toBe('200');
-    const functionResult3 = setCalculatedValue({
-      prevValue,
-      currentValue,
-      sign: '/',
-    });
-    expect(functionResult3).toBe('0.50');
-    const functionResult4 = setCalculatedValue({
-      prevValue: '10000000',
-      currentValue: '1000000',
-      sign: 'X',
-    });
-    expect(functionResult4).toBe('1000000');
-    const functionResult5 = setCalculatedValue({
-      prevValue: '0.323232',
-      currentValue: '0.3434',
-      sign: '/',
-    });
-    expect(functionResult5).toBe('0.94');
-    const functionResult6 = setCalculatedValue({
-      prevValue: '0',
-      currentValue: '0',
-      sign: '/',
-    });
-    expect(functionResult6).toBe('0');
-  });
-  it('setIsAnotherSign should work correct', () => {
-    const functionResult0 = setIsAnotherSign({ sign: '-' });
-    expect(functionResult0).toBeFalsy();
-    const functionResult1 = setIsAnotherSign({ sign: 'C' });
-    expect(functionResult1).toBeTruthy();
-    const functionResult2 = setIsAnotherSign({ sign: '+/-' });
-    expect(functionResult2).toBeTruthy();
-    const functionResult3 = setIsAnotherSign({ sign: '%' });
-    expect(functionResult3).toBeTruthy();
-  });
-  it('handleAnotherSigns should work correct', () => {
-    const currentValue = '10';
-    const functionResult0 = handleAnotherSigns({ sign: '-', currentValue });
-    expect(functionResult0).toBe('0');
-    const functionResult1 = handleAnotherSigns({ sign: 'C', currentValue });
-    expect(functionResult1).toBe('0');
-    const functionResult2 = handleAnotherSigns({ sign: '+/-', currentValue });
-    expect(functionResult2).toBe('-10');
-    const functionResult3 = handleAnotherSigns({ sign: '%', currentValue });
-    expect(functionResult3).toBe('0.10');
-    const functionResult4 = handleAnotherSigns({
-      sign: '%',
-      currentValue: '100000000',
-    });
-    expect(functionResult4).toBe('1000000');
+    expect(functionResult1).toBe(0);
   });
 });
