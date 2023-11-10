@@ -10,3 +10,4 @@ export { default as TimerIcon } from './TimerIcon.svg';
 export { default as BellIcon } from './BellIcon.svg';
 export { default as RightArrowIcon } from './RightArrowIcon.svg';
 export { default as CheckMarkIcon } from './CheckMarkIcon.svg';
+export { default as CreateNoteIcon } from './CreateNoteIcon.svg';

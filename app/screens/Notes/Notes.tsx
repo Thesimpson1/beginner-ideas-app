@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { FlatList, Text, TextInput } from 'react-native';
 
+import { BottomComponent } from 'app/screens/Notes/components/BottomComponent/BottomComponent';
 import { NoteCard } from 'app/screens/Notes/components/NoteCard/NoteCard';
 import { useGetChangedData } from 'app/screens/Notes/hooks/useGetChangedData';
 import {
@@ -56,7 +57,7 @@ export function NotesScreen() {
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
       />
-
+      <BottomComponent amountOfNotes={oldData.length} createNote={() => {}} />
       {/*<Text onTextLayout={onTextLayout}>{text}</Text>*/}
     </StyledTimerScreenContainer>
   );
