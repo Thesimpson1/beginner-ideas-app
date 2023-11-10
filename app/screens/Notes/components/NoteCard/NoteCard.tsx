@@ -8,18 +8,14 @@ import {
   StyledSubTitleWrapper,
   StyledTitle,
 } from 'app/screens/Notes/components/NoteCard/NoteCard.styled';
+import { CardItemI } from 'app/screens/Notes/Notes';
 
-interface RenderItemI {
-  date: string;
-  title: string;
-  subTitle: string;
-}
 interface RenderItemPropsI {
-  item: RenderItemI;
+  item: CardItemI;
   index: number;
 }
 interface NoteCardPropsI {
-  data: Array<RenderItemI>;
+  data: Array<CardItemI>;
 }
 export function NoteCard({ data }: NoteCardPropsI) {
   const renderItem = ({ item, index }: RenderItemPropsI) => {
