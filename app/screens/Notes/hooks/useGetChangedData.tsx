@@ -11,6 +11,7 @@ export const useGetChangedData = ({ data }: GetChangedDataI) => {
   const currentYear = moment().get('year');
   const newData: Array<ChangedDataItemI> = [];
   const dataTitles: Array<string> = [];
+  const amountOfCards: Array<number> = [];
 
   data.forEach(({ date }) => {
     let title;
@@ -60,8 +61,9 @@ export const useGetChangedData = ({ data }: GetChangedDataI) => {
     if (!dataTitles.includes(title)) {
       newData.push({ title, filteredData });
       dataTitles.push(title);
+      amountOfCards.push(filteredData.length);
     }
   });
 
-  return { newData };
+  return { newData, amountOfCards };
 };

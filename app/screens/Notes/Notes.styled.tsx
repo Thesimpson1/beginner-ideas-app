@@ -1,3 +1,4 @@
+import Animated from 'react-native-reanimated';
 import styled from 'styled-components/native';
 
 import {
@@ -10,8 +11,8 @@ import { colors, MainColorName } from 'app/constants/color';
 
 export const StyledTimerScreenContainer = styled(StyledAnimatedWrapper)`
   background-color: ${colors[MainColorName.BLUE]};
-  padding: ${calcHeight(20)}px ${calcWidth(15)}px;
-`;
+  padding: ${calcHeight(20)}px ${calcWidth(15)}px 0 ${calcWidth(15)}px;
+` as typeof Animated.View;
 export const StyledLabel = styled(StyledTextH1)`
   font-size: ${calcFontSize(22)}px;
   color: ${colors[MainColorName.WHITE]};

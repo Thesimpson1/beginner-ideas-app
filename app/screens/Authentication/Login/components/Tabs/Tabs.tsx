@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  Alert,
-  Button,
-  FlatList,
-  ListRenderItemInfo,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
-import Animated, { FadeIn } from 'react-native-reanimated';
+import { ListRenderItemInfo } from 'react-native';
 
 import { SimpleButton } from 'app/components/SimpleButton/SimpleButton';
 import {

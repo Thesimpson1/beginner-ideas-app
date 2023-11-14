@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import * as Sentry from '@sentry/react-native';
 import { persistor, store } from 'app/redux/store';
@@ -17,13 +17,15 @@ import { RootNavigator } from 'app/navigation/RootNavigator.navigator';
 
 function App(): JSX.Element {
   return (
-    <ErrorBoundary>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <RootNavigator />
-        </PersistGate>
-      </Provider>
-    </ErrorBoundary>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <RootNavigator />
+          </PersistGate>
+        </Provider>
+      </ErrorBoundary>
+    </GestureHandlerRootView>
   );
 }
 

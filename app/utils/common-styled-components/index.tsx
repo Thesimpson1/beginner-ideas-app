@@ -1,4 +1,4 @@
-import { TextProps } from 'react-native';
+import {FlatList, TextProps} from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import styled from 'styled-components/native';
 
@@ -17,7 +17,7 @@ export const StyledAnimatedWrapper = styled(Animated.View).attrs({
   entering: FadeIn.duration(1000),
 })`
   flex: 1;
-`;
+` as typeof Animated.View;
 export const StyledAnimatedSimpleViewWrapper = styled(Animated.View).attrs({
   entering: FadeIn.duration(1000),
 })``;
