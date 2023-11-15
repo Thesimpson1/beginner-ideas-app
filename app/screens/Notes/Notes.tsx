@@ -3,6 +3,7 @@ import { FlatList, View } from 'react-native';
 
 import { BottomComponent } from 'app/screens/Notes/components/BottomComponent/BottomComponent';
 import { NoteCard } from 'app/screens/Notes/components/NoteCard/NoteCard';
+import { Search } from 'app/screens/Notes/components/Search/Search';
 import { useGetChangedData } from 'app/screens/Notes/hooks/useGetChangedData';
 import {
   StyledCardWithTitleWrapper,
@@ -57,6 +58,7 @@ export function NotesScreen() {
   };
   return (
     <StyledTimerScreenContainer>
+      <Search />
       <FlatList
         data={newData}
         renderItem={renderItem}
