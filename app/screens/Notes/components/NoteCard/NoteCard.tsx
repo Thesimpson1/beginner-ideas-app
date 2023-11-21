@@ -28,11 +28,8 @@ export function NoteCard({ data, isSearch, searchText = '' }: NoteCardPropsI) {
       <StyledRenderItemWrapper
         isDisplayBottomBorder={index !== data.length - 1}
       >
-        <CardTitle
-          title={title}
-          isDisabled={!isSearch}
-          searchText={searchText}
-        />
+        {isSearch && <CardTitle title={title} searchText={searchText} />}
+
         <StyledTitle isSearch={isSearch}>{title}</StyledTitle>
         <StyledSubTitleWrapper>
           <StyledSubTitle isAdditionalSpaceAfter>{date}</StyledSubTitle>

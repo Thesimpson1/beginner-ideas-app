@@ -4,11 +4,8 @@ import { StyledTextH2 } from 'app/utils/common-styled-components';
 import { calcFontSize } from 'app/utils/scaling-system';
 import { colors, MainColorName } from 'app/constants/color';
 
-export const StyledFlatListTitleContainer = styled.View<{
-  isDisabled: boolean;
-}>`
+export const StyledFlatListTitleContainer = styled.View`
   flex-direction: row;
-  display: ${({ isDisabled }) => (isDisabled ? 'none' : 'flex')};
 `;
 export const StyledTitle = styled(StyledTextH2)<{
   isHighlight: boolean;

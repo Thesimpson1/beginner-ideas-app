@@ -22,15 +22,11 @@ export const oldData = [
   { date: '2023-11-09', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
   { date: '2023-11-09', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
   { date: '2023-11-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  { date: '2023-11-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  { date: '2023-09-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  { date: '2023-09-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  { date: '2021-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  { date: '2021-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  { date: '2020-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  { date: '2020-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+  // { date: '2023-11-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+  // { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+  // { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+  // { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+  // { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
 ];
 
 export interface ChangedDataItemI {
@@ -94,7 +90,7 @@ export function NotesScreen() {
         <BottomComponent amountOfNotes={oldData.length} createNote={() => {}} />
       )}
 
-      {/*<Text onTextLayout={onTextLayout}>{text}</Text>*/}
+      {/*/!*<Text onTextLayout={onTextLayout}>{text}</Text>*!/*/}
     </StyledTimerScreenContainer>
   );
 }

@@ -4,12 +4,19 @@ import styled from 'styled-components/native';
 import { calcFontSize, calcWidth, width } from 'app/utils/scaling-system';
 import { colors, MainColorName } from 'app/constants/color';
 
+export const StyledSearchWrapper = styled.View`
+  flex-direction: row;
+`;
 export const StyledSearchContainer = styled(Animated.View)`
   flex-direction: row;
   margin: ${calcWidth(15)}px 0;
   background-color: ${colors[MainColorName.LIGHT_BLUE]};
   align-items: center;
   border-radius: ${calcWidth(10)}px;
+`;
+export const StyledCancelWrapper = styled(Animated.View)`
+  justify-content: center;
+  margin-left: ${calcWidth(10)}px;
 `;
 export const StyledEmptyWrapper = styled.TextInput`
   margin-left: ${calcWidth(5)}px;

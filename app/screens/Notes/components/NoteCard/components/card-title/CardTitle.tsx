@@ -12,7 +12,6 @@ interface RenderItemPropsI {
 }
 interface CardTitleI {
   title: string;
-  isDisabled?: boolean;
   searchText: string;
 }
 interface OnChangeTitleI {
@@ -20,11 +19,7 @@ interface OnChangeTitleI {
   item: string;
   index: number;
 }
-export function CardTitle({
-  title,
-  isDisabled = false,
-  searchText = '',
-}: CardTitleI) {
+export function CardTitle({ title, searchText = '' }: CardTitleI) {
   const onChangeTitle = ({ text, item, index }: OnChangeTitleI) => {
     switch (true) {
       case index > text.length - 1: {
@@ -52,7 +47,7 @@ export function CardTitle({
   };
   const newData = title.split('');
   return (
-    <StyledFlatListTitleContainer isDisabled={isDisabled}>
+    <StyledFlatListTitleContainer>
       <FlatList data={newData} renderItem={renderItem} horizontal />
     </StyledFlatListTitleContainer>
   );

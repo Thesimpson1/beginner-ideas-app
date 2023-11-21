@@ -14,12 +14,12 @@ export const StyledCenteredWrapper = styled.View`
   align-items: center;
 `;
 export const StyledAnimatedWrapper = styled(Animated.View).attrs({
-  entering: FadeIn.duration(1000),
+  entering: FadeIn.duration(500),
 })`
   flex: 1;
 ` as typeof Animated.View;
 export const StyledAnimatedSimpleViewWrapper = styled(Animated.View).attrs({
-  entering: FadeIn.duration(1000),
+  entering: FadeIn.duration(500),
 })``;
 export const StyledTextH1 = styled.Text<TextProps>`
   font-family: Inter-Bold;
