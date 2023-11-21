@@ -35,6 +35,7 @@ interface SearchPropsI {
   setText: (text: string) => void;
   data: Array<CardItemI>;
   text: string;
+  isRunSearchAnimation: boolean;
   setDataAfterSearch: Dispatch<SetStateAction<CardItemI[]>>;
 }
 const Icon = () => <SearchIcon testID={'CreateNoteIconTestID'} />;
@@ -45,6 +46,7 @@ export function Search({
   text,
   data,
   setDataAfterSearch,
+  isRunSearchAnimation,
 }: SearchPropsI) {
   const searchWidth = useSharedValue('100%');
   const cancelButtonWidth = useSharedValue(0);
@@ -91,13 +93,16 @@ export function Search({
   return (
     <StyledSearchWrapper>
       <StyledSearchContainer
-        style={[wrapperAnimatedStyle, searchWidthAnimatedStyle]}
+        style={[
+          isRunSearchAnimation && wrapperAnimatedStyle,
+          searchWidthAnimatedStyle,
+        ]}
       >
-        <Animated.View style={textAnimatedStyle}>
+        <Animated.View style={isRunSearchAnimation && textAnimatedStyle}>
           <Icon />
         </Animated.View>
 
-        <Animated.View style={textAnimatedStyle}>
+        <Animated.View style={isRunSearchAnimation && textAnimatedStyle}>
           <StyledEmptyWrapper
             //@ts-ignore
             ref={ref}

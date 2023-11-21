@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { FlatList, ScrollView, Text, View } from 'react-native';
+import { FlatList } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 
 import { BottomComponent } from 'app/screens/Notes/components/BottomComponent/BottomComponent';
 import { NoteCard } from 'app/screens/Notes/components/NoteCard/NoteCard';
 import { Search } from 'app/screens/Notes/components/Search/Search';
+import { useGetAnimationData } from 'app/screens/Notes/hooks/useGetAnimationData';
 import { useGetChangedData } from 'app/screens/Notes/hooks/useGetChangedData';
 import {
   StyledCardWithTitleWrapper,
@@ -23,10 +24,10 @@ export const oldData = [
   { date: '2023-11-09', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
   { date: '2023-11-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
   // { date: '2023-11-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  // { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  // { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  // { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  // { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+  { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+  { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+  { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+  { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
 ];
 
 export interface ChangedDataItemI {
@@ -46,7 +47,12 @@ export function NotesScreen() {
   const [dataAfterSearch, setDataAfterSearch] = useState<Array<CardItemI>>([]);
   const [isFocus, setIsFocus] = useState(false);
   const [text, setText] = useState('');
-  const { newData } = useGetChangedData({ data: oldData });
+  const [screenSize, setScreenSize] = useState(0);
+  const { newData, amountOfCards } = useGetChangedData({ data: oldData });
+  const { isRunSearchAnimation } = useGetAnimationData({
+    amountOfCards,
+    screenSize,
+  });
   const screenOffset = useSharedValue(0);
 
   const renderItem = ({ item, index }: RenderItemI) => {
@@ -58,13 +64,16 @@ export function NotesScreen() {
     );
   };
   return (
-    <StyledTimerScreenContainer>
+    <StyledTimerScreenContainer
+      onLayout={({ nativeEvent }) => setScreenSize(nativeEvent.layout.height)}
+    >
       <Search
         offset={screenOffset}
         setIsFocus={setIsFocus}
         setText={setText}
         text={text}
         data={oldData}
+        isRunSearchAnimation={isRunSearchAnimation}
         setDataAfterSearch={setDataAfterSearch}
       />
 

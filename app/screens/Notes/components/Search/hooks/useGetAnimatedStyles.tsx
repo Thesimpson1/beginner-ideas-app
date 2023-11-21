@@ -3,6 +3,7 @@ import {
   interpolate,
   SharedValue,
   useAnimatedStyle,
+  withSpring,
   withTiming,
 } from 'react-native-reanimated';
 
@@ -23,7 +24,7 @@ export const useGetAnimatedStyles = ({
   searchWidth,
 }: useGetAnimatedStylesI) => {
   const textAnimatedStyle = useAnimatedStyle(() => {
-    const animatedOpacity = interpolate(offset.value, [0, 50], [1, 0], {
+    const animatedOpacity = interpolate(offset.value, [0, 25], [1, 0], {
       extrapolateRight: Extrapolation.CLAMP,
     });
     return { opacity: animatedOpacity };
@@ -31,7 +32,7 @@ export const useGetAnimatedStyles = ({
   const wrapperAnimatedStyle = useAnimatedStyle(() => {
     const animatedHeight = interpolate(
       offset.value,
-      [-50, 0, 50],
+      [-50, 0, 25],
       [50, 50, 0],
       {
         extrapolateRight: Extrapolation.CLAMP,
@@ -39,15 +40,15 @@ export const useGetAnimatedStyles = ({
     );
     const animatedPadding = interpolate(
       offset.value,
-      [-50, 0, 50],
+      [-50, 0, 25],
       [15, 15, 0],
       {
         extrapolateRight: Extrapolation.CLAMP,
       }
     );
     return {
-      maxHeight: animatedHeight,
-      padding: animatedPadding,
+      maxHeight: withTiming(animatedHeight, { duration: 200 }),
+      padding: withTiming(animatedPadding, { duration: 100 }),
       width: '100%',
     };
   });
