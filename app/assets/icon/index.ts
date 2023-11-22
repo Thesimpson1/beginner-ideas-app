@@ -12,3 +12,8 @@ export { default as RightArrowIcon } from './RightArrowIcon.svg';
 export { default as CheckMarkIcon } from './CheckMarkIcon.svg';
 export { default as CreateNoteIcon } from './CreateNoteIcon.svg';
 export { default as SearchIcon } from './SearchIcon.svg';
+export { default as ChooseIcon } from './ChooseIcon.svg';
+export { default as MenuWithDotsIcon } from './MenuWithDotsIcon.svg';
+export { default as SortVerticalIcon } from './SortVerticalIcon.svg';
+export { default as NotesCalendarIcon } from './NotesCalendarIcon.svg';
+export { default as RightArrowWhiteIcon } from './RightArrowWhiteIcon.svg';

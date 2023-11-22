@@ -88,6 +88,7 @@ export function Search({
     cancelButtonHeight.value = 0;
     cancelButtonOpacity.value = 0;
     setIsFocus(false);
+    setText('');
   };
 
   return (

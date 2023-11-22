@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
-import { FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Text, View } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
+import { HomeStackParamList } from 'app/navigation/app/HomeStack.navigator';
 import { BottomComponent } from 'app/screens/Notes/components/BottomComponent/BottomComponent';
+
+import { HeaderRightComponent } from 'app/screens/Notes/components/HeaderRightComponent/HeaderRightComponent';
 import { NoteCard } from 'app/screens/Notes/components/NoteCard/NoteCard';
 import { Search } from 'app/screens/Notes/components/Search/Search';
 import { useGetAnimationData } from 'app/screens/Notes/hooks/useGetAnimationData';
@@ -10,6 +15,7 @@ import { useGetChangedData } from 'app/screens/Notes/hooks/useGetChangedData';
 import {
   StyledCardWithTitleWrapper,
   StyledLabel,
+  StyledMenuIcon,
   StyledTimerScreenContainer,
 } from 'app/screens/Notes/Notes.styled';
 export interface CardItemI {
@@ -54,7 +60,12 @@ export function NotesScreen() {
     screenSize,
   });
   const screenOffset = useSharedValue(0);
-
+  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: HeaderRightComponent,
+    });
+  }, [navigation]);
   const renderItem = ({ item, index }: RenderItemI) => {
     return (
       <StyledCardWithTitleWrapper isLastIndex={index === newData.length - 1}>
