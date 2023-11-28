@@ -39,7 +39,7 @@ export const HeaderRightComponent = () => {
           <Icon />
         </Animated.View>
       </StyledMenuIcon>
-      <RightMenu isShowAnimation={isShowAnimation} />
+      <RightMenu isShowAnimation={isShowAnimation} isVisible={isVisible}/>
     </StyledHeaderRightComponentWrapper>
   );
 };

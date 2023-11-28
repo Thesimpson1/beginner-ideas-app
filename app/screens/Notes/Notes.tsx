@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -15,7 +15,6 @@ import { useGetChangedData } from 'app/screens/Notes/hooks/useGetChangedData';
 import {
   StyledCardWithTitleWrapper,
   StyledLabel,
-  StyledMenuIcon,
   StyledTimerScreenContainer,
 } from 'app/screens/Notes/Notes.styled';
 export interface CardItemI {

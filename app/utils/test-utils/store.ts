@@ -5,12 +5,14 @@ import {
 } from '@reduxjs/toolkit';
 import authReducer from 'app/redux/auth/slice';
 import timerReducer from 'app/redux/timer/slice';
+import notesReducer from 'app/redux/notes/slice';
 import createSagaMiddleware from 'redux-saga';
 
 // Create the root reducer independently to obtain the RootState type
 const rootReducer = combineReducers({
   auth: authReducer,
   timer: timerReducer,
+  notes: notesReducer,
 });
 export const sagaMiddleware = createSagaMiddleware();
 export function setupStore(preloadedState?: PreloadedState<RootState>) {
