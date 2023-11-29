@@ -4,10 +4,6 @@ import { RightArrowWhiteIcon, WhiteCheckMarkIcon } from 'app/assets/icon';
 import { StyledRotatedArrowWrapper } from 'app/screens/Notes/components/HeaderRightComponent/components/RightMenu/RightMenu.styled';
 import { MenuDataTypes } from 'app/screens/Notes/types';
 
-interface SetIndexI {
-  index: number;
-  prevState: number;
-}
 interface SetLeftIconI {
   mode: string;
   title: string;
@@ -18,15 +14,8 @@ interface UseGetItemInfoI {
   menuOnPress: () => void;
   title: string;
   mode: string;
-  changeMode: (type: MenuDataTypes, newMode: string) => void;
+  changeMode: () => void;
 }
-export const setIndex = ({ index, prevState }: SetIndexI) => {
-  if (prevState === index) {
-    return -1;
-  } else {
-    return index;
-  }
-};
 export const setLeftIcon = ({ mode, title }: SetLeftIconI) => {
   if (mode === title) {
     return () => <WhiteCheckMarkIcon testID={'WhiteCheckMarkIconTestID'} />;

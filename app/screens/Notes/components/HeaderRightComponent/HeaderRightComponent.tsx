@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -11,21 +10,31 @@ import { RightMenu } from 'app/screens/Notes/components/HeaderRightComponent/com
 import {
   StyledHeaderRightComponentWrapper,
   StyledMenuIcon,
+  StyledShadowModalWrapper,
 } from 'app/screens/Notes/components/HeaderRightComponent/HeaderRightComponent.styled';
 
 const Icon = () => <MenuWithDotsIcon testID={'MenuWithDotsIconTestID'} />;
-export const HeaderRightComponent = () => {
+interface HeaderRightComponentPropsI {
+  isCloseRightMenu: boolean;
+  setIsCloseRightMenu: Dispatch<SetStateAction<boolean>>;
+}
+export const HeaderRightComponent = ({
+  isCloseRightMenu,
+  setIsCloseRightMenu,
+}: HeaderRightComponentPropsI) => {
   const [isVisible, setIsVisible] = useState(false);
   const isShowAnimation = useSharedValue(false);
+
   useEffect(() => {
-    if (isVisible) {
+    if (isVisible && !isCloseRightMenu) {
       isShowAnimation.value = true;
     } else {
       isShowAnimation.value = false;
     }
-  }, [isVisible]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isVisible, isCloseRightMenu]); // eslint-disable-line react-hooks/exhaustive-deps
   const onPress = () => {
     setIsVisible(!isVisible);
+    setIsCloseRightMenu(false);
   };
   const animatedButtonStyle = useAnimatedStyle(() => {
     return {
@@ -39,7 +48,11 @@ export const HeaderRightComponent = () => {
           <Icon />
         </Animated.View>
       </StyledMenuIcon>
-      <RightMenu isShowAnimation={isShowAnimation} isVisible={isVisible}/>
+      <RightMenu isShowAnimation={isShowAnimation} />
+      <StyledShadowModalWrapper
+        onPress={() => setIsVisible(false)}
+        isVisible={isVisible}
+      />
     </StyledHeaderRightComponentWrapper>
   );
 };

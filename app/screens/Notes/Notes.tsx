@@ -6,7 +6,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { HomeStackParamList } from 'app/navigation/app/HomeStack.navigator';
 import { BottomComponent } from 'app/screens/Notes/components/BottomComponent/BottomComponent';
-
 import { HeaderRightComponent } from 'app/screens/Notes/components/HeaderRightComponent/HeaderRightComponent';
 import { NoteCard } from 'app/screens/Notes/components/NoteCard/NoteCard';
 import { Search } from 'app/screens/Notes/components/Search/Search';
@@ -51,6 +50,7 @@ export function NotesScreen() {
   //
   const [dataAfterSearch, setDataAfterSearch] = useState<Array<CardItemI>>([]);
   const [isFocus, setIsFocus] = useState(false);
+  const [isCloseRightMenu, setIsCloseRightMenu] = useState(false);
   const [text, setText] = useState('');
   const [screenSize, setScreenSize] = useState(0);
   const { newData, amountOfCards } = useGetChangedData({ data: oldData });
@@ -62,12 +62,16 @@ export function NotesScreen() {
   const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
   useEffect(() => {
     navigation.setOptions({
-      headerRight: HeaderRightComponent,
+      headerRight: () =>
+        HeaderRightComponent({ isCloseRightMenu, setIsCloseRightMenu }),
     });
-  }, [navigation]);
+  }, [isCloseRightMenu, navigation]);
   const renderItem = ({ item, index }: RenderItemI) => {
     return (
-      <StyledCardWithTitleWrapper isLastIndex={index === newData.length - 1}>
+      <StyledCardWithTitleWrapper
+        isLastIndex={index === newData.length - 1}
+        key={item.title}
+      >
         <StyledLabel>{item.title}</StyledLabel>
         <NoteCard data={item.filteredData} isSearch={isFocus} />
       </StyledCardWithTitleWrapper>
