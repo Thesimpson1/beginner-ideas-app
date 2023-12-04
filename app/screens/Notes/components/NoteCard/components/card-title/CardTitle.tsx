@@ -5,7 +5,7 @@ import {
   StyledFlatListTitleContainer,
   StyledTitle,
 } from 'app/screens/Notes/components/NoteCard/components/card-title/CardTitle.styled';
-import { CardItemI } from 'app/screens/Notes/Notes';
+
 interface RenderItemPropsI {
   item: string;
   index: number;

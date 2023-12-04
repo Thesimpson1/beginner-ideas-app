@@ -3,6 +3,7 @@ import { FlatList } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useAppSelector } from 'app/redux/hooks';
 
 import { HomeStackParamList } from 'app/navigation/app/HomeStack.navigator';
 import { BottomComponent } from 'app/screens/Notes/components/BottomComponent/BottomComponent';
@@ -52,12 +53,15 @@ export function NotesScreen() {
   const [isFocus, setIsFocus] = useState(false);
   const [isCloseRightMenu, setIsCloseRightMenu] = useState(false);
   const [text, setText] = useState('');
+  const sortMode = useAppSelector((state) => state.notes.sortMode);
+  const dateSortMode = useAppSelector((state) => state.notes.dataSortMode);
   const [screenSize, setScreenSize] = useState(0);
   const { newData, amountOfCards } = useGetChangedData({ data: oldData });
   const { isRunSearchAnimation } = useGetAnimationData({
     amountOfCards,
     screenSize,
   });
+  const isSortByNames = sortMode === 'By names' || dateSortMode === 'Off';
   const screenOffset = useSharedValue(0);
   const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
   useEffect(() => {
@@ -91,7 +95,7 @@ export function NotesScreen() {
         setDataAfterSearch={setDataAfterSearch}
       />
 
-      {isFocus ? (
+      {isFocus || isSortByNames ? (
         <StyledCardWithTitleWrapper isLastIndex>
           <NoteCard
             data={dataAfterSearch}
@@ -109,7 +113,7 @@ export function NotesScreen() {
           showsVerticalScrollIndicator={false}
         />
       )}
-      {!isFocus && (
+      {!isFocus && !isSortByNames && (
         <BottomComponent amountOfNotes={oldData.length} createNote={() => {}} />
       )}
 

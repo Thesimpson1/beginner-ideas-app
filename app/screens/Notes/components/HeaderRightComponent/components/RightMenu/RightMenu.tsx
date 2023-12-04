@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
-import Animated, {
+import {
   SharedValue,
   useAnimatedStyle,
   useSharedValue,
@@ -131,8 +131,20 @@ export function RightMenu({ isShowAnimation }: RightMenuPropsI) {
       setIndexOfItem(-1);
       if (index !== 0) {
         if (type === MenuDataTypes.DATE_SORT_ITEM_DATA) {
+          if (title === 'Off') {
+            dispatch(setSortMode('By names'));
+          }
+          if (title === 'On') {
+            dispatch(setSortMode('By creating date'));
+          }
           dispatch(setDataSortMode(title));
         } else {
+          if (title === 'By names') {
+            dispatch(setDataSortMode('Off'));
+          }
+          if (title === 'By creating date') {
+            dispatch(setDataSortMode('On'));
+          }
           dispatch(setSortMode(title));
         }
       }
