@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { skipLogin } from 'app/redux/auth/slice';
 import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
 import { RootState } from 'app/redux/store';
+import { MainStackScreenName } from 'app/types';
 import { useFormik } from 'formik';
 
 import { EmailIcon, PasswordIcon } from 'app/assets/icon';
@@ -11,10 +12,7 @@ import { StyledAnimatedWrapper } from 'app/utils/common-styled-components';
 import { CustomInput } from 'app/components/CustomInput/CustomInput';
 import { RoundButton } from 'app/components/RoundButton/RoundButton';
 import { SimpleButton } from 'app/components/SimpleButton/SimpleButton';
-import {
-  MainStackParamList,
-  MainStackScreenName,
-} from 'app/navigation/app/MainStack.navigator';
+import { MainStackParamList } from 'app/navigation/app/MainStack.navigator';
 import { colors, MainColorName } from 'app/constants/color';
 import { Tabs } from 'app/screens/Authentication/Login/components/Tabs/Tabs';
 import { useOnSubmit } from 'app/screens/Authentication/Login/hooks/useOnSubmit';

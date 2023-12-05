@@ -1,19 +1,5 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import Animated, {
-  SharedValue,
-  useAnimatedStyle,
-  useSharedValue,
-  withDelay,
-  withSequence,
-  withSpring,
-  withTiming,
-} from 'react-native-reanimated';
+import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react';
+import Animated, { SharedValue, useSharedValue } from 'react-native-reanimated';
 
 import { SearchIcon } from 'app/assets/icon';
 import { calcHeight, width } from 'app/utils/scaling-system';
@@ -27,7 +13,7 @@ import {
   StyledSearchContainer,
   StyledSearchWrapper,
 } from 'app/screens/Notes/components/Search/Search.styled';
-import { CardItemI } from 'app/screens/Notes/Notes';
+import { CardItemI } from 'app/screens/Notes/types';
 
 interface SearchPropsI {
   offset: SharedValue<number>;

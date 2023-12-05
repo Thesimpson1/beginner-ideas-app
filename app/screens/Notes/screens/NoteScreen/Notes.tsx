@@ -4,8 +4,10 @@ import { useSharedValue } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useAppSelector } from 'app/redux/hooks';
+import { NotesStackScreenName } from 'app/types';
 
 import { HomeStackParamList } from 'app/navigation/app/HomeStack.navigator';
+import { MainNotesParamList } from 'app/navigation/app/Notes.navigator';
 import { BottomComponent } from 'app/screens/Notes/components/BottomComponent/BottomComponent';
 import { HeaderRightComponent } from 'app/screens/Notes/components/HeaderRightComponent/HeaderRightComponent';
 import { NoteCard } from 'app/screens/Notes/components/NoteCard/NoteCard';
@@ -16,12 +18,9 @@ import {
   StyledCardWithTitleWrapper,
   StyledLabel,
   StyledTimerScreenContainer,
-} from 'app/screens/Notes/Notes.styled';
-export interface CardItemI {
-  date: string;
-  title: string;
-  subTitle: string;
-}
+} from 'app/screens/Notes/screens/NoteScreen/Notes.styled';
+import { CardItemI, RenderItemI } from 'app/screens/Notes/types';
+
 export const oldData = [
   { date: '2023-11-10', title: 'noteCardTitle', subTitle: 'NoteCardSubtitle' },
   { date: '2023-11-10', title: 'qwqwqwqwq', subTitle: 'NoteCardSubtitle' },
@@ -34,15 +33,6 @@ export const oldData = [
   { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
   { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
 ];
-
-export interface ChangedDataItemI {
-  filteredData: Array<CardItemI>;
-  title: string;
-}
-interface RenderItemI {
-  item: ChangedDataItemI;
-  index: number;
-}
 
 export function NotesScreen() {
   // const onTextLayout = (e) => {
@@ -63,13 +53,15 @@ export function NotesScreen() {
   });
   const isSortByNames = sortMode === 'By names' || dateSortMode === 'Off';
   const screenOffset = useSharedValue(0);
-  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
+  const navigation = useNavigation<StackNavigationProp<MainNotesParamList>>();
   useEffect(() => {
     navigation.setOptions({
       headerRight: () =>
         HeaderRightComponent({ isCloseRightMenu, setIsCloseRightMenu }),
     });
   }, [isCloseRightMenu, navigation]);
+  const navigateToCreateNote = () =>
+    navigation.navigate(NotesStackScreenName.CREATE_NOTE);
   const renderItem = ({ item, index }: RenderItemI) => {
     return (
       <StyledCardWithTitleWrapper
@@ -114,7 +106,10 @@ export function NotesScreen() {
         />
       )}
       {!isFocus && !isSortByNames && (
-        <BottomComponent amountOfNotes={oldData.length} createNote={() => {}} />
+        <BottomComponent
+          amountOfNotes={oldData.length}
+          createNote={navigateToCreateNote}
+        />
       )}
 
       {/*/!*<Text onTextLayout={onTextLayout}>{text}</Text>*!/*/}

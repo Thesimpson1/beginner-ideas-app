@@ -61,7 +61,7 @@ export const getRightButtonInfo = ({
   isRunTimer,
   startTimer,
   pauseTimer,
-}: GetRightButtonInfoI)=> {
+}: GetRightButtonInfoI) => {
   switch (true) {
     case isShowTimePicker && !isRunTimer: {
       return {

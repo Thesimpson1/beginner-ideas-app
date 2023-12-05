@@ -37,4 +37,3 @@ export const StyledSubTitle = styled(StyledTextH3)<{
   margin-right: ${({ isAdditionalSpaceAfter }) =>
     isAdditionalSpaceAfter ? calcWidth(10) : 0}px;
 `;
-

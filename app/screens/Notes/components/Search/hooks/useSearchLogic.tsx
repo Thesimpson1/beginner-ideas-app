@@ -1,4 +1,4 @@
-import { CardItemI } from 'app/screens/Notes/Notes';
+import { CardItemI } from 'app/screens/Notes/types';
 
 interface useGetAnimatedStylesI {
   text: string;

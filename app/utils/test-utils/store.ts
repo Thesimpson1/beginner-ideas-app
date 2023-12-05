@@ -4,8 +4,8 @@ import {
   PreloadedState,
 } from '@reduxjs/toolkit';
 import authReducer from 'app/redux/auth/slice';
-import timerReducer from 'app/redux/timer/slice';
 import notesReducer from 'app/redux/notes/slice';
+import timerReducer from 'app/redux/timer/slice';
 import createSagaMiddleware from 'redux-saga';
 
 // Create the root reducer independently to obtain the RootState type

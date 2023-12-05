@@ -3,11 +3,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { HomeStackScreenName } from 'app/types';
 
 import { MainStack } from 'app/navigation/app/MainStack.navigator';
+import { NotesStack } from 'app/navigation/app/Notes.navigator';
 import { colors, MainColorName } from 'app/constants/color';
 import { CalculatorScreen } from 'app/screens/Calculator/Calculator';
 import { CalendarScreen } from 'app/screens/Calendar/Calendar';
 import { HomeScreen } from 'app/screens/Home/Home';
-import { NotesScreen } from 'app/screens/Notes/Notes';
 import { TimerScreen } from 'app/screens/Timer/Timer';
 
 export type HomeStackParamList = {
@@ -46,7 +46,11 @@ export const HomeStack = () => {
         component={CalculatorScreen}
       />
       <Stack.Screen name={HomeStackScreenName.TIMER} component={TimerScreen} />
-      <Stack.Screen name={HomeStackScreenName.NOTES} component={NotesScreen} />
+      <Stack.Screen
+        name={HomeStackScreenName.NOTES}
+        component={NotesStack}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

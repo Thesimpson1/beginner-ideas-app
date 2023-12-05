@@ -1,10 +1,10 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react-native';
 import { mockInitialState } from 'app/mocks';
+import { MainStackScreenName } from 'app/types';
 import * as formik from 'formik';
 
 import { renderWithProviders } from 'app/utils/test-utils/renderWithProviders';
-import { MainStackScreenName } from 'app/navigation/app/MainStack.navigator';
 import { LoginScreen } from 'app/screens/Authentication';
 
 const mockedNavigate = jest.fn();

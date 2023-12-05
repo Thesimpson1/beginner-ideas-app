@@ -15,7 +15,7 @@ export const StyledMenuItemsWrapper = styled.Pressable<{
   align-items: center;
   height: ${calcHeight(50)}px;
   width: ${calcWidth(200)}px;
-` ;
+`;
 export const StyledArrowWrapper = styled.View`
   width: ${calcWidth(20)}px;
 `;

@@ -2,14 +2,11 @@ import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useAppSelector } from 'app/redux/hooks';
 import { RootState } from 'app/redux/store';
+import { MainStackScreenName } from 'app/types';
 
 import { HomeStack } from 'app/navigation/app/HomeStack.navigator';
 import { LoginScreen } from 'app/screens/Authentication';
 
-export enum MainStackScreenName {
-  Home = 'MainStackHome',
-  Login = 'Login',
-}
 export type MainStackParamList = {
   [MainStackScreenName.Home]: undefined;
   [MainStackScreenName.Login]: undefined;

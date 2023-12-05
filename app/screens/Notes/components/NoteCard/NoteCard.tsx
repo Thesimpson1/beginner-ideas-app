@@ -9,7 +9,7 @@ import {
   StyledSubTitleWrapper,
   StyledTitle,
 } from 'app/screens/Notes/components/NoteCard/NoteCard.styled';
-import { CardItemI } from 'app/screens/Notes/Notes';
+import { CardItemI } from 'app/screens/Notes/types';
 
 interface RenderItemPropsI {
   item: CardItemI;

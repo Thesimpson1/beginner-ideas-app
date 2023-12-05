@@ -2,7 +2,12 @@ import Animated from 'react-native-reanimated';
 import styled from 'styled-components/native';
 
 import { StyledTextH2, StyledTextH3 } from 'app/utils/common-styled-components';
-import {calcFontSize, calcHeight, calcWidth, width} from 'app/utils/scaling-system';
+import {
+  calcFontSize,
+  calcHeight,
+  calcWidth,
+  width,
+} from 'app/utils/scaling-system';
 import { colors, MainColorName } from 'app/constants/color';
 
 export const StyledBottomComponentContainer = styled.View`

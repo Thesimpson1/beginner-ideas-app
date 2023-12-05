@@ -1,6 +1,7 @@
 import moment from 'moment/moment';
 
-import { CardItemI, ChangedDataItemI } from 'app/screens/Notes/Notes';
+import { CardItemI, ChangedDataItemI } from 'app/screens/Notes/types';
+
 interface GetChangedDataI {
   data: Array<CardItemI>;
 }

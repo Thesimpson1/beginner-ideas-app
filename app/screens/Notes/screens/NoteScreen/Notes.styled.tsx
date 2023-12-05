@@ -22,4 +22,3 @@ export const StyledLabel = styled(StyledTextH1)`
   color: ${colors[MainColorName.WHITE]};
   margin-left: ${calcWidth(15)}px;
 `;
-
