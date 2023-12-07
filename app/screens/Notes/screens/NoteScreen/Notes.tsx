@@ -45,6 +45,7 @@ export function NotesScreen() {
   const [text, setText] = useState('');
   const sortMode = useAppSelector((state) => state.notes.sortMode);
   const dateSortMode = useAppSelector((state) => state.notes.dataSortMode);
+  const user = useAppSelector((state) => state.auth.user);
   const [screenSize, setScreenSize] = useState(0);
   const { newData, amountOfCards } = useGetChangedData({ data: oldData });
   const { isRunSearchAnimation } = useGetAnimationData({
@@ -54,12 +55,19 @@ export function NotesScreen() {
   const isSortByNames = sortMode === 'By names' || dateSortMode === 'Off';
   const screenOffset = useSharedValue(0);
   const navigation = useNavigation<StackNavigationProp<MainNotesParamList>>();
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: () =>
         HeaderRightComponent({ isCloseRightMenu, setIsCloseRightMenu }),
     });
   }, [isCloseRightMenu, navigation]);
+  useEffect(() => {
+    dispatch(getNotes({ user }));
+    // dispatch(updateNote({ user, note: 'heyka12', key: '-Nl4LmP4DBVqu9GhljRm' }));
+    // dispatch(deleteNote({ user, key: '-Nl4LmP4DBVqu9GhljRm' }));
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const navigateToCreateNote = () =>
     navigation.navigate(NotesStackScreenName.CREATE_NOTE);
   const renderItem = ({ item, index }: RenderItemI) => {
