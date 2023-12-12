@@ -1,9 +1,9 @@
-import { logoutError, logoutSuccess } from 'app/redux/auth/slice';
 import {
   deleteNoteError,
   deleteNoteSuccess,
   getNotesError,
   getNotesSuccess,
+  PushNoteActionPayloadI,
   pushNoteError,
   pushNoteSuccess,
   updateNoteError,
@@ -13,7 +13,6 @@ import { errorHandler } from 'app/redux/utils/utils';
 import { put, takeLatest } from 'redux-saga/effects';
 
 import { api } from 'app/api';
-import { readNotes } from 'app/api/notes';
 
 interface SetGetNotesPayloadI {
   [key: string]: { user: string };
@@ -23,7 +22,7 @@ type SetGetNotesSagaPropsType = SetGetNotesPayloadI & {
 };
 
 interface SetPushNotePayloadI {
-  [key: string]: { user: string; note: string };
+  [key: string]: PushNoteActionPayloadI;
 }
 type SetPushNoteSagaPropsType = SetPushNotePayloadI & {
   type: string;
@@ -50,7 +49,7 @@ export function* getNotesSaga({
     yield api.createReference({
       user,
     });
-    const getNotesOnce: ReturnType<typeof readNotes> = yield api.readNotes({
+    const getNotesOnce: PushNoteActionPayloadI = yield api.readNotes({
       user,
     });
     yield put(getNotesSuccess(getNotesOnce));
@@ -61,16 +60,14 @@ export function* getNotesSaga({
   }
 }
 
-export function* pushNoteSaga({
-  payload: { user, note },
-}: SetPushNoteSagaPropsType): unknown {
+export function* pushNoteSaga({ payload }: SetPushNoteSagaPropsType): unknown {
   try {
+    console.log('1111', payload);
     yield api.pushNote({
-      user,
-      note,
+      ...payload,
     });
-    const getNotesOnce: ReturnType<typeof readNotes> = yield api.readNotes({
-      user,
+    const getNotesOnce: PushNoteActionPayloadI = yield api.readNotes({
+      user: payload.user,
     });
     yield put(pushNoteSuccess(getNotesOnce));
     // @ts-ignore
@@ -89,7 +86,7 @@ export function* updateNoteSaga({
       note,
       key,
     });
-    const getNotesOnce: ReturnType<typeof readNotes> = yield api.readNotes({
+    const getNotesOnce: PushNoteActionPayloadI = yield api.readNotes({
       user,
     });
     yield put(updateNoteSuccess(getNotesOnce));
@@ -108,7 +105,7 @@ export function* deleteNoteSaga({
       user,
       key,
     });
-    const getNotesOnce: ReturnType<typeof readNotes> = yield api.readNotes({
+    const getNotesOnce: PushNoteActionPayloadI = yield api.readNotes({
       user,
     });
     yield put(deleteNoteSuccess(getNotesOnce));

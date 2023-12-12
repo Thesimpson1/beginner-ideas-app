@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
+import database, { firebase } from '@react-native-firebase/database';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useAppSelector } from 'app/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
+import {
+  deleteNote,
+  getNotes,
+  pushNote,
+  updateNote,
+} from 'app/redux/notes/slice';
 import { NotesStackScreenName } from 'app/types';
 
 import { HomeStackParamList } from 'app/navigation/app/HomeStack.navigator';
@@ -21,18 +28,18 @@ import {
 } from 'app/screens/Notes/screens/NoteScreen/Notes.styled';
 import { CardItemI, RenderItemI } from 'app/screens/Notes/types';
 
-export const oldData = [
-  { date: '2023-11-10', title: 'noteCardTitle', subTitle: 'NoteCardSubtitle' },
-  { date: '2023-11-10', title: 'qwqwqwqwq', subTitle: 'NoteCardSubtitle' },
-  { date: '2023-11-09', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  { date: '2023-11-09', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  { date: '2023-11-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  // { date: '2023-11-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-  { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-];
+// export const oldData = [
+//   { date: '2023-11-10', title: 'noteCardTitle', subTitle: 'NoteCardSubtitle' },
+//   { date: '2023-11-10', title: 'qwqwqwqwq', subTitle: 'NoteCardSubtitle' },
+//   { date: '2023-11-09', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+//   { date: '2023-11-09', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+//   { date: '2023-11-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+//   // { date: '2023-11-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+//   { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+//   { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+//   { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+//   { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
+// ];
 
 export function NotesScreen() {
   // const onTextLayout = (e) => {
@@ -46,8 +53,12 @@ export function NotesScreen() {
   const sortMode = useAppSelector((state) => state.notes.sortMode);
   const dateSortMode = useAppSelector((state) => state.notes.dataSortMode);
   const user = useAppSelector((state) => state.auth.user);
+  const notes = useAppSelector((state) => state.notes.notes);
+  const { newData, amountOfCards } = useGetChangedData({
+    data: notes ? notes : [],
+  });
   const [screenSize, setScreenSize] = useState(0);
-  const { newData, amountOfCards } = useGetChangedData({ data: oldData });
+
   const { isRunSearchAnimation } = useGetAnimationData({
     amountOfCards,
     screenSize,
@@ -68,6 +79,8 @@ export function NotesScreen() {
     // dispatch(updateNote({ user, note: 'heyka12', key: '-Nl4LmP4DBVqu9GhljRm' }));
     // dispatch(deleteNote({ user, key: '-Nl4LmP4DBVqu9GhljRm' }));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  console.log('11112', notes);
   const navigateToCreateNote = () =>
     navigation.navigate(NotesStackScreenName.CREATE_NOTE);
   const renderItem = ({ item, index }: RenderItemI) => {
@@ -81,6 +94,29 @@ export function NotesScreen() {
       </StyledCardWithTitleWrapper>
     );
   };
+
+  const reference = firebase
+    .app()
+    .database('https://beginner-ideas-app-default-rtdb.firebaseio.com')
+    .ref(`/${user}/notes`);
+
+  database()
+    .ref(`/${user}/notes`)
+    .once('value')
+    .then((snapshot) => {
+      // console.log('1111', Object.values(snapshot.val()));
+    });
+
+  // reference
+  //   .set({
+  //     age: `dddd
+  //
+  //
+  //     dddd
+  //     `,
+  //   })
+  //   .then(() => console.log('Data updated.'));
+
   return (
     <StyledTimerScreenContainer
       onLayout={({ nativeEvent }) => setScreenSize(nativeEvent.layout.height)}
@@ -90,7 +126,7 @@ export function NotesScreen() {
         setIsFocus={setIsFocus}
         setText={setText}
         text={text}
-        data={oldData}
+        data={notes ? notes : []}
         isRunSearchAnimation={isRunSearchAnimation}
         setDataAfterSearch={setDataAfterSearch}
       />
@@ -115,7 +151,7 @@ export function NotesScreen() {
       )}
       {!isFocus && !isSortByNames && (
         <BottomComponent
-          amountOfNotes={oldData.length}
+          amountOfNotes={notes ? notes.length : 0}
           createNote={navigateToCreateNote}
         />
       )}

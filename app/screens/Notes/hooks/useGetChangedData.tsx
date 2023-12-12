@@ -2,8 +2,8 @@ import moment from 'moment/moment';
 
 import { CardItemI, ChangedDataItemI } from 'app/screens/Notes/types';
 
-interface GetChangedDataI {
-  data: Array<CardItemI>;
+export interface GetChangedDataI {
+  data: Array<CardItemI> | null;
 }
 export const useGetChangedData = ({ data }: GetChangedDataI) => {
   const today = moment().format('YYYY-MM-DD');
@@ -14,7 +14,7 @@ export const useGetChangedData = ({ data }: GetChangedDataI) => {
   const dataTitles: Array<string> = [];
   const amountOfCards: Array<number> = [];
 
-  data.forEach(({ date }) => {
+  data?.forEach(({ date }) => {
     let title;
     let filteredData: Array<CardItemI> = [];
 

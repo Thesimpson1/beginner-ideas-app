@@ -7,6 +7,7 @@ export interface CardItemI {
   date: string;
   title: string;
   subTitle: string;
+  note: string;
 }
 export interface ChangedDataItemI {
   filteredData: Array<CardItemI>;

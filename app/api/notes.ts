@@ -1,4 +1,5 @@
 import database, { firebase } from '@react-native-firebase/database';
+import { PushNoteActionPayloadI } from 'app/redux/notes/slice';
 
 interface CreateReferencePropsI {
   user: string;
@@ -26,12 +27,21 @@ export const readNotes = ({ user }: CreateReferencePropsI) =>
       // console.log('User data: ', snapshot.val());
       return snapshot.val();
     });
-export const pushNote = ({ user, note }: PushNotePropsI) =>
+export const pushNote = ({
+  user,
+  note,
+  title,
+  subTitle,
+  date,
+}: PushNoteActionPayloadI) =>
   database()
     .ref(`/${user}/notes`)
     .push()
     .set({
       note,
+      title,
+      subTitle,
+      date,
     })
     .then(() => console.log('Data pushed.'));
 export const updateNote = ({ user, note, key }: UpdateNotePropsI) =>
