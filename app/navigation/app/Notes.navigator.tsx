@@ -7,7 +7,7 @@ import { CreateNoteScreen } from 'app/screens/Notes/screens/CreateNote/CreateNot
 import { NotesScreen } from 'app/screens/Notes/screens/NoteScreen/Notes';
 
 export type MainNotesParamList = {
-  [NotesStackScreenName.CREATE_NOTE]: undefined;
+  [NotesStackScreenName.CREATE_NOTE]: { key: string; note: string } | undefined;
   [NotesStackScreenName.NOTES]: undefined;
 };
 const Stack = createStackNavigator<MainNotesParamList>();

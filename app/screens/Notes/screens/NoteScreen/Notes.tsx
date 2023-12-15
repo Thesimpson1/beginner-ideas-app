@@ -40,7 +40,10 @@ import { CardItemI, RenderItemI } from 'app/screens/Notes/types';
 //   { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
 //   { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
 // ];
-
+export interface OnCardPressPropsI {
+  note: string;
+  key: string;
+}
 export function NotesScreen() {
   // const onTextLayout = (e) => {
   //   console.log('1111', e.nativeEvent.lines)
@@ -50,10 +53,11 @@ export function NotesScreen() {
   const [isFocus, setIsFocus] = useState(false);
   const [isCloseRightMenu, setIsCloseRightMenu] = useState(false);
   const [text, setText] = useState('');
-  const sortMode = useAppSelector((state) => state.notes.sortMode);
-  const dateSortMode = useAppSelector((state) => state.notes.dataSortMode);
   const user = useAppSelector((state) => state.auth.user);
-  const notes = useAppSelector((state) => state.notes.notes);
+  const { notesKeys, notes, sortMode, dataSortMode } = useAppSelector(
+    (state) => state.notes
+  );
+
   const { newData, amountOfCards } = useGetChangedData({
     data: notes ? notes : [],
   });
@@ -63,7 +67,8 @@ export function NotesScreen() {
     amountOfCards,
     screenSize,
   });
-  const isSortByNames = sortMode === 'By names' || dateSortMode === 'Off';
+
+  const isSortByNames = sortMode === 'By names' || dataSortMode === 'Off';
   const screenOffset = useSharedValue(0);
   const navigation = useNavigation<StackNavigationProp<MainNotesParamList>>();
   const dispatch = useAppDispatch();
@@ -80,9 +85,12 @@ export function NotesScreen() {
     // dispatch(deleteNote({ user, key: '-Nl4LmP4DBVqu9GhljRm' }));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  console.log('11112', notes);
   const navigateToCreateNote = () =>
     navigation.navigate(NotesStackScreenName.CREATE_NOTE);
+
+  const onCardPress = ({ note, key }: OnCardPressPropsI) => {
+    navigation.navigate(NotesStackScreenName.CREATE_NOTE, { note, key });
+  };
   const renderItem = ({ item, index }: RenderItemI) => {
     return (
       <StyledCardWithTitleWrapper
@@ -90,32 +98,14 @@ export function NotesScreen() {
         key={item.title}
       >
         <StyledLabel>{item.title}</StyledLabel>
-        <NoteCard data={item.filteredData} isSearch={isFocus} />
+        <NoteCard
+          data={item.filteredData}
+          isSearch={isFocus}
+          onCardPress={onCardPress}
+        />
       </StyledCardWithTitleWrapper>
     );
   };
-
-  const reference = firebase
-    .app()
-    .database('https://beginner-ideas-app-default-rtdb.firebaseio.com')
-    .ref(`/${user}/notes`);
-
-  database()
-    .ref(`/${user}/notes`)
-    .once('value')
-    .then((snapshot) => {
-      // console.log('1111', Object.values(snapshot.val()));
-    });
-
-  // reference
-  //   .set({
-  //     age: `dddd
-  //
-  //
-  //     dddd
-  //     `,
-  //   })
-  //   .then(() => console.log('Data updated.'));
 
   return (
     <StyledTimerScreenContainer
@@ -137,6 +127,7 @@ export function NotesScreen() {
             data={dataAfterSearch}
             isSearch={isFocus}
             searchText={text}
+            onCardPress={onCardPress}
           />
         </StyledCardWithTitleWrapper>
       ) : (

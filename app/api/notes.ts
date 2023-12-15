@@ -4,10 +4,7 @@ import { PushNoteActionPayloadI } from 'app/redux/notes/slice';
 interface CreateReferencePropsI {
   user: string;
 }
-interface PushNotePropsI extends CreateReferencePropsI {
-  note: string;
-}
-interface UpdateNotePropsI extends PushNotePropsI {
+interface UpdateNotePropsI extends PushNoteActionPayloadI {
   key: string;
 }
 interface DeleteNotePropsI extends CreateReferencePropsI {
@@ -44,11 +41,21 @@ export const pushNote = ({
       date,
     })
     .then(() => console.log('Data pushed.'));
-export const updateNote = ({ user, note, key }: UpdateNotePropsI) =>
+export const updateNote = ({
+  user,
+  note,
+  key,
+  title,
+  subTitle,
+  date,
+}: UpdateNotePropsI) =>
   database()
     .ref(`/${user}/notes/${key}`)
     .update({
       note,
+      title,
+      subTitle,
+      date,
     })
     .then(() => console.log('Data updated.'));
 

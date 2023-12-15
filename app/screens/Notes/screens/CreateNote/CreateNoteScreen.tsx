@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { SetStateAction, useEffect, useState } from 'react';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
-import { pushNote } from 'app/redux/notes/slice';
+import { pushNote, updateNote } from 'app/redux/notes/slice';
+import { NotesStackScreenName } from 'app/types';
 
 import { MainNotesParamList } from 'app/navigation/app/Notes.navigator';
 import { colors, MainColorName } from 'app/constants/color';
@@ -17,18 +18,36 @@ interface CreateNoteScreenPropsI {}
 
 export function CreateNoteScreen({}: CreateNoteScreenPropsI) {
   const [text, setText] = useState('');
+  const [key, setKey] = useState('');
+  const route =
+    useRoute<RouteProp<MainNotesParamList, NotesStackScreenName.CREATE_NOTE>>();
   const dispatch = useAppDispatch();
   const navigation = useNavigation<StackNavigationProp<MainNotesParamList>>();
   const dataForSend = usePrepareObjectForSendToServer({ note: text });
   const user = useAppSelector((state) => state.auth.user);
 
-  const onPress = () =>
+  const onPress = () => {
+      console.log('22', dataForSend)
     dispatch(
-      pushNote({
-        ...dataForSend,
-        user: user ? user : '',
-      })
+      key
+        ? updateNote({
+            ...dataForSend,
+            user: user ? user : '',
+            key,
+          })
+        : pushNote({
+            ...dataForSend,
+            user: user ? user : '',
+          })
     );
+  };
+  useEffect(() => {
+    if (route?.params) {
+      setText(route?.params.note);
+      setKey(route?.params.key);
+    }
+  }, [route?.params]);
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: () =>

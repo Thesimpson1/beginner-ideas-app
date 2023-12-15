@@ -62,7 +62,6 @@ export function* getNotesSaga({
 
 export function* pushNoteSaga({ payload }: SetPushNoteSagaPropsType): unknown {
   try {
-    console.log('1111', payload);
     yield api.pushNote({
       ...payload,
     });
@@ -77,17 +76,13 @@ export function* pushNoteSaga({ payload }: SetPushNoteSagaPropsType): unknown {
   }
 }
 
-export function* updateNoteSaga({
-  payload: { user, note, key },
-}: UpdateNoteSagaPropsType): unknown {
+export function* updateNoteSaga({ payload }: UpdateNoteSagaPropsType): unknown {
   try {
     yield api.updateNote({
-      user,
-      note,
-      key,
+      ...payload,
     });
     const getNotesOnce: PushNoteActionPayloadI = yield api.readNotes({
-      user,
+      user: payload.user,
     });
     yield put(updateNoteSuccess(getNotesOnce));
     // @ts-ignore
