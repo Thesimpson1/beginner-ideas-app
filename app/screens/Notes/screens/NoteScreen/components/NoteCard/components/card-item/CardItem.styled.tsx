@@ -1,4 +1,4 @@
-import { Animated as JSTreatAnimated } from 'react-native';
+
 import styled from 'styled-components/native';
 
 import { StyledTextH2, StyledTextH3 } from 'app/utils/common-styled-components';
@@ -29,10 +29,4 @@ export const StyledTitle = styled(StyledTextH2)<{
   font-size: ${calcFontSize(16)}px;
   color: ${colors[MainColorName.WHITE]};
   display: ${({ isSearch }) => (isSearch ? 'none' : 'flex')};
-`;
-export const StyledDeleteComponentWrapper = styled(JSTreatAnimated.View)`
-  background-color: red;
-  width: ${calcWidth(60)}px;
-  justify-content: center;
-  align-items: center;
 `;
