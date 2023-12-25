@@ -16,12 +16,12 @@ import {
 } from 'app/assets/icon';
 import { calcHeight, calcWidth } from 'app/utils/scaling-system';
 import { MenuItem } from 'app/components/MenuItem/MenuItem';
-import { useGetItemData } from 'app/screens/Notes/components/HeaderRightComponent/components/RightMenu/hooks/useGetItemData';
+import { useGetItemData } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/hooks/useGetItemData';
 import {
   StyledRightMenuDropdownWrapper,
   StyledRightMenuWrapper,
-} from 'app/screens/Notes/components/HeaderRightComponent/components/RightMenu/RightMenu.styled';
-import { getItemInfo } from 'app/screens/Notes/components/HeaderRightComponent/components/RightMenu/utils/utils';
+} from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/RightMenu.styled';
+import { getItemInfo } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/utils/utils';
 import { MenuDataTypes } from 'app/screens/Notes/types';
 
 interface RightMenuPropsI {

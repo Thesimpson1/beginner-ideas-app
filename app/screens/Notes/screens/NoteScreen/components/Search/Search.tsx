@@ -5,14 +5,14 @@ import { SearchIcon } from 'app/assets/icon';
 import { calcHeight, width } from 'app/utils/scaling-system';
 import { SimpleButton } from 'app/components/SimpleButton/SimpleButton';
 import { colors, MainColorName } from 'app/constants/color';
-import { useGetAnimatedStyles } from 'app/screens/Notes/components/Search/hooks/useGetAnimatedStyles';
-import { useSearchLogic } from 'app/screens/Notes/components/Search/hooks/useSearchLogic';
+import { useGetAnimatedStyles } from 'app/screens/Notes/screens/NoteScreen/components/Search/hooks/useGetAnimatedStyles';
+import { useSearchLogic } from 'app/screens/Notes/screens/NoteScreen/components/Search/hooks/useSearchLogic';
 import {
   StyledCancelWrapper,
   StyledEmptyWrapper,
   StyledSearchContainer,
   StyledSearchWrapper,
-} from 'app/screens/Notes/components/Search/Search.styled';
+} from 'app/screens/Notes/screens/NoteScreen/components/Search/Search.styled';
 import { CardItemI } from 'app/screens/Notes/types';
 
 interface SearchPropsI {

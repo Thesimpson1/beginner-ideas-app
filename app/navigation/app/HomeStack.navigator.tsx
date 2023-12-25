@@ -12,7 +12,7 @@ import { TimerScreen } from 'app/screens/Timer/Timer';
 
 export type HomeStackParamList = {
   [HomeStackScreenName.CALCULATOR]: undefined;
-  [HomeStackScreenName.NOTES]: undefined;
+  [HomeStackScreenName.NOTES_SCREEN]: undefined;
   [HomeStackScreenName.CALENDAR]: undefined;
   [HomeStackScreenName.HOME]: undefined;
   [HomeStackScreenName.LOGIN_FROM_HOME]: undefined;
@@ -47,7 +47,7 @@ export const HomeStack = () => {
       />
       <Stack.Screen name={HomeStackScreenName.TIMER} component={TimerScreen} />
       <Stack.Screen
-        name={HomeStackScreenName.NOTES}
+        name={HomeStackScreenName.NOTES_SCREEN}
         component={NotesStack}
         options={{ headerShown: false }}
       />

@@ -4,7 +4,7 @@ import { FlatList } from 'react-native';
 import {
   StyledFlatListTitleContainer,
   StyledTitle,
-} from 'app/screens/Notes/components/NoteCard/components/card-title/CardTitle.styled';
+} from 'app/screens/Notes/screens/NoteScreen/components/NoteCard/components/card-title/CardTitle.styled';
 
 interface RenderItemPropsI {
   item: string;

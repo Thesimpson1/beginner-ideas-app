@@ -1,8 +1,11 @@
 import React from 'react';
 
 import { RightArrowWhiteIcon, WhiteCheckMarkIcon } from 'app/assets/icon';
-import { StyledRotatedArrowWrapper } from 'app/screens/Notes/components/HeaderRightComponent/components/RightMenu/RightMenu.styled';
+
 import { MenuDataTypes } from 'app/screens/Notes/types';
+import {
+  StyledRotatedArrowWrapper
+} from "app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/RightMenu.styled";
 
 interface SetLeftIconI {
   mode: string;

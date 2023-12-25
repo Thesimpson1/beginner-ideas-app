@@ -6,12 +6,12 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { MenuWithDotsIcon } from 'app/assets/icon';
-import { RightMenu } from 'app/screens/Notes/components/HeaderRightComponent/components/RightMenu/RightMenu';
+import { RightMenu } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/RightMenu';
 import {
   StyledHeaderRightComponentWrapper,
   StyledMenuIcon,
   StyledShadowModalWrapper,
-} from 'app/screens/Notes/components/HeaderRightComponent/HeaderRightComponent.styled';
+} from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/HeaderRightComponent.styled';
 
 const Icon = () => <MenuWithDotsIcon testID={'MenuWithDotsIconTestID'} />;
 interface HeaderRightComponentPropsI {

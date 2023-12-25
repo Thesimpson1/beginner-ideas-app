@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
-import { useSharedValue } from 'react-native-reanimated';
+import { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import database, { firebase } from '@react-native-firebase/database';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -15,12 +15,12 @@ import { NotesStackScreenName } from 'app/types';
 
 import { HomeStackParamList } from 'app/navigation/app/HomeStack.navigator';
 import { MainNotesParamList } from 'app/navigation/app/Notes.navigator';
-import { BottomComponent } from 'app/screens/Notes/components/BottomComponent/BottomComponent';
-import { HeaderRightComponent } from 'app/screens/Notes/components/HeaderRightComponent/HeaderRightComponent';
-import { NoteCard } from 'app/screens/Notes/components/NoteCard/NoteCard';
-import { Search } from 'app/screens/Notes/components/Search/Search';
 import { useGetAnimationData } from 'app/screens/Notes/hooks/useGetAnimationData';
 import { useGetChangedData } from 'app/screens/Notes/hooks/useGetChangedData';
+import { BottomComponent } from 'app/screens/Notes/screens/NoteScreen/components/BottomComponent/BottomComponent';
+import { HeaderRightComponent } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/HeaderRightComponent';
+import { NoteCard } from 'app/screens/Notes/screens/NoteScreen/components/NoteCard/NoteCard';
+import { Search } from 'app/screens/Notes/screens/NoteScreen/components/Search/Search';
 import {
   StyledCardWithTitleWrapper,
   StyledLabel,
@@ -80,6 +80,7 @@ export function NotesScreen() {
     });
   }, [isCloseRightMenu, navigation]);
   useEffect(() => {
+    console.log('33');
     dispatch(getNotes({ user }));
     // dispatch(updateNote({ user, note: 'heyka12', key: '-Nl4LmP4DBVqu9GhljRm' }));
     // dispatch(deleteNote({ user, key: '-Nl4LmP4DBVqu9GhljRm' }));
@@ -91,6 +92,7 @@ export function NotesScreen() {
   const onCardPress = ({ note, key }: OnCardPressPropsI) => {
     navigation.navigate(NotesStackScreenName.CREATE_NOTE, { note, key });
   };
+
   const renderItem = ({ item, index }: RenderItemI) => {
     return (
       <StyledCardWithTitleWrapper

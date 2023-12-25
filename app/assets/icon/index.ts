@@ -18,3 +18,4 @@ export { default as SortVerticalIcon } from './SortVerticalIcon.svg';
 export { default as NotesCalendarIcon } from './NotesCalendarIcon.svg';
 export { default as RightArrowWhiteIcon } from './RightArrowWhiteIcon.svg';
 export { default as WhiteCheckMarkIcon } from './WhiteCheckMarkIcon.svg';
+export { default as TrashIcon } from './TrashIcon.svg';

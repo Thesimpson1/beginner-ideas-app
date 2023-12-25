@@ -29,7 +29,14 @@ type SetPushNoteSagaPropsType = SetPushNotePayloadI & {
 };
 
 interface UpdateNotePayloadI {
-  [key: string]: { user: string; note: string; key: string };
+  [key: string]: {
+    user: string;
+    note: string;
+    key: string;
+    title: string;
+    subTitle: string;
+    date: string;
+  };
 }
 type UpdateNoteSagaPropsType = UpdateNotePayloadI & {
   type: string;
