@@ -1,16 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createValidObjectForDisplay } from 'app/redux/notes/helpers';
 
-import { GetChangedDataI } from 'app/screens/Notes/hooks/useGetChangedData';
 import { CardItemI } from 'app/screens/Notes/types';
-
-interface NotesFromServerI {
-  [key: string]: string;
-}
 
 export interface NotesState {
   sortMode: string;
   dataSortMode: string;
+  isOpenDeleteComponent: boolean;
 
   isFetchNotes: boolean;
   notes: CardItemI[] | null;
@@ -30,6 +26,7 @@ export interface NotesState {
 const initialState: NotesState = {
   sortMode: 'By creating date',
   dataSortMode: 'On',
+  isOpenDeleteComponent: false,
 
   isFetchNotes: false,
   notes: null,
@@ -68,6 +65,10 @@ export const slice = createSlice({
   name: 'notes',
   initialState,
   reducers: {
+    setIsOpenDeleteComponent: (state, action) => {
+      state.isOpenDeleteComponent = action.payload;
+    },
+
     setSortMode: (state, action) => {
       state.sortMode = action.payload;
     },
@@ -152,6 +153,7 @@ export const {
   updateNoteSuccess,
   updateNote,
   deleteNote,
+  setIsOpenDeleteComponent,
 } = slice.actions;
 
 export default slice.reducer;

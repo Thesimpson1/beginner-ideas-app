@@ -1,15 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import {
-  Animated as JSTreatAnimated,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import React, { useEffect } from 'react';
+import { Animated as JSTreatAnimated, TouchableOpacity } from 'react-native';
 import SwipeableComponent from 'react-native-gesture-handler/Swipeable';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
 import {
   StyledDeleteComponentWrapper,
@@ -24,7 +16,7 @@ import { CardItemI } from 'app/screens/Notes/types';
 import AnimatedInterpolation = JSTreatAnimated.AnimatedInterpolation;
 
 import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
-import { deleteNote } from 'app/redux/notes/slice';
+import { deleteNote, setIsOpenDeleteComponent } from 'app/redux/notes/slice';
 
 import { TrashIcon } from 'app/assets/icon';
 import { calcWidth } from 'app/utils/scaling-system';
@@ -33,7 +25,48 @@ interface RenderItemPropsI extends NoteCardPropsI {
   item: CardItemI;
   index: number;
 }
+interface DeleteComponentI {
+  dragAnimatedValue: AnimatedInterpolation<string | number>;
+  Swipeable: SwipeableComponent;
+  userKey: string;
+}
+const DeleteComponent = ({
+  dragAnimatedValue,
+  Swipeable,
+  userKey,
+}: DeleteComponentI) => {
+  const dispatch = useAppDispatch();
+  const { isOpenDeleteComponent } = useAppSelector((state) => state.notes);
+  const user = useAppSelector((state) => state.auth.user);
 
+  useEffect(() => {
+    if (!isOpenDeleteComponent) {
+      Swipeable.close();
+    }
+  }, [isOpenDeleteComponent]); // eslint-disable-line react-hooks/exhaustive-deps
+  const deleteNoteAction = () => {
+    dispatch(deleteNote({ user, key: userKey }));
+  };
+  const opacity = dragAnimatedValue.interpolate({
+    inputRange: [calcWidth(-60), 0],
+    outputRange: [1, 0],
+    extrapolate: 'clamp',
+  });
+  const translateX = dragAnimatedValue.interpolate({
+    inputRange: [calcWidth(-60), 0],
+    outputRange: [0, calcWidth(60)],
+  });
+
+  return (
+    <StyledDeleteComponentWrapper
+      style={[{ transform: [{ translateX }], opacity }]}
+    >
+      <TouchableOpacity hitSlop={30} onPress={deleteNoteAction}>
+        <TrashIcon />
+      </TouchableOpacity>
+    </StyledDeleteComponentWrapper>
+  );
+};
 export const CardItem = ({
   item,
   index,
@@ -43,40 +76,23 @@ export const CardItem = ({
   isSearch,
 }: RenderItemPropsI) => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.user);
-
   const { date, title, subTitle, note, key } = item;
 
-  const deleteNoteAction = () => {
-    dispatch(deleteNote({ user, key }));
-  };
-  const renderDeleteComponent = (
-    progressAnimatedValue: AnimatedInterpolation<string | number>,
-    dragAnimatedValue: AnimatedInterpolation<string | number>
-  ) => {
-    const opacity = dragAnimatedValue.interpolate({
-      inputRange: [calcWidth(-60), 0],
-      outputRange: [1, 0],
-      extrapolate: 'clamp',
-    });
-    const translateX = dragAnimatedValue.interpolate({
-      inputRange: [calcWidth(-60), 0],
-      outputRange: [0, calcWidth(60)],
-    });
-
-    return (
-      <StyledDeleteComponentWrapper
-        style={[{ transform: [{ translateX }], opacity }]}
-      >
-        <TouchableOpacity hitSlop={30} onPress={deleteNoteAction}>
-          <TrashIcon />
-        </TouchableOpacity>
-      </StyledDeleteComponentWrapper>
-    );
-  };
-
   return (
-    <SwipeableComponent renderRightActions={renderDeleteComponent}>
+    <SwipeableComponent
+      renderRightActions={(
+        progressAnimatedValue,
+        dragAnimatedValue,
+        Swipeable
+      ) => (
+        <DeleteComponent
+          dragAnimatedValue={dragAnimatedValue}
+          Swipeable={Swipeable}
+          userKey={key}
+        />
+      )}
+      onSwipeableOpen={() => dispatch(setIsOpenDeleteComponent(true))}
+    >
       <Animated.View>
         <StyledRenderItemWrapper
           isDisplayBottomBorder={index !== data.length - 1}

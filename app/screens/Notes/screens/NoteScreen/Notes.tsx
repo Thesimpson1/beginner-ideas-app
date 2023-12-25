@@ -9,11 +9,11 @@ import {
   deleteNote,
   getNotes,
   pushNote,
+  setIsOpenDeleteComponent,
   updateNote,
 } from 'app/redux/notes/slice';
 import { NotesStackScreenName } from 'app/types';
 
-import { HomeStackParamList } from 'app/navigation/app/HomeStack.navigator';
 import { MainNotesParamList } from 'app/navigation/app/Notes.navigator';
 import { useGetAnimationData } from 'app/screens/Notes/hooks/useGetAnimationData';
 import { useGetChangedData } from 'app/screens/Notes/hooks/useGetChangedData';
@@ -54,9 +54,8 @@ export function NotesScreen() {
   const [isCloseRightMenu, setIsCloseRightMenu] = useState(false);
   const [text, setText] = useState('');
   const user = useAppSelector((state) => state.auth.user);
-  const { notesKeys, notes, sortMode, dataSortMode } = useAppSelector(
-    (state) => state.notes
-  );
+  const { notes, sortMode, dataSortMode, isOpenDeleteComponent } =
+    useAppSelector((state) => state.notes);
 
   const { newData, amountOfCards } = useGetChangedData({
     data: notes ? notes : [],
@@ -80,17 +79,18 @@ export function NotesScreen() {
     });
   }, [isCloseRightMenu, navigation]);
   useEffect(() => {
-    console.log('33');
     dispatch(getNotes({ user }));
-    // dispatch(updateNote({ user, note: 'heyka12', key: '-Nl4LmP4DBVqu9GhljRm' }));
-    // dispatch(deleteNote({ user, key: '-Nl4LmP4DBVqu9GhljRm' }));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const navigateToCreateNote = () =>
     navigation.navigate(NotesStackScreenName.CREATE_NOTE);
 
   const onCardPress = ({ note, key }: OnCardPressPropsI) => {
-    navigation.navigate(NotesStackScreenName.CREATE_NOTE, { note, key });
+    if (!isOpenDeleteComponent) {
+      navigation.navigate(NotesStackScreenName.CREATE_NOTE, { note, key });
+    } else {
+      dispatch(setIsOpenDeleteComponent(false));
+    }
   };
 
   const renderItem = ({ item, index }: RenderItemI) => {
