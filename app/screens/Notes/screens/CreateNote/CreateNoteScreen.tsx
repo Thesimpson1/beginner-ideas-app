@@ -1,8 +1,8 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
-import { pushNote, updateNote } from 'app/redux/notes/slice';
+import { updateNote } from 'app/redux/notes/slice';
 import { NotesStackScreenName } from 'app/types';
 
 import { MainNotesParamList } from 'app/navigation/app/Notes.navigator';
@@ -19,27 +19,24 @@ interface CreateNoteScreenPropsI {}
 export function CreateNoteScreen({}: CreateNoteScreenPropsI) {
   const [text, setText] = useState('');
   const [key, setKey] = useState('');
+  const { isPushNewNote, isUpdateNote } = useAppSelector(
+    (state) => state.notes
+  );
   const route =
     useRoute<RouteProp<MainNotesParamList, NotesStackScreenName.CREATE_NOTE>>();
   const dispatch = useAppDispatch();
   const navigation = useNavigation<StackNavigationProp<MainNotesParamList>>();
-  const dataForSend = usePrepareObjectForSendToServer({ note: text });
+  const dataForSend = usePrepareObjectForSendToServer({ note: text, key });
   const user = useAppSelector((state) => state.auth.user);
 
   const onPress = () => {
-      console.log('22', dataForSend)
     dispatch(
-      key
-        ? updateNote({
-            ...dataForSend,
-            user: user ? user : '',
-            key,
-          })
-        : pushNote({
-            ...dataForSend,
-            user: user ? user : '',
-          })
+      updateNote({
+        ...dataForSend,
+        user: user ? user : '',
+      })
     );
+    setKey(dataForSend.key);
   };
   useEffect(() => {
     if (route?.params) {
@@ -53,7 +50,7 @@ export function CreateNoteScreen({}: CreateNoteScreenPropsI) {
       headerRight: () =>
         RightDoneButton({
           onClickButton: onPress,
-          isDisabled: dataForSend.title === '',
+          isDisabled: dataForSend.title === '' || isPushNewNote || isUpdateNote,
         }),
     });
   }, [navigation, dataForSend]); // eslint-disable-line react-hooks/exhaustive-deps

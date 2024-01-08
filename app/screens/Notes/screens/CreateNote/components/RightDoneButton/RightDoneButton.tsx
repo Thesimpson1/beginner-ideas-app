@@ -20,7 +20,7 @@ export const RightDoneButton = ({
         title={'Done'}
         isDisabled={isDisabled}
         size={calcFontSize(12)}
-        color={colors[MainColorName.BLUE]}
+        color={colors[MainColorName.DARK_BLUE]}
       />
     </StyledRightDoneButtonWrapper>
   );

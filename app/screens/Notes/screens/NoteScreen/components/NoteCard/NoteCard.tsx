@@ -1,15 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Animated as JSTreatAnimated,
-  FlatList,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React from 'react';
+import { FlatList } from 'react-native';
 
 import { CardItem } from 'app/screens/Notes/screens/NoteScreen/components/NoteCard/components/card-item/CardItem';
-import { CardTitle } from 'app/screens/Notes/screens/NoteScreen/components/NoteCard/components/card-title/CardTitle';
 import { StyledCardContainer } from 'app/screens/Notes/screens/NoteScreen/components/NoteCard/NoteCard.styled';
 import { OnCardPressPropsI } from 'app/screens/Notes/screens/NoteScreen/Notes';
 import { CardItemI } from 'app/screens/Notes/types';

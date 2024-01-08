@@ -2,13 +2,17 @@ import moment from 'moment';
 
 interface UsePrepareObjectForSendToServerI {
   note: string;
+  key: string;
 }
 export const usePrepareObjectForSendToServer = ({
   note,
+  key,
 }: UsePrepareObjectForSendToServerI) => {
+
   const date = moment().format('YYYY-MM-DD');
   let title = '';
   let subTitle = '';
+  let currentKey = '';
   if (note) {
     note.split('\n').forEach((item) => {
       if (item) {
@@ -27,5 +31,10 @@ export const usePrepareObjectForSendToServer = ({
       }
     });
   }
-  return { date, note, title, subTitle };
+  if (key) {
+    currentKey = key;
+  } else {
+    currentKey = Math.round(Math.random() * 1000).toString();
+  }
+  return { date, note, title, subTitle, key: currentKey };
 };

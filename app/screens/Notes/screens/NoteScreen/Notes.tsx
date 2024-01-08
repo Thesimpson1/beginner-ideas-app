@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
-import { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
-import database, { firebase } from '@react-native-firebase/database';
+import { useSharedValue } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
-import {
-  deleteNote,
-  getNotes,
-  pushNote,
-  setIsOpenDeleteComponent,
-  updateNote,
-} from 'app/redux/notes/slice';
+import { getNotes, setIsOpenDeleteComponent } from 'app/redux/notes/slice';
 import { NotesStackScreenName } from 'app/types';
 
 import { MainNotesParamList } from 'app/navigation/app/Notes.navigator';
@@ -81,7 +74,6 @@ export function NotesScreen() {
   useEffect(() => {
     dispatch(getNotes({ user }));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   const navigateToCreateNote = () =>
     navigation.navigate(NotesStackScreenName.CREATE_NOTE);
 
