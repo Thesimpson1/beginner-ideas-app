@@ -10,7 +10,6 @@ export interface NotesState {
 
   isFetchNotes: boolean;
   notes: CardItemI[] | null;
-  notesKeys: Array<string>;
   fetchNotesError: string;
 
   isPushNewNote: boolean;
@@ -30,7 +29,6 @@ const initialState: NotesState = {
 
   isFetchNotes: false,
   notes: null,
-  notesKeys: [],
   fetchNotesError: '',
 
   isPushNewNote: false,
@@ -83,7 +81,6 @@ export const slice = createSlice({
     getNotesSuccess: (state, action: GetNotesSuccessActionI) => {
       state.isFetchNotes = false;
       state.notes = createValidObjectForDisplay({ data: action.payload });
-      state.notesKeys = Object.keys(action.payload).reverse();
     },
     getNotesError: (state, action) => {
       state.isFetchNotes = false;
@@ -97,7 +94,6 @@ export const slice = createSlice({
     pushNoteSuccess: (state, action: GetNotesSuccessActionI) => {
       state.isPushNewNote = false;
       state.notes = createValidObjectForDisplay({ data: action.payload });
-      state.notesKeys = Object.keys(action.payload).reverse();
     },
     pushNoteError: (state, action) => {
       state.isPushNewNote = false;
@@ -111,7 +107,6 @@ export const slice = createSlice({
     updateNoteSuccess: (state, action: GetNotesSuccessActionI) => {
       state.isUpdateNote = false;
       state.notes = createValidObjectForDisplay({ data: action.payload });
-      state.notesKeys = Object.keys(action.payload).reverse();
     },
     updateNoteError: (state, action) => {
       state.isUpdateNote = false;
@@ -125,7 +120,6 @@ export const slice = createSlice({
     deleteNoteSuccess: (state, action: GetNotesSuccessActionI) => {
       state.isDeleteNote = false;
       state.notes = createValidObjectForDisplay({ data: action.payload });
-      state.notesKeys = Object.keys(action.payload).reverse();
     },
     deleteNoteError: (state, action) => {
       state.isDeleteNote = false;

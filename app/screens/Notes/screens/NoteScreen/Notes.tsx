@@ -100,7 +100,6 @@ export function NotesScreen() {
       </StyledCardWithTitleWrapper>
     );
   };
-
   return (
     <StyledTimerScreenContainer
       onLayout={({ nativeEvent }) => setScreenSize(nativeEvent.layout.height)}

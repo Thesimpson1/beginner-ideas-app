@@ -13,14 +13,13 @@ export const useGetChangedData = ({ data }: GetChangedDataI) => {
   const newData: Array<ChangedDataItemI> = [];
   const dataTitles: Array<string> = [];
   const amountOfCards: Array<number> = [];
-
   data?.forEach(({ date }) => {
     let title;
     let filteredData: Array<CardItemI> = [];
 
     switch (true) {
       case date === today: {
-        filteredData = data.filter((item) => item.date === today);
+        filteredData = data.filter((item) => item.date === today).reverse();
         title = 'Today';
         break;
       }
