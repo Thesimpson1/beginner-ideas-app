@@ -11,6 +11,6 @@ export enum MainStackScreenName {
   Login = 'Login',
 }
 export enum NotesStackScreenName {
-  NOTES = 'Notes',
+  NOTES = 'All Notes',
   CREATE_NOTE = 'Create Note',
 }

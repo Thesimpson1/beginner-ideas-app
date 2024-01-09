@@ -14,7 +14,7 @@ import {
 } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/HeaderRightComponent.styled';
 
 const Icon = () => <MenuWithDotsIcon testID={'MenuWithDotsIconTestID'} />;
-interface HeaderRightComponentPropsI {
+export interface HeaderRightComponentPropsI {
   isCloseRightMenu: boolean;
   setIsCloseRightMenu: Dispatch<SetStateAction<boolean>>;
 }

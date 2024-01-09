@@ -11,7 +11,10 @@ import { MainNotesParamList } from 'app/navigation/app/Notes.navigator';
 import { useGetAnimationData } from 'app/screens/Notes/hooks/useGetAnimationData';
 import { useGetChangedData } from 'app/screens/Notes/hooks/useGetChangedData';
 import { BottomComponent } from 'app/screens/Notes/screens/NoteScreen/components/BottomComponent/BottomComponent';
-import { HeaderRightComponent } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/HeaderRightComponent';
+import {
+  HeaderRightComponent,
+  HeaderRightComponentPropsI,
+} from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/HeaderRightComponent';
 import { NoteCard } from 'app/screens/Notes/screens/NoteScreen/components/NoteCard/NoteCard';
 import { Search } from 'app/screens/Notes/screens/NoteScreen/components/Search/Search';
 import {
@@ -37,6 +40,17 @@ export interface OnCardPressPropsI {
   note: string;
   key: string;
 }
+
+//was created because of ruls of hooks
+const RightHeader = ({
+  isCloseRightMenu,
+  setIsCloseRightMenu,
+}: HeaderRightComponentPropsI) => (
+  <HeaderRightComponent
+    isCloseRightMenu={isCloseRightMenu}
+    setIsCloseRightMenu={setIsCloseRightMenu}
+  />
+);
 export function NotesScreen() {
   // const onTextLayout = (e) => {
   //   console.log('1111', e.nativeEvent.lines)
@@ -67,8 +81,7 @@ export function NotesScreen() {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () =>
-        HeaderRightComponent({ isCloseRightMenu, setIsCloseRightMenu }),
+      headerRight: () => RightHeader({ isCloseRightMenu, setIsCloseRightMenu }),
     });
   }, [isCloseRightMenu, navigation]);
   useEffect(() => {

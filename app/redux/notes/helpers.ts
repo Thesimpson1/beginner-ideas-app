@@ -16,7 +16,7 @@ export const createValidObjectForDisplay = ({
       return { ...item, key: notesKeys[index] };
     })
     .sort((a, b) => {
-      return +moment(a.key) - +moment(b.key);
+      return +moment(new Date(a.key)) - +moment(new Date(b.key));
     });
   return filteredNotes;
 };
