@@ -15,18 +15,16 @@ export const usePrepareObjectForSendToServer = ({
   let currentKey = '';
   if (note) {
     note.split('\n').forEach((item) => {
-      if (item) {
-        if (title && subTitle) {
+      if (title && subTitle) {
+        return;
+      } else {
+        if (!title) {
+          title = item;
           return;
-        } else {
-          if (!title) {
-            title = item;
-            return;
-          }
-          if (!subTitle) {
-            subTitle = item;
-            return;
-          }
+        }
+        if (!subTitle) {
+          subTitle = item;
+          return;
         }
       }
     });
