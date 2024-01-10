@@ -31,16 +31,12 @@ export const pushNote = ({
   subTitle,
   date,
 }: PushNoteActionPayloadI) =>
-  database()
-    .ref(`/${user}/notes`)
-    .push()
-    .set({
-      note,
-      title,
-      subTitle,
-      date,
-    })
-    .then(() => console.log('Data pushed.'));
+  database().ref(`/${user}/notes`).push().set({
+    note,
+    title,
+    subTitle,
+    date,
+  });
 export const updateNote = ({
   user,
   note,
@@ -49,15 +45,12 @@ export const updateNote = ({
   subTitle,
   date,
 }: UpdateNotePropsI) =>
-  database()
-    .ref(`/${user}/notes/${key}`)
-    .update({
-      note,
-      title,
-      subTitle,
-      date,
-    })
-    .then(() => console.log('Data updated.'));
+  database().ref(`/${user}/notes/${key}`).update({
+    note,
+    title,
+    subTitle,
+    date,
+  });
 
 export const deleteNote = ({ user, key }: DeleteNotePropsI) =>
   database().ref(`/${user}/notes/${key}`).remove();

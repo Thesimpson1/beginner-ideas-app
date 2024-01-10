@@ -1,4 +1,4 @@
-import { FlatList, TextProps } from 'react-native';
+import { TextProps } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import styled from 'styled-components/native';
 

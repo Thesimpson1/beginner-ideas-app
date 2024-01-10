@@ -15,6 +15,7 @@ import {
   HeaderRightComponent,
   HeaderRightComponentPropsI,
 } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/HeaderRightComponent';
+import { NoNotes } from 'app/screens/Notes/screens/NoteScreen/components/NoNotes/NoNotes';
 import { NoteCard } from 'app/screens/Notes/screens/NoteScreen/components/NoteCard/NoteCard';
 import { Search } from 'app/screens/Notes/screens/NoteScreen/components/Search/Search';
 import {
@@ -24,18 +25,6 @@ import {
 } from 'app/screens/Notes/screens/NoteScreen/Notes.styled';
 import { CardItemI, RenderItemI } from 'app/screens/Notes/types';
 
-// export const oldData = [
-//   { date: '2023-11-10', title: 'noteCardTitle', subTitle: 'NoteCardSubtitle' },
-//   { date: '2023-11-10', title: 'qwqwqwqwq', subTitle: 'NoteCardSubtitle' },
-//   { date: '2023-11-09', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-//   { date: '2023-11-09', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-//   { date: '2023-11-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-//   // { date: '2023-11-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-//   { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-//   { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-//   { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-//   { date: '2023-10-07', title: 'NoteCardTitle', subTitle: 'NoteCardSubtitle' },
-// ];
 export interface OnCardPressPropsI {
   note: string;
   key: string;
@@ -52,10 +41,6 @@ const RightHeader = ({
   />
 );
 export function NotesScreen() {
-  // const onTextLayout = (e) => {
-  //   console.log('1111', e.nativeEvent.lines)
-  // };
-  //
   const [dataAfterSearch, setDataAfterSearch] = useState<Array<CardItemI>>([]);
   const [isFocus, setIsFocus] = useState(false);
   const [isCloseRightMenu, setIsCloseRightMenu] = useState(false);
@@ -79,6 +64,8 @@ export function NotesScreen() {
   const navigation = useNavigation<StackNavigationProp<MainNotesParamList>>();
   const dispatch = useAppDispatch();
 
+  const isNoNotes = notes === null || notes?.length === 0;
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => RightHeader({ isCloseRightMenu, setIsCloseRightMenu }),
@@ -97,7 +84,6 @@ export function NotesScreen() {
       dispatch(setIsOpenDeleteComponent(false));
     }
   };
-
   const renderItem = ({ item, index }: RenderItemI) => {
     return (
       <StyledCardWithTitleWrapper
@@ -119,6 +105,7 @@ export function NotesScreen() {
     >
       <Search
         offset={screenOffset}
+        isEmptyScreen={isNoNotes}
         setIsFocus={setIsFocus}
         setText={setText}
         text={text}
@@ -126,7 +113,7 @@ export function NotesScreen() {
         isRunSearchAnimation={isRunSearchAnimation}
         setDataAfterSearch={setDataAfterSearch}
       />
-
+      <NoNotes isNoNotes={isNoNotes} />
       {isFocus || isSortByNames ? (
         <StyledCardWithTitleWrapper isLastIndex>
           <NoteCard
@@ -146,14 +133,13 @@ export function NotesScreen() {
           showsVerticalScrollIndicator={false}
         />
       )}
+
       {!isFocus && !isSortByNames && (
         <BottomComponent
           amountOfNotes={notes ? notes.length : 0}
           createNote={navigateToCreateNote}
         />
       )}
-
-      {/*/!*<Text onTextLayout={onTextLayout}>{text}</Text>*!/*/}
     </StyledTimerScreenContainer>
   );
 }

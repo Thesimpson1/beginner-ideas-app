@@ -8,15 +8,20 @@ interface CreateValidObjectForDisplayI {
 export const createValidObjectForDisplay = ({
   data,
 }: CreateValidObjectForDisplayI) => {
-  const notes = Object.values(data);
-  const notesKeys = Object.keys(data);
+  let filteredNotes = [];
 
-  const filteredNotes = notes
-    .map((item, index) => {
-      return { ...item, key: notesKeys[index] };
-    })
-    .sort((a, b) => {
-      return +moment(new Date(a.key)) - +moment(new Date(b.key));
-    });
+  if (data) {
+    const notes = Object.values(data);
+    const notesKeys = Object.keys(data);
+
+    filteredNotes = notes
+      .map((item, index) => {
+        return { ...item, key: notesKeys[index] };
+      })
+      .sort((a, b) => {
+        return +moment(new Date(a.key)) - +moment(new Date(b.key));
+      });
+  }
+
   return filteredNotes;
 };

@@ -23,6 +23,7 @@ interface SearchPropsI {
   text: string;
   isRunSearchAnimation: boolean;
   setDataAfterSearch: Dispatch<SetStateAction<CardItemI[]>>;
+  isEmptyScreen: boolean;
 }
 const Icon = () => <SearchIcon testID={'CreateNoteIconTestID'} />;
 export function Search({
@@ -33,6 +34,7 @@ export function Search({
   data,
   setDataAfterSearch,
   isRunSearchAnimation,
+  isEmptyScreen,
 }: SearchPropsI) {
   const searchWidth = useSharedValue('100%');
   const cancelButtonWidth = useSharedValue(0);
@@ -57,7 +59,7 @@ export function Search({
   const { dataAfterSearch } = useSearchLogic({ text, data });
   useEffect(() => {
     setDataAfterSearch(dataAfterSearch);
-  }, [text]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [text, data]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onFocus = () => {
     isBlur.value = false;
@@ -78,7 +80,7 @@ export function Search({
   };
 
   return (
-    <StyledSearchWrapper>
+    <StyledSearchWrapper isEmptyScreen={isEmptyScreen}>
       <StyledSearchContainer
         style={[
           isRunSearchAnimation && wrapperAnimatedStyle,

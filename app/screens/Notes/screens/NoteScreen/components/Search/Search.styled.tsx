@@ -4,8 +4,11 @@ import styled from 'styled-components/native';
 import { calcFontSize, calcWidth, width } from 'app/utils/scaling-system';
 import { colors, MainColorName } from 'app/constants/color';
 
-export const StyledSearchWrapper = styled.View`
+export const StyledSearchWrapper = styled.View<{
+  isEmptyScreen: boolean;
+}>`
   flex-direction: row;
+  display: ${({ isEmptyScreen }) => isEmptyScreen && 'none'};
 `;
 export const StyledSearchContainer = styled(Animated.View)`
   flex-direction: row;
