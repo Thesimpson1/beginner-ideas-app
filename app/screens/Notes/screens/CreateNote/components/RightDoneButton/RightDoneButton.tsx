@@ -14,7 +14,7 @@ export const RightDoneButton = ({
   isDisabled,
 }: RightDoneButtonPropsI) => {
   return (
-    <StyledRightDoneButtonWrapper>
+    <StyledRightDoneButtonWrapper testID={'StyledRightDoneButtonWrapperTestID'}>
       <SimpleButton
         onPress={onClickButton}
         title={'Done'}
