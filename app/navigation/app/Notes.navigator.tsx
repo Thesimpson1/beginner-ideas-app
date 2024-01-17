@@ -2,7 +2,6 @@ import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NotesStackScreenName } from 'app/types';
 
-import { colors, MainColorName } from 'app/constants/color';
 import { CreateNoteScreen } from 'app/screens/Notes/screens/CreateNote/CreateNoteScreen';
 import { NotesScreen } from 'app/screens/Notes/screens/NoteScreen/Notes';
 
@@ -16,7 +15,7 @@ export const NotesStack = () => {
     <Stack.Navigator
       initialRouteName={NotesStackScreenName.NOTES}
       screenOptions={{
-        headerStyle: { backgroundColor: colors[MainColorName.GRAY_BLUE] },
+        headerShown: false,
       }}
     >
       <Stack.Screen name={NotesStackScreenName.NOTES} component={NotesScreen} />
