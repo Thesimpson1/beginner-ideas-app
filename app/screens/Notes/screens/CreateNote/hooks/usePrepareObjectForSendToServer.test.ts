@@ -63,17 +63,4 @@ describe('Use Prepare Object For Send To Server', () => {
     expect(subTitle).toBe('    Hello subtitle');
     expect(key).toBe(mockKey);
   });
-  // it('Should correct create object for send to server when note = null', async () => {
-  //   mockNote = null;
-  //   mockKey = 'SomeMockKey';
-  //   const { result } = renderHook(() =>
-  //     usePrepareObjectForSendToServer({ note: null, key: mockKey })
-  //   );
-  //   const { note, title, subTitle, key } = result.current;
-  //
-  //   expect(note).toBe(mockNote);
-  //   expect(title).toBe('Hello mock');
-  //   expect(subTitle).toBe('    Hello subtitle');
-  //   expect(key).toBe(mockKey);
-  // });
 });

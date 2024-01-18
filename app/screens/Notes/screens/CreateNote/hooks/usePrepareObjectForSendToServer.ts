@@ -4,10 +4,17 @@ interface UsePrepareObjectForSendToServerI {
   note: string;
   key: string;
 }
+export interface DataForSendI {
+  date: string;
+  title: string;
+  subTitle: string;
+  note: string;
+  key: string;
+}
 export const usePrepareObjectForSendToServer = ({
   note,
   key,
-}: UsePrepareObjectForSendToServerI) => {
+}: UsePrepareObjectForSendToServerI): DataForSendI => {
   const date = moment().format('YYYY-MM-DD');
 
   let title = '';
