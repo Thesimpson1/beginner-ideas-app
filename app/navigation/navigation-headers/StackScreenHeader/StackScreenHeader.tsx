@@ -38,7 +38,13 @@ export function StackScreenHeader({ options }: StackScreenHeaderPropsI) {
     }
 
     return (
-      <StyledLeftHeaderDefaultWrapper onPress={() => navigation.goBack()}>
+      <StyledLeftHeaderDefaultWrapper
+        onPress={() => {
+          if (navigation.canGoBack()) {
+            navigation.goBack();
+          }
+        }}
+      >
         <StyledRightArrowIconWrapper />
         <SimpleButton
           onPress={() => {}}

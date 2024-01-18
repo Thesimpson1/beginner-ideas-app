@@ -19,7 +19,7 @@ export const useGetChangedData = ({ data }: GetChangedDataI) => {
 
     switch (true) {
       case date === today: {
-        filteredData = data.filter((item) => item.date === today).reverse();
+        filteredData = data.filter((item) => item.date === today);
         title = 'Today';
         break;
       }

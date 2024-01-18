@@ -20,8 +20,8 @@ export const createValidObjectForDisplay = ({
       })
       .sort((a, b) => {
         return +moment(new Date(a.key)) - +moment(new Date(b.key));
-      });
+      })
+      .reverse();
   }
-
   return filteredNotes;
 };
