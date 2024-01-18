@@ -11,6 +11,8 @@ import { colors, MainColorName } from 'app/constants/color';
 export const StyledTimerScreenContainer = styled(StyledAnimatedWrapper)`
   background-color: ${colors[MainColorName.BLUE]};
   padding: ${calcHeight(20)}px ${calcWidth(15)}px 0 ${calcWidth(15)}px;
+  position: relative;
+  z-index: -2;
 ` as typeof Animated.View;
 export const StyledCardWithTitleWrapper = styled.View<{
   isLastIndex: boolean;

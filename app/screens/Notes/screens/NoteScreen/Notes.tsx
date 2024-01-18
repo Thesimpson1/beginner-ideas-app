@@ -8,6 +8,7 @@ import { getNotes, setIsOpenDeleteComponent } from 'app/redux/notes/slice';
 import { NotesStackScreenName } from 'app/types';
 
 import { MainNotesParamList } from 'app/navigation/app/Notes.navigator';
+import { StackScreenHeader } from 'app/navigation/navigation-headers/StackScreenHeader/StackScreenHeader';
 import { useGetAnimationData } from 'app/screens/Notes/hooks/useGetAnimationData';
 import { useGetChangedData } from 'app/screens/Notes/hooks/useGetChangedData';
 import { BottomComponent } from 'app/screens/Notes/screens/NoteScreen/components/BottomComponent/BottomComponent';
@@ -67,11 +68,6 @@ export function NotesScreen() {
   const isNoNotes = notes === null || notes?.length === 0;
 
   useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => RightHeader({ isCloseRightMenu, setIsCloseRightMenu }),
-    });
-  }, [isCloseRightMenu, navigation]);
-  useEffect(() => {
     dispatch(getNotes({ user }));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const navigateToCreateNote = () =>
@@ -100,46 +96,55 @@ export function NotesScreen() {
     );
   };
   return (
-    <StyledTimerScreenContainer
-      onLayout={({ nativeEvent }) => setScreenSize(nativeEvent.layout.height)}
-    >
-      <Search
-        offset={screenOffset}
-        isEmptyScreen={isNoNotes}
-        setIsFocus={setIsFocus}
-        setText={setText}
-        text={text}
-        data={notes ? notes : []}
-        isRunSearchAnimation={isRunSearchAnimation}
-        setDataAfterSearch={setDataAfterSearch}
+    <>
+      <StackScreenHeader
+        options={{
+          headerTitle: NotesStackScreenName.NOTES,
+          headerRight: RightHeader({ isCloseRightMenu, setIsCloseRightMenu }),
+        }}
       />
-      <NoNotes isNoNotes={isNoNotes} />
-      {isFocus || isSortByNames ? (
-        <StyledCardWithTitleWrapper isLastIndex>
-          <NoteCard
-            data={dataAfterSearch}
-            isSearch={isFocus}
-            searchText={text}
-            onCardPress={onCardPress}
+      <StyledTimerScreenContainer
+        onLayout={({ nativeEvent }) => setScreenSize(nativeEvent.layout.height)}
+        testID={'StyledTimerScreenContainerTestID'}
+      >
+        <Search
+          offset={screenOffset}
+          isEmptyScreen={isNoNotes}
+          setIsFocus={setIsFocus}
+          setText={setText}
+          text={text}
+          data={notes ? notes : []}
+          isRunSearchAnimation={isRunSearchAnimation}
+          setDataAfterSearch={setDataAfterSearch}
+        />
+        <NoNotes isNoNotes={isNoNotes} />
+        {isFocus || isSortByNames ? (
+          <StyledCardWithTitleWrapper isLastIndex>
+            <NoteCard
+              data={dataAfterSearch}
+              isSearch={isFocus}
+              searchText={text}
+              onCardPress={onCardPress}
+            />
+          </StyledCardWithTitleWrapper>
+        ) : (
+          <FlatList
+            data={newData}
+            onScroll={({ nativeEvent }) => {
+              screenOffset.value = nativeEvent.contentOffset.y;
+            }}
+            renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
           />
-        </StyledCardWithTitleWrapper>
-      ) : (
-        <FlatList
-          data={newData}
-          onScroll={({ nativeEvent }) => {
-            screenOffset.value = nativeEvent.contentOffset.y;
-          }}
-          renderItem={renderItem}
-          showsVerticalScrollIndicator={false}
-        />
-      )}
+        )}
 
-      {!isFocus && !isSortByNames && (
-        <BottomComponent
-          amountOfNotes={notes ? notes.length : 0}
-          createNote={navigateToCreateNote}
-        />
-      )}
-    </StyledTimerScreenContainer>
+        {!isFocus && !isSortByNames && (
+          <BottomComponent
+            amountOfNotes={notes ? notes.length : 0}
+            createNote={navigateToCreateNote}
+          />
+        )}
+      </StyledTimerScreenContainer>
+    </>
   );
 }
