@@ -1,11 +1,5 @@
-import React, {
-  Dispatch,
-  JSXElementConstructor,
-  ReactElement,
-  SetStateAction,
-} from 'react';
+import React from 'react';
 import { GestureResponderEvent } from 'react-native';
-import Animated from 'react-native-reanimated';
 
 import {
   StyledArrowWrapper,
@@ -30,11 +24,19 @@ export function MenuItem({
   onPress,
 }: MenuItemPropsI) {
   return (
-    <StyledMenuItemsWrapper isLastItem={index === 2} onPress={onPress}>
-      <StyledArrowWrapper>{LeftIcon && <LeftIcon />}</StyledArrowWrapper>
+    <StyledMenuItemsWrapper
+      isLastItem={index === 2}
+      onPress={onPress}
+      testID={'StyledMenuItemsWrapperTestID'}
+    >
+      <StyledArrowWrapper testID={'StyledArrowWrapperTestID'}>
+        {LeftIcon && <LeftIcon />}
+      </StyledArrowWrapper>
 
-      <StyledIconAndTextWrapper>
-        <StyledRightMenuText>{title}</StyledRightMenuText>
+      <StyledIconAndTextWrapper testID={'StyledIconAndTextWrapperTestID'}>
+        <StyledRightMenuText testID={'StyledRightMenuTextTestID'}>
+          {title}
+        </StyledRightMenuText>
         {RightIcon && <RightIcon />}
       </StyledIconAndTextWrapper>
     </StyledMenuItemsWrapper>

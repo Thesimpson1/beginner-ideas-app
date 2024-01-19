@@ -1,7 +1,6 @@
-import { Pressable } from 'react-native';
 import styled from 'styled-components/native';
 
-import { StyledTextH2, StyledTextH3 } from 'app/utils/common-styled-components';
+import { StyledTextH3 } from 'app/utils/common-styled-components';
 import { calcFontSize, calcHeight, calcWidth } from 'app/utils/scaling-system';
 import { colors, MainColorName } from 'app/constants/color';
 
