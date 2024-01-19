@@ -28,6 +28,7 @@ export const useGetNoteLogicAndInfo = ({
       setKey(route?.params.key);
     }
   }, [route?.params]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const onPress = () => {
     dispatch(
       updateNote({
@@ -37,5 +38,6 @@ export const useGetNoteLogicAndInfo = ({
     );
     setKey(dataForSend.key);
   };
+
   return { onPress, dataForSend };
 };

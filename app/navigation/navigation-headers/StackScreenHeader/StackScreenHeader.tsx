@@ -56,7 +56,9 @@ export function StackScreenHeader({ options }: StackScreenHeaderPropsI) {
     );
   }, [headerLeft, navigation]);
   return (
-    <StyledStackScreenHeaderWrapper>
+    <StyledStackScreenHeaderWrapper
+      testID={'StyledStackScreenHeaderWrapperTestID'}
+    >
       <StyledLeftHeaderWrapper>{renderHeaderLeft()}</StyledLeftHeaderWrapper>
       <StyledTitleHeaderWrapper>
         <StyledTitleHeaderText>{headerTitle}</StyledTitleHeaderText>
