@@ -6,7 +6,7 @@ import {
 } from 'app/components/SimpleButton/SimpleButton.styled';
 
 interface SimpleButtonPropsI {
-  onPress: () => void;
+  onPress?: () => void;
   title: string;
   size?: number;
   color?: string;
@@ -24,7 +24,7 @@ export function SimpleButton({
   return (
     <StyledSimpleButtonWrapper
       onPress={onPress}
-      disabled={isDisabled}
+      disabled={isDisabled || !onPress}
       testID={onPressTestID}
     >
       <StyledSimpleButtonTitle

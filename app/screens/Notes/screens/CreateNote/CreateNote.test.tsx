@@ -27,7 +27,6 @@ describe('Create note screen', () => {
         auth: mockInitialState,
       },
     });
-    // jest.useFakeTimers();
     const StyledCreateNoteScreenContainerTestID = screen.getByTestId(
       'StyledCreateNoteScreenContainerTestID'
     );

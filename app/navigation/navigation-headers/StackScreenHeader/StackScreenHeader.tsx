@@ -39,6 +39,7 @@ export function StackScreenHeader({ options }: StackScreenHeaderPropsI) {
 
     return (
       <StyledLeftHeaderDefaultWrapper
+        testID={'StyledLeftHeaderDefaultWrapperTestID'}
         onPress={() => {
           if (navigation.canGoBack()) {
             navigation.goBack();
@@ -46,12 +47,7 @@ export function StackScreenHeader({ options }: StackScreenHeaderPropsI) {
         }}
       >
         <StyledRightArrowIconWrapper />
-        <SimpleButton
-          onPress={() => {}}
-          title={'Back'}
-          isDisabled={true}
-          color={colors[MainColorName.BLUE]}
-        />
+        <SimpleButton title={'Back'} color={colors[MainColorName.BLUE]} />
       </StyledLeftHeaderDefaultWrapper>
     );
   }, [headerLeft, navigation]);
@@ -59,11 +55,15 @@ export function StackScreenHeader({ options }: StackScreenHeaderPropsI) {
     <StyledStackScreenHeaderWrapper
       testID={'StyledStackScreenHeaderWrapperTestID'}
     >
-      <StyledLeftHeaderWrapper>{renderHeaderLeft()}</StyledLeftHeaderWrapper>
+      <StyledLeftHeaderWrapper testID={'StyledLeftHeaderWrapperTestID'}>
+        {renderHeaderLeft()}
+      </StyledLeftHeaderWrapper>
       <StyledTitleHeaderWrapper>
-        <StyledTitleHeaderText>{headerTitle}</StyledTitleHeaderText>
+        <StyledTitleHeaderText testID={'StyledTitleHeaderTextTestID'}>
+          {headerTitle}
+        </StyledTitleHeaderText>
       </StyledTitleHeaderWrapper>
-      <StyledRightHeaderWrapper>
+      <StyledRightHeaderWrapper testID={'StyledRightHeaderWrapperTestID'}>
         {headerRight ? headerRight : null}
       </StyledRightHeaderWrapper>
     </StyledStackScreenHeaderWrapper>
