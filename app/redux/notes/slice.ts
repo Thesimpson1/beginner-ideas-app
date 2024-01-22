@@ -57,7 +57,7 @@ interface GetNodesActionI {
 }
 interface GetNotesSuccessActionI {
   type: string;
-  payload: PushNoteActionPayloadI;
+  payload: { [key: string]: PushNoteActionPayloadI };
 }
 export const slice = createSlice({
   name: 'notes',

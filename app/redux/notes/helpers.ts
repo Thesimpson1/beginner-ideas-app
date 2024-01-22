@@ -1,14 +1,15 @@
 import { PushNoteActionPayloadI } from 'app/redux/notes/slice';
 import moment from 'moment';
 
-interface CreateValidObjectForDisplayI {
-  data: PushNoteActionPayloadI;
-}
+import { CardItemI } from 'app/screens/Notes/types';
 
+export interface CreateValidObjectForDisplayI {
+  data?: { [key: string]: PushNoteActionPayloadI };
+}
 export const createValidObjectForDisplay = ({
   data,
 }: CreateValidObjectForDisplayI) => {
-  let filteredNotes = [];
+  let filteredNotes: Array<CardItemI> = [];
 
   if (data) {
     const notes = Object.values(data);
