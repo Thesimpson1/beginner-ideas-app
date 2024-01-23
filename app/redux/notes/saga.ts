@@ -56,9 +56,10 @@ export function* getNotesSaga({
     yield api.createReference({
       user,
     });
-    const getNotesOnce: PushNoteActionPayloadI = yield api.readNotes({
-      user,
-    });
+    const getNotesOnce: { [key: string]: PushNoteActionPayloadI } =
+      yield api.readNotes({
+        user,
+      });
     yield put(getNotesSuccess(getNotesOnce));
     // @ts-ignore
   } catch (e: never) {
@@ -72,9 +73,10 @@ export function* pushNoteSaga({ payload }: SetPushNoteSagaPropsType): unknown {
     yield api.pushNote({
       ...payload,
     });
-    const getNotesOnce: PushNoteActionPayloadI = yield api.readNotes({
-      user: payload.user,
-    });
+    const getNotesOnce: { [key: string]: PushNoteActionPayloadI } =
+      yield api.readNotes({
+        user: payload.user,
+      });
     yield put(pushNoteSuccess(getNotesOnce));
     // @ts-ignore
   } catch (e: never) {
@@ -88,9 +90,10 @@ export function* updateNoteSaga({ payload }: UpdateNoteSagaPropsType): unknown {
     yield api.updateNote({
       ...payload,
     });
-    const getNotesOnce: PushNoteActionPayloadI = yield api.readNotes({
-      user: payload.user,
-    });
+    const getNotesOnce: { [key: string]: PushNoteActionPayloadI } =
+      yield api.readNotes({
+        user: payload.user,
+      });
     yield put(updateNoteSuccess(getNotesOnce));
     // @ts-ignore
   } catch (e: never) {
@@ -107,9 +110,10 @@ export function* deleteNoteSaga({
       user,
       key,
     });
-    const getNotesOnce: PushNoteActionPayloadI = yield api.readNotes({
-      user,
-    });
+    const getNotesOnce: { [key: string]: PushNoteActionPayloadI } =
+      yield api.readNotes({
+        user,
+      });
     yield put(deleteNoteSuccess(getNotesOnce));
     // @ts-ignore
   } catch (e: never) {

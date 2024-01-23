@@ -38,3 +38,18 @@ export const mockInitialNotesState: NotesState = {
   isDeleteNote: false,
   deleteNoteError: '',
 };
+
+export const MockNoteValue1 = {
+  date: '2024-01-12',
+  note: 'MockNote',
+  subTitle: 'MockSubTitle',
+  title: 'MockTitle',
+  user: 'MockUser',
+};
+export const MockNoteValue2 = {
+  date: '2024-02-12',
+  note: 'MockNote',
+  subTitle: 'MockSubTitle',
+  title: 'MockTitle',
+  user: 'MockUser',
+};
