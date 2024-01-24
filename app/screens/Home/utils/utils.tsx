@@ -17,7 +17,7 @@ export const setIcon = (title?: HomeStackScreenName) => {
     case HomeStackScreenName.CALENDAR:
       icon = <CalendarIcon testID={'CalendarIconTestID'} />;
       break;
-    case HomeStackScreenName.NOTES:
+    case HomeStackScreenName.NOTES_SCREEN:
       icon = <NoteIcon testID={'NoteIconTestID'} />;
       break;
     case HomeStackScreenName.TIMER:

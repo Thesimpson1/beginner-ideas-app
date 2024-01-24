@@ -31,7 +31,7 @@ describe('Home utils', () => {
     expect(functionResult2).toStrictEqual(
       <CalendarIcon testID={'CalendarIconTestID'} />
     );
-    const functionResult3 = setIcon(HomeStackScreenName.NOTES);
+    const functionResult3 = setIcon(HomeStackScreenName.NOTES_SCREEN);
     expect(functionResult3).toStrictEqual(
       <NoteIcon testID={'NoteIconTestID'} />
     );
