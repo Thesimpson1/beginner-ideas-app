@@ -20,11 +20,18 @@ export function BottomComponent({
   createNote,
 }: BottomComponentPropsI) {
   return (
-    <StyledBottomComponentContainer>
+    <StyledBottomComponentContainer
+      testID={'StyledBottomComponentContainerTestID'}
+    >
       <StyledEmptyWrapper />
       <StyledBottomBodyWrapper>
-        <StyledBottomComponentText>{`${amountOfNotes} notes`}</StyledBottomComponentText>
-        <TouchableOpacity onPress={createNote}>
+        <StyledBottomComponentText
+          testID={'StyledBottomComponentTextTestID'}
+        >{`${amountOfNotes} notes`}</StyledBottomComponentText>
+        <TouchableOpacity
+          onPress={createNote}
+          testID={'TouchableOpacityTestID'}
+        >
           <Icon />
         </TouchableOpacity>
       </StyledBottomBodyWrapper>
