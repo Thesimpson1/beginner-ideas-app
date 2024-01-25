@@ -35,22 +35,24 @@ export const useGetChangedData = ({ data }: GetChangedDataI) => {
         title = 'Last 30 Days';
         break;
       }
-      case date < monthAgo &&
-        date.slice(0, 4).toString() === currentYear.toString(): {
-        filteredData = data.filter(
-          (item) =>
-            //less than 30 days
-            item.date < monthAgo &&
-            //current year
-            item.date.slice(0, 4).toString() === currentYear.toString() &&
-            //date from only one month
-            item.date.slice(5, 7) === date.slice(5, 7)
-        );
-        title = moment()
-          .month(+date.slice(5, 7) - 1)
-          .format('MMMM');
-        break;
-      }
+      //have to thinking about this place
+      // case date < monthAgo &&
+      //   date.slice(0, 4).toString() === currentYear.toString(): {
+      //
+      //   filteredData = data.filter(
+      //     (item) =>
+      //       //less than 30 days
+      //       item.date < monthAgo &&
+      //       //current year
+      //       item.date.slice(0, 4).toString() === currentYear.toString() &&
+      //       //date from only one month
+      //       item.date.slice(5, 7) === date.slice(5, 7)
+      //   );
+      //   title = moment()
+      //     .month(+date.slice(5, 7) - 1)
+      //     .format('MMMM');
+      //   break;
+      // }
       default: {
         filteredData = data.filter(
           (item) => item.date.slice(0, 4).toString() !== currentYear.toString()

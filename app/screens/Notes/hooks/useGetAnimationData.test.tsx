@@ -9,7 +9,7 @@ jest.mock('react-native-reanimated', () => {
   };
 });
 
-describe('Test useGetAnimatedStyle', () => {
+describe('Test useGetAnimationData', () => {
   const mockAmountOfCards = [1, 2, 3];
   const mockScreenSize = 150;
   it('should return true', () => {
