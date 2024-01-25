@@ -1,16 +1,7 @@
 import React from 'react';
-import { HomeStackScreenName } from 'app/types';
 
-import {
-  CalculatorIcon,
-  CalendarIcon,
-  ChooseIcon,
-  NoteIcon,
-  NotesCalendarIcon,
-  SortVerticalIcon,
-  TimerIcon,
-} from 'app/assets/icon';
-import { ItemDataItemI } from 'app/screens/Notes/components/HeaderRightComponent/components/RightMenu/RightMenu';
+import { NotesCalendarIcon, SortVerticalIcon } from 'app/assets/icon';
+import { ItemDataItemI } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/RightMenu';
 import { MenuDataTypes } from 'app/screens/Notes/types';
 interface UseGetItemDataI {
   index: number;
