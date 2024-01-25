@@ -25,7 +25,7 @@ const SORT_ITEM_DATA = [
 const DATE_SORT_ITEM_DATA = [
   {
     title: 'Date sort',
-    Icon: () => <NotesCalendarIcon testID={'SortVerticalIconTestID'} />,
+    Icon: () => <NotesCalendarIcon testID={'NotesCalendarIconTestID'} />,
     type: MenuDataTypes.DATE_SORT_ITEM_DATA,
   },
   {
