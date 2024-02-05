@@ -4,6 +4,7 @@ import { render } from '@testing-library/react-native';
 import {
   getItemInfo,
   RotatedArrow,
+  setAnimationOpacity,
   setLeftIcon,
 } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/utils/utils';
 import { MenuDataTypes } from 'app/screens/Notes/types';
@@ -144,9 +145,30 @@ describe('RightMenu utils', () => {
     expect(WhiteCheckMarkIconTestID).toBeTruthy();
   });
 
-  it('getItemInfo should work correct third case1', () => {
+  it('RotatedArrow should work correct third case', () => {
     const { getByTestId } = render(<RotatedArrow />);
     const RightArrowWhiteIconTestID5 = getByTestId('RightArrowWhiteIconTestID');
     expect(RightArrowWhiteIconTestID5).toBeTruthy();
+  });
+
+  it('setAnimationOpacity should work correct', () => {
+    // case when all are false
+    const functionResult0 = setAnimationOpacity({
+      isShowAnimation: false,
+      isShowDropdown: false,
+    });
+    expect(functionResult0).toBe(0);
+    // case when isShowAnimation = true and  isShowDropdown = false
+    const functionResult1 = setAnimationOpacity({
+      isShowAnimation: true,
+      isShowDropdown: false,
+    });
+    expect(functionResult1).toBe(1);
+    // case when isShowAnimation = true and  isShowDropdown = true
+    const functionResult2 = setAnimationOpacity({
+      isShowAnimation: true,
+      isShowDropdown: true,
+    });
+    expect(functionResult2).toBe(0.6);
   });
 });

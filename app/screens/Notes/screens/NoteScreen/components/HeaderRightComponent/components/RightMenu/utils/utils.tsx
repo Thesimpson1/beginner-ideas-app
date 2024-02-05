@@ -1,4 +1,5 @@
 import React from 'react';
+import { SharedValue } from 'react-native-reanimated';
 
 import { RightArrowWhiteIcon, WhiteCheckMarkIcon } from 'app/assets/icon';
 import { StyledRotatedArrowWrapper } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/RightMenu.styled';
@@ -73,4 +74,26 @@ export const getItemInfo = ({
   }
 
   return { action, leftIcon };
+};
+//set animation opacity
+interface SetAnimationOpacityI {
+  isShowAnimation: boolean;
+  isShowDropdown: boolean;
+}
+export const setAnimationOpacity = ({
+  isShowAnimation,
+  isShowDropdown,
+}: SetAnimationOpacityI) => {
+  'worklet';
+  let currentOpacity;
+  if (isShowAnimation) {
+    if (isShowDropdown) {
+      currentOpacity = 0.6;
+    } else {
+      currentOpacity = 1;
+    }
+  } else {
+    currentOpacity = 0;
+  }
+  return currentOpacity;
 };

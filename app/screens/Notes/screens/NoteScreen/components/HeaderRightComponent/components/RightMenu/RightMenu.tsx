@@ -21,7 +21,10 @@ import {
   StyledRightMenuDropdownWrapper,
   StyledRightMenuWrapper,
 } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/RightMenu.styled';
-import { getItemInfo } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/utils/utils';
+import {
+  getItemInfo,
+  setAnimationOpacity,
+} from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/utils/utils';
 import { MenuDataTypes } from 'app/screens/Notes/types';
 
 interface RightMenuPropsI {
@@ -78,19 +81,7 @@ export function RightMenu({ isShowAnimation }: RightMenuPropsI) {
     if (!isShowAnimation.value) {
       isShowDropdown.value = false;
     }
-    const setAnimationOpacity = () => {
-      let currentOpacity;
-      if (isShowAnimation.value) {
-        if (isShowDropdown.value) {
-          currentOpacity = 0.6;
-        } else {
-          currentOpacity = 1;
-        }
-      } else {
-        currentOpacity = 0;
-      }
-      return currentOpacity;
-    };
+
     return {
       height: withTiming(isShowAnimation.value ? MENU_HEIGHT : 0, {
         duration: 200,
@@ -98,7 +89,13 @@ export function RightMenu({ isShowAnimation }: RightMenuPropsI) {
       width: withTiming(isShowAnimation.value ? MENU_WIDTH : 0, {
         duration: 200,
       }),
-      opacity: withTiming(setAnimationOpacity(), { duration: 200 }),
+      opacity: withTiming(
+        setAnimationOpacity({
+          isShowAnimation: isShowAnimation.value,
+          isShowDropdown: isShowDropdown.value,
+        }),
+        { duration: 200 }
+      ),
       transform: [
         {
           scale: withTiming(isShowDropdown.value ? 0.95 : 1, {
