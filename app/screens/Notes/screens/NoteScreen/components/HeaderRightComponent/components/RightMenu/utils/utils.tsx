@@ -1,11 +1,8 @@
 import React from 'react';
 
 import { RightArrowWhiteIcon, WhiteCheckMarkIcon } from 'app/assets/icon';
-
+import { StyledRotatedArrowWrapper } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/RightMenu.styled';
 import { MenuDataTypes } from 'app/screens/Notes/types';
-import {
-  StyledRotatedArrowWrapper
-} from "app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/RightMenu.styled";
 
 interface SetLeftIconI {
   mode: string;
@@ -25,7 +22,7 @@ export const setLeftIcon = ({ mode, title }: SetLeftIconI) => {
   }
 };
 //getItemInfo helper
-const RotatedArrow = () => (
+export const RotatedArrow = () => (
   <StyledRotatedArrowWrapper>
     <RightArrowWhiteIcon testID={'RightArrowWhiteIconTestID'} />
   </StyledRotatedArrowWrapper>
@@ -57,6 +54,7 @@ export const getItemInfo = ({
       } else {
         leftIcon = setLeftIcon({ mode, title });
       }
+
       break;
     }
     case MenuDataTypes.SORT_ITEM_DATA === type: {
@@ -66,11 +64,11 @@ export const getItemInfo = ({
       } else {
         leftIcon = setLeftIcon({ mode, title });
       }
+
       break;
     }
     default: {
       leftIcon = undefined;
-      action = () => {};
     }
   }
 
