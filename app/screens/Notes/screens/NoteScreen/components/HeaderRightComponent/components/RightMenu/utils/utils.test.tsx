@@ -1,7 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
+import { setSortMode } from 'app/redux/notes/slice';
 
 import {
+  changeMode,
   getItemInfo,
   RotatedArrow,
   setAnimationOpacity,
@@ -170,5 +172,118 @@ describe('RightMenu utils', () => {
       isShowDropdown: true,
     });
     expect(functionResult2).toBe(0.6);
+  });
+  it('changeMode should work correct', () => {
+    const mockDispatch = jest.fn();
+    const mockSetIndex = jest.fn();
+    // case with required props and index =  0
+    changeMode({
+      index: 0,
+      title: 'Off',
+      setIndexOfItem: mockSetIndex,
+      dispatch: mockDispatch,
+    });
+
+    expect(mockSetIndex).toHaveBeenCalledWith(-1);
+
+    // case with required props and index =  1
+    changeMode({
+      index: 1,
+      title: 'Off',
+      setIndexOfItem: mockSetIndex,
+      dispatch: mockDispatch,
+    });
+
+    expect(mockSetIndex).toHaveBeenCalledWith(-1);
+    expect(mockDispatch).toHaveBeenCalledWith({
+      payload: 'Off',
+      type: 'notes/setSortMode',
+    });
+
+    // case with required props and changed title
+    changeMode({
+      index: 1,
+      title: 'By names',
+      setIndexOfItem: mockSetIndex,
+      dispatch: mockDispatch,
+    });
+
+    expect(mockSetIndex).toHaveBeenCalledWith(-1);
+    expect(mockDispatch).toHaveBeenLastCalledWith({
+      payload: 'By names',
+      type: 'notes/setSortMode',
+    });
+    expect(mockDispatch).toHaveBeenCalledWith({
+      payload: 'Off',
+      type: 'notes/setDataSortMode',
+    });
+
+    changeMode({
+      index: 1,
+      title: 'By creating date',
+      setIndexOfItem: mockSetIndex,
+      dispatch: mockDispatch,
+    });
+
+    expect(mockSetIndex).toHaveBeenCalledWith(-1);
+    expect(mockDispatch).toHaveBeenLastCalledWith({
+      payload: 'By creating date',
+      type: 'notes/setSortMode',
+    });
+    expect(mockDispatch).toHaveBeenCalledWith({
+      payload: 'On',
+      type: 'notes/setDataSortMode',
+    });
+
+    // case with type
+    changeMode({
+      index: 1,
+      title: 'By names',
+      setIndexOfItem: mockSetIndex,
+      dispatch: mockDispatch,
+      type: MenuDataTypes.DATE_SORT_ITEM_DATA,
+    });
+
+    expect(mockSetIndex).toHaveBeenCalledWith(-1);
+    expect(mockDispatch).toHaveBeenLastCalledWith({
+      payload: 'By names',
+      type: 'notes/setDataSortMode',
+    });
+
+    changeMode({
+      index: 1,
+      title: 'Off',
+      setIndexOfItem: mockSetIndex,
+      dispatch: mockDispatch,
+      type: MenuDataTypes.DATE_SORT_ITEM_DATA,
+    });
+
+    expect(mockSetIndex).toHaveBeenCalledWith(-1);
+    expect(mockDispatch).toHaveBeenCalledWith({
+      payload: 'By names',
+      type: 'notes/setSortMode',
+    });
+    expect(mockDispatch).toHaveBeenCalledWith({
+      payload: 'Off',
+      type: 'notes/setDataSortMode',
+    });
+
+    changeMode({
+      index: 1,
+      title: 'On',
+      setIndexOfItem: mockSetIndex,
+      dispatch: mockDispatch,
+      type: MenuDataTypes.DATE_SORT_ITEM_DATA,
+    });
+
+    expect(mockSetIndex).toHaveBeenCalledWith(-1);
+    expect(mockDispatch).toHaveBeenCalledWith({
+      payload: 'By creating date',
+      type: 'notes/setSortMode',
+    });
+    expect(mockDispatch).toHaveBeenCalledWith({
+      payload: 'On',
+      type: 'notes/setDataSortMode',
+    });
   });
 });

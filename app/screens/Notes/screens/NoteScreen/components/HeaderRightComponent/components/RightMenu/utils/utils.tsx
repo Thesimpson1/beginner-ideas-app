@@ -1,5 +1,5 @@
 import React from 'react';
-import { SharedValue } from 'react-native-reanimated';
+import { setDataSortMode, setSortMode } from 'app/redux/notes/slice';
 
 import { RightArrowWhiteIcon, WhiteCheckMarkIcon } from 'app/assets/icon';
 import { StyledRotatedArrowWrapper } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/RightMenu.styled';
@@ -96,4 +96,40 @@ export const setAnimationOpacity = ({
     currentOpacity = 0;
   }
   return currentOpacity;
+};
+// change mode util
+interface ChangeModeI {
+  index: number;
+  type?: MenuDataTypes;
+  title: string;
+  dispatch: (v: unknown) => void;
+  setIndexOfItem: (v: number) => void;
+}
+export const changeMode = ({
+  index,
+  type,
+  title,
+  dispatch,
+  setIndexOfItem,
+}: ChangeModeI) => {
+  setIndexOfItem(-1);
+  if (index !== 0) {
+    if (type === MenuDataTypes.DATE_SORT_ITEM_DATA) {
+      if (title === 'Off') {
+        dispatch(setSortMode('By names'));
+      }
+      if (title === 'On') {
+        dispatch(setSortMode('By creating date'));
+      }
+      dispatch(setDataSortMode(title));
+    } else {
+      if (title === 'By names') {
+        dispatch(setDataSortMode('Off'));
+      }
+      if (title === 'By creating date') {
+        dispatch(setDataSortMode('On'));
+      }
+      dispatch(setSortMode(title));
+    }
+  }
 };

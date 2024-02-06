@@ -7,7 +7,6 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
-import { setDataSortMode, setSortMode } from 'app/redux/notes/slice';
 
 import {
   ChooseIcon,
@@ -22,6 +21,7 @@ import {
   StyledRightMenuWrapper,
 } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/RightMenu.styled';
 import {
+  changeMode,
   getItemInfo,
   setAnimationOpacity,
 } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/utils/utils';
@@ -124,28 +124,6 @@ export function RightMenu({ isShowAnimation }: RightMenuPropsI) {
         setIndexOfItem(-1);
       }
     };
-    const changeMode = () => {
-      setIndexOfItem(-1);
-      if (index !== 0) {
-        if (type === MenuDataTypes.DATE_SORT_ITEM_DATA) {
-          if (title === 'Off') {
-            dispatch(setSortMode('By names'));
-          }
-          if (title === 'On') {
-            dispatch(setSortMode('By creating date'));
-          }
-          dispatch(setDataSortMode(title));
-        } else {
-          if (title === 'By names') {
-            dispatch(setDataSortMode('Off'));
-          }
-          if (title === 'By creating date') {
-            dispatch(setDataSortMode('On'));
-          }
-          dispatch(setSortMode(title));
-        }
-      }
-    };
 
     const { action, leftIcon } = getItemInfo({
       index,
@@ -154,7 +132,14 @@ export function RightMenu({ isShowAnimation }: RightMenuPropsI) {
         type === MenuDataTypes.DATE_SORT_ITEM_DATA ? dateSortMode : sortMode,
       title,
       menuOnPress,
-      changeMode,
+      changeMode: () =>
+        changeMode({
+          index,
+          type,
+          title,
+          dispatch,
+          setIndexOfItem,
+        }),
     });
 
     return (
