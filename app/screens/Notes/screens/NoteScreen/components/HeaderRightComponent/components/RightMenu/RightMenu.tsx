@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
-import {
-  SharedValue,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import { SharedValue, useSharedValue } from 'react-native-reanimated';
 import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
 
 import {
@@ -13,8 +8,8 @@ import {
   NotesCalendarIcon,
   SortVerticalIcon,
 } from 'app/assets/icon';
-import { calcHeight, calcWidth } from 'app/utils/scaling-system';
 import { MenuItem } from 'app/components/MenuItem/MenuItem';
+import { useGetAnimationStyles } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/hooks/useGetAnimationStyles';
 import { useGetItemData } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/hooks/useGetItemData';
 import {
   StyledRightMenuDropdownWrapper,
@@ -23,7 +18,6 @@ import {
 import {
   changeMode,
   getItemInfo,
-  setAnimationOpacity,
 } from 'app/screens/Notes/screens/NoteScreen/components/HeaderRightComponent/components/RightMenu/utils/utils';
 import { MenuDataTypes } from 'app/screens/Notes/types';
 
@@ -57,8 +51,7 @@ const MENU_DATA = [
     type: MenuDataTypes.MAIN_MENU_DATA,
   },
 ];
-const MENU_HEIGHT = calcHeight(50) * 3;
-const MENU_WIDTH = calcWidth(200);
+
 export function RightMenu({ isShowAnimation }: RightMenuPropsI) {
   const [indexOfItem, setIndexOfItem] = useState(-1);
   const [dropdownTop, setDropdownTop] = useState(-1);
@@ -67,6 +60,11 @@ export function RightMenu({ isShowAnimation }: RightMenuPropsI) {
   const dateSortMode = useAppSelector((state) => state.notes.dataSortMode);
   const { itemData } = useGetItemData({ index: indexOfItem });
   const dispatch = useAppDispatch();
+  const { rightMenuWrapperAnimatedStyle, dropdownAnimatedStyle } =
+    useGetAnimationStyles({
+      isShowAnimation,
+      isShowDropdown,
+    });
 
   useEffect(() => {
     if (indexOfItem !== -1) {
@@ -77,43 +75,7 @@ export function RightMenu({ isShowAnimation }: RightMenuPropsI) {
       setDropdownTop((prevState) => prevState);
     }
   }, [indexOfItem]); // eslint-disable-line react-hooks/exhaustive-deps
-  const rightMenuWrapperAnimatedStyle = useAnimatedStyle(() => {
-    if (!isShowAnimation.value) {
-      isShowDropdown.value = false;
-    }
 
-    return {
-      height: withTiming(isShowAnimation.value ? MENU_HEIGHT : 0, {
-        duration: 200,
-      }),
-      width: withTiming(isShowAnimation.value ? MENU_WIDTH : 0, {
-        duration: 200,
-      }),
-      opacity: withTiming(
-        setAnimationOpacity({
-          isShowAnimation: isShowAnimation.value,
-          isShowDropdown: isShowDropdown.value,
-        }),
-        { duration: 200 }
-      ),
-      transform: [
-        {
-          scale: withTiming(isShowDropdown.value ? 0.95 : 1, {
-            duration: 200,
-          }),
-        },
-      ],
-    };
-  });
-
-  const dropdownAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      height: withTiming(isShowDropdown.value ? MENU_HEIGHT : 0, {
-        duration: 500,
-      }),
-      opacity: withTiming(isShowDropdown.value ? 1 : 0, { duration: 500 }),
-    };
-  });
   const renderItem = ({ item, index }: RenderItemProps) => {
     const { title, Icon, type } = item;
 
