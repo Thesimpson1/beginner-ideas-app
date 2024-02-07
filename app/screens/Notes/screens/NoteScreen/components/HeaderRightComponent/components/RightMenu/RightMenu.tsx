@@ -122,6 +122,7 @@ export function RightMenu({ isShowAnimation }: RightMenuPropsI) {
         style={rightMenuWrapperAnimatedStyle}
         top={40}
         right={10}
+        testID={'StyledRightMenuWrapperTestID'}
       >
         <FlatList
           data={MENU_DATA}
@@ -133,11 +134,13 @@ export function RightMenu({ isShowAnimation }: RightMenuPropsI) {
         top={dropdownTop}
         right={7}
         style={dropdownAnimatedStyle}
+        testID={'StyledRightMenuDropdownWrapperTestID'}
       >
         <FlatList
           data={itemData}
           renderItem={renderItem}
           scrollEnabled={false}
+          testID={'FlatMenuDropdownWrapperTestID'}
         />
       </StyledRightMenuDropdownWrapper>
     </>
