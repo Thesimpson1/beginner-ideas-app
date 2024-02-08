@@ -41,10 +41,13 @@ export const HeaderRightComponent = ({
       opacity: withTiming(isShowAnimation.value ? 0.3 : 1, { duration: 200 }),
     };
   });
+
   return (
-    <StyledHeaderRightComponentWrapper>
-      <StyledMenuIcon onPress={onPress}>
-        <Animated.View style={animatedButtonStyle}>
+    <StyledHeaderRightComponentWrapper
+      testID={'StyledHeaderRightComponentWrapperTestID'}
+    >
+      <StyledMenuIcon onPress={onPress} testID={'StyledMenuIconTestID'}>
+        <Animated.View style={animatedButtonStyle} testID={'AnimatedTestID'}>
           <Icon />
         </Animated.View>
       </StyledMenuIcon>
@@ -52,6 +55,7 @@ export const HeaderRightComponent = ({
       <StyledShadowModalWrapper
         onPress={() => setIsVisible(false)}
         isVisible={isVisible}
+        testID={'StyledShadowModalWrapperTestID'}
       />
     </StyledHeaderRightComponentWrapper>
   );
