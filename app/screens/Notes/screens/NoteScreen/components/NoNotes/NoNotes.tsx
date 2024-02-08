@@ -11,7 +11,10 @@ interface NoNotesPropsI {
 
 export function NoNotes({ isNoNotes }: NoNotesPropsI) {
   return (
-    <StyledNoNotesWrapper isNoNotes={isNoNotes}>
+    <StyledNoNotesWrapper
+      isNoNotes={isNoNotes}
+      testID={'StyledNoNotesWrapperTestID'}
+    >
       <StyledNoNotesText>There is no notes yet</StyledNoNotesText>
     </StyledNoNotesWrapper>
   );
