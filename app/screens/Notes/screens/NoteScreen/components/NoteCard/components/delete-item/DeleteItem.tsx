@@ -44,8 +44,13 @@ export const DeleteItem = ({
   return (
     <StyledDeleteComponentWrapper
       style={[{ transform: [{ translateX }], opacity }]}
+      testID={'StyledDeleteComponentWrapperTestID'}
     >
-      <TouchableOpacity hitSlop={30} onPress={deleteNoteAction}>
+      <TouchableOpacity
+        hitSlop={30}
+        onPress={deleteNoteAction}
+        testID={'DeleteElementTestID'}
+      >
         <TrashIcon />
       </TouchableOpacity>
     </StyledDeleteComponentWrapper>
