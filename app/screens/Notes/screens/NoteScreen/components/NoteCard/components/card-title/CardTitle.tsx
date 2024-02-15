@@ -13,7 +13,7 @@ interface RenderItemPropsI {
 }
 interface CardTitleI {
   title: string;
-  searchText: string;
+  searchText?: string;
 }
 
 export function CardTitle({ title, searchText = '' }: CardTitleI) {
@@ -23,12 +23,25 @@ export function CardTitle({ title, searchText = '' }: CardTitleI) {
       item,
       index,
     });
-    return <StyledTitle isHighlight={changedTitle}>{item}</StyledTitle>;
+    return (
+      <StyledTitle
+        isHighlight={changedTitle}
+        key={`${item}${Math.random()}`}
+        testID={'StyledTitleTestID'}
+      >
+        {item}
+      </StyledTitle>
+    );
   };
   const newData = title.split('');
   return (
-    <StyledFlatListTitleContainer>
-      <FlatList data={newData} renderItem={renderItem} horizontal />
+    <StyledFlatListTitleContainer testID={'StyledFlatListTitleContainerTestID'}>
+      <FlatList
+        data={newData}
+        renderItem={renderItem}
+        horizontal
+        testID={'FlatListTestID'}
+      />
     </StyledFlatListTitleContainer>
   );
 }
