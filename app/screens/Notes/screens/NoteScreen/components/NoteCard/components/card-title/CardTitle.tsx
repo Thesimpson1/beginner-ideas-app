@@ -5,6 +5,7 @@ import {
   StyledFlatListTitleContainer,
   StyledTitle,
 } from 'app/screens/Notes/screens/NoteScreen/components/NoteCard/components/card-title/CardTitle.styled';
+import { setIsChangeTitle } from 'app/screens/Notes/screens/NoteScreen/components/NoteCard/utils/utils';
 
 interface RenderItemPropsI {
   item: string;
@@ -14,31 +15,10 @@ interface CardTitleI {
   title: string;
   searchText: string;
 }
-interface OnChangeTitleI {
-  text: string;
-  item: string;
-  index: number;
-}
-export function CardTitle({ title, searchText = '' }: CardTitleI) {
-  const onChangeTitle = ({ text, item, index }: OnChangeTitleI) => {
-    switch (true) {
-      case index > text.length - 1: {
-        return false;
-      }
-      case text.length === 1: {
-        return item.toLowerCase() === text.toLowerCase();
-      }
-      case text.length > 1: {
-        return text.toLowerCase().includes(item.toLowerCase());
-      }
-      default: {
-        return false;
-      }
-    }
-  };
 
+export function CardTitle({ title, searchText = '' }: CardTitleI) {
   const renderItem = ({ item, index }: RenderItemPropsI) => {
-    const changedTitle = onChangeTitle({
+    const changedTitle = setIsChangeTitle({
       text: searchText,
       item,
       index,
