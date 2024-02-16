@@ -28,7 +28,15 @@ describe('Delete Item', () => {
     interpolate: mockInterpolate,
   } as AnimatedInterpolation<string | number>;
   // @ts-ignore
-  const mockSwipeable = { close: mockClose } as Swipeable;
+  const mockSwipeable = {
+    close: mockClose,
+    state: { rowState: 0 },
+  } as Swipeable;
+  // @ts-ignore
+  const mockSwipeable1 = {
+    close: mockClose,
+    state: { rowState: -1 },
+  } as Swipeable;
   const mockOpacity = {
     inputRange: [calcWidth(-60), 0],
     outputRange: [1, 0],
@@ -70,10 +78,11 @@ describe('Delete Item', () => {
   });
   it('Should render correct with another props', () => {
     mockInitialNotesState.isOpenDeleteComponent = true;
+
     const { getByTestId } = renderWithProviders(
       <DeleteItem
         dragAnimatedValue={mockDragAnimatedValue}
-        Swipeable={mockSwipeable}
+        Swipeable={mockSwipeable1}
         userKey={mockUserKey}
       />,
       {
@@ -97,5 +106,9 @@ describe('Delete Item', () => {
     expect(mockInterpolate).toHaveBeenCalledWith(mockTranslateX);
 
     expect(DeleteElementTestID.props).toBeTruthy();
+    expect(mockDispatch).toHaveBeenCalledWith({
+      payload: true,
+      type: 'notes/setIsOpenDeleteComponent',
+    });
   });
 });

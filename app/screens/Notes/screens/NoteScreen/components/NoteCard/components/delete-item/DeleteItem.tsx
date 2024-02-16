@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Animated as JSTreatAnimated, TouchableOpacity } from 'react-native';
 import SwipeableComponent from 'react-native-gesture-handler/Swipeable';
 import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
-import { deleteNote } from 'app/redux/notes/slice';
+import { deleteNote, setIsOpenDeleteComponent } from 'app/redux/notes/slice';
 
 import { TrashIcon } from 'app/assets/icon';
 import { calcWidth } from 'app/utils/scaling-system';
@@ -28,6 +28,12 @@ export const DeleteItem = ({
       Swipeable.close();
     }
   }, [isOpenDeleteComponent]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (Swipeable.state.rowState === -1) {
+      dispatch(setIsOpenDeleteComponent(true));
+    }
+  }, [Swipeable.state]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const deleteNoteAction = () => {
     dispatch(deleteNote({ user, key: userKey }));
   };
