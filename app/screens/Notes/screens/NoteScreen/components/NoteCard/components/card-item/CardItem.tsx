@@ -1,8 +1,6 @@
 import React from 'react';
 import SwipeableComponent from 'react-native-gesture-handler/Swipeable';
 import Animated from 'react-native-reanimated';
-import { useAppDispatch } from 'app/redux/hooks';
-import { setIsOpenDeleteComponent } from 'app/redux/notes/slice';
 
 import {
   StyledRenderItemWrapper,
@@ -28,11 +26,11 @@ export const CardItem = ({
   searchText = '',
   isSearch,
 }: RenderItemPropsI) => {
-  const dispatch = useAppDispatch();
   const { date, title, subTitle, note, key } = item;
 
   return (
     <SwipeableComponent
+      testID={'SwipeableComponentTestID'}
       renderRightActions={(
         progressAnimatedValue,
         dragAnimatedValue,
@@ -44,16 +42,18 @@ export const CardItem = ({
           userKey={key}
         />
       )}
-      onSwipeableOpen={() => dispatch(setIsOpenDeleteComponent(true))}
     >
       <Animated.View>
         <StyledRenderItemWrapper
           isDisplayBottomBorder={index !== data.length - 1}
           onPress={() => onCardPress({ note, key })}
+          testID={'StyledRenderItemWrapperTestID'}
         >
           {isSearch && <CardTitle title={title} searchText={searchText} />}
 
-          <StyledTitle isSearch={isSearch}>{title}</StyledTitle>
+          <StyledTitle isSearch={isSearch} testID={'StyledTitleTestID'}>
+            {title}
+          </StyledTitle>
 
           <StyledSubTitleWrapper>
             <StyledSubTitle isAdditionalSpaceAfter>{date}</StyledSubTitle>

@@ -1,4 +1,3 @@
-
 import styled from 'styled-components/native';
 
 import { StyledTextH2, StyledTextH3 } from 'app/utils/common-styled-components';
