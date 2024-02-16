@@ -19,6 +19,7 @@ module.exports = {
     '!app/**/*.styled.{ts,tsx}',
     '!app/**/*.constants.{ts,tsx}',
     '!app/types/**',
+    '!app/screens/Notes/types/**',
     '!app/App.tsx',
     '!app/assets/**',
     '!app/**/*.providers.tsx',
