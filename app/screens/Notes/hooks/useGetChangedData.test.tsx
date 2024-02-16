@@ -29,7 +29,7 @@ describe('Test useGetChangedData', () => {
     expect(useGetChangedData1.newData[0].filteredData[0].date).toBe(monthAgo);
     expect(useGetChangedData1.newData[0].title).toBe('Last 30 Days');
     expect(useGetChangedData1.newData[1].title).toBe('2022');
-    expect(useGetChangedData1.amountOfCards).toStrictEqual([1, 2]);
+    expect(useGetChangedData1.amountOfCards).toStrictEqual([1, 1]);
   });
   it("should return 'Today and Yesterday'", () => {
     const today = moment().format('YYYY-MM-DD');

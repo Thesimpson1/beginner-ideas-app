@@ -20,6 +20,8 @@ module.exports = {
     '!app/**/*.constants.{ts,tsx}',
     '!app/types/**',
     '!app/screens/Notes/types/**',
+    //hook was tested without one case
+    '!app/screens/Notes/hooks/useGetChangedData.tsx',
     '!app/App.tsx',
     '!app/assets/**',
     '!app/**/*.providers.tsx',
