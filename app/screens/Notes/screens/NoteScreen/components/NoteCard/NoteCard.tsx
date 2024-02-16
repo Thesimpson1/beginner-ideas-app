@@ -20,9 +20,10 @@ export function NoteCard({
   onCardPress,
 }: NoteCardPropsI) {
   return (
-    <StyledCardContainer>
+    <StyledCardContainer testID={'StyledCardContainerTestID'}>
       <FlatList
         data={data}
+        testID={'FlatListTestID'}
         renderItem={({ item, index }) => (
           <CardItem
             item={item}

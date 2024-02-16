@@ -53,3 +53,10 @@ export const MockNoteValue2 = {
   title: 'MockTitle',
   user: 'MockUser',
 };
+export const MockCardItem = {
+  date: '2024-02-12',
+  note: 'MockNote',
+  subTitle: 'MockSubTitle',
+  title: 'MockTitle',
+  key: 'MockKey',
+};
