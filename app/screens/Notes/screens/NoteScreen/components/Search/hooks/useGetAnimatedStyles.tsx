@@ -3,7 +3,6 @@ import {
   interpolate,
   SharedValue,
   useAnimatedStyle,
-  withSpring,
   withTiming,
 } from 'react-native-reanimated';
 
@@ -15,6 +14,7 @@ interface useGetAnimatedStylesI {
   cancelButtonOpacity: SharedValue<number>;
   isBlur: SharedValue<boolean>;
 }
+
 export const useGetAnimatedStyles = ({
   offset,
   cancelButtonOpacity,

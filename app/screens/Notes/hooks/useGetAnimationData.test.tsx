@@ -1,6 +1,5 @@
 import { renderHook } from '@testing-library/react-native';
 
-import { useGetAnimatedStyle } from 'app/components/CircleProgressBar/hooks/getAnimatedStyle';
 import { useGetAnimationData } from 'app/screens/Notes/hooks/useGetAnimationData';
 jest.mock('react-native-reanimated', () => {
   const actualNav = jest.requireActual('react-native-reanimated');
