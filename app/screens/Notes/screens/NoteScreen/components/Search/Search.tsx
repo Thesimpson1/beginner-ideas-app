@@ -78,24 +78,34 @@ export function Search({
     setIsFocus(false);
     setText('');
   };
-
   return (
-    <StyledSearchWrapper isEmptyScreen={isEmptyScreen}>
+    <StyledSearchWrapper
+      isEmptyScreen={isEmptyScreen}
+      testID={'StyledSearchWrapperTestID'}
+    >
       <StyledSearchContainer
         style={[
           isRunSearchAnimation && wrapperAnimatedStyle,
           searchWidthAnimatedStyle,
         ]}
+        testID={'StyledSearchContainerTestID'}
       >
-        <Animated.View style={isRunSearchAnimation && textAnimatedStyle}>
+        <Animated.View
+          style={isRunSearchAnimation && textAnimatedStyle}
+          testID={'AnimatedIconTestID'}
+        >
           <Icon />
         </Animated.View>
 
-        <Animated.View style={isRunSearchAnimation && textAnimatedStyle}>
+        <Animated.View
+          style={isRunSearchAnimation && textAnimatedStyle}
+          testID={'AnimatedEmptyWrapper'}
+        >
           <StyledEmptyWrapper
             //@ts-ignore
             ref={ref}
             autoCapitalize={'none'}
+            testID={'StyledEmptyWrapperID'}
             value={text}
             onFocus={onFocus}
             onBlur={onBlur}
@@ -107,7 +117,10 @@ export function Search({
           />
         </Animated.View>
       </StyledSearchContainer>
-      <StyledCancelWrapper style={cancelButtonWidthAnimatedStyle}>
+      <StyledCancelWrapper
+        style={cancelButtonWidthAnimatedStyle}
+        testID={'StyledCancelWrapperTestID'}
+      >
         <SimpleButton onPress={() => ref.current.blur()} title={'Cancel'} />
       </StyledCancelWrapper>
     </StyledSearchWrapper>
