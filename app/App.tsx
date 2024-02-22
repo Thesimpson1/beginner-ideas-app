@@ -6,9 +6,9 @@
  */
 
 import React from 'react';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import * as Sentry from '@sentry/react-native';
+import { StyledGestureHandlerRootView } from 'app/App.styled';
 import { persistor, store } from 'app/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -17,7 +17,7 @@ import { RootNavigator } from 'app/navigation/RootNavigator.navigator';
 
 function App(): JSX.Element {
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <StyledGestureHandlerRootView>
       <ErrorBoundary>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
@@ -25,7 +25,7 @@ function App(): JSX.Element {
           </PersistGate>
         </Provider>
       </ErrorBoundary>
-    </GestureHandlerRootView>
+    </StyledGestureHandlerRootView>
   );
 }
 

@@ -118,15 +118,12 @@ describe('Notes Screen', () => {
   it('Case without opened the delete component should render correct ', () => {
     mockInitialNotesState.notes = [MockCardItem, MockCardItem1];
     mockInitialNotesState.isOpenDeleteComponent = true;
-    const { getAllByTestId, getByTestId } = renderWithProviders(
-      <NotesScreen />,
-      {
-        preloadedState: {
-          notes: mockInitialNotesState,
-          auth: mockInitialState,
-        },
-      }
-    );
+    const { getAllByTestId } = renderWithProviders(<NotesScreen />, {
+      preloadedState: {
+        notes: mockInitialNotesState,
+        auth: mockInitialState,
+      },
+    });
 
     const StyledRenderItemWrapperTestID = getAllByTestId(
       'StyledRenderItemWrapperTestID'

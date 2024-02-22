@@ -1,25 +1,8 @@
 import {
   mockInitialNotesState,
-  mockInitialState,
   MockNoteValue1,
   MockNoteValue2,
 } from 'app/mocks';
-import {
-  createUserSaga,
-  getUserSaga,
-  loginSaga,
-  logoutSaga,
-} from 'app/redux/auth/saga';
-import {
-  createUserError,
-  createUserSuccess,
-  getUserInfoError,
-  getUserInfoSuccess,
-  loginError,
-  loginSuccess,
-  logoutError,
-  logoutSuccess,
-} from 'app/redux/auth/slice';
 import {
   deleteNoteSaga,
   getNotesSaga,
@@ -27,14 +10,14 @@ import {
   updateNoteSaga,
 } from 'app/redux/notes/saga';
 import {
-    deleteNoteError,
-    deleteNoteSuccess,
-    getNotesError,
-    getNotesSuccess,
-    pushNoteError,
-    pushNoteSuccess,
-    updateNoteError,
-    updateNoteSuccess,
+  deleteNoteError,
+  deleteNoteSuccess,
+  getNotesError,
+  getNotesSuccess,
+  pushNoteError,
+  pushNoteSuccess,
+  updateNoteError,
+  updateNoteSuccess,
 } from 'app/redux/notes/slice';
 
 import { api } from 'app/api';

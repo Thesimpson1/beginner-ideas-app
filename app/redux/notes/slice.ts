@@ -73,7 +73,7 @@ export const slice = createSlice({
     setDataSortMode: (state, action) => {
       state.dataSortMode = action.payload;
     },
-
+    // eslint-disable-next-line
     getNotes: (state, action: GetNodesActionI) => {
       state.isFetchNotes = true;
       state.fetchNotesError = '';
@@ -86,7 +86,7 @@ export const slice = createSlice({
       state.isFetchNotes = false;
       state.fetchNotesError = action.payload;
     },
-
+    // eslint-disable-next-line
     pushNote: (state, action: PushNoteActionI) => {
       state.isPushNewNote = true;
       state.pushNewNoteError = '';
@@ -99,7 +99,7 @@ export const slice = createSlice({
       state.isPushNewNote = false;
       state.pushNewNoteError = action.payload;
     },
-
+    // eslint-disable-next-line
     updateNote: (state, action) => {
       state.isUpdateNote = true;
       state.updateNoteError = '';
@@ -112,7 +112,7 @@ export const slice = createSlice({
       state.isUpdateNote = false;
       state.updateNoteError = action.payload;
     },
-
+    // eslint-disable-next-line
     deleteNote: (state, action) => {
       state.isDeleteNote = true;
       state.deleteNoteError = '';

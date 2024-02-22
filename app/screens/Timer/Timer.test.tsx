@@ -7,7 +7,6 @@ import {
 import { fireEvent } from '@testing-library/react-native';
 import { mockInitialTimerState } from 'app/mocks';
 import { SoundsItem } from 'app/redux/timer/slice';
-import moment from 'moment';
 
 import { renderWithProviders } from 'app/utils/test-utils/renderWithProviders';
 import { initDate, TimerScreen } from 'app/screens/Timer/Timer';

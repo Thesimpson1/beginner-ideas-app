@@ -9,6 +9,7 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
+    // 'plugin:eslint-comments/recommended',
   ],
   plugins: ['prettier', 'import', 'simple-import-sort', 'beginner-apps'],
   rules: {
@@ -18,6 +19,7 @@ module.exports = {
 
     // community provided rules marked as errors
     'react-hooks/exhaustive-deps': 2,
+    'eslint-comments/no-unlimited-disable': 0,
     '@typescript-eslint/no-non-null-assertion': 2,
     '@typescript-eslint/no-explicit-any': 2,
     'prettier/prettier': 2,

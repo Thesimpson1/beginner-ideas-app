@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-native';
-import {
-  playSampleSound,
-  stopSampleSound,
-} from 'react-native-notification-sounds';
+import { stopSampleSound } from 'react-native-notification-sounds';
 import { useAppDispatch, useAppSelector } from 'app/redux/hooks';
 import { RootState } from 'app/redux/store';
 import { setCurrentSound } from 'app/redux/timer/slice';

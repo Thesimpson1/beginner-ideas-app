@@ -1,10 +1,6 @@
 import React from 'react';
-import {
-  playSampleSound,
-  stopSampleSound,
-} from 'react-native-notification-sounds';
-import { fireEvent, render } from '@testing-library/react-native';
-import { mockInitialState, mockInitialTimerState } from 'app/mocks';
+import { fireEvent } from '@testing-library/react-native';
+import { mockInitialTimerState } from 'app/mocks';
 import { SoundsItem } from 'app/redux/timer/slice';
 
 import { renderWithProviders } from 'app/utils/test-utils/renderWithProviders';

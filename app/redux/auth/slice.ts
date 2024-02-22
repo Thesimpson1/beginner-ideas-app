@@ -45,6 +45,7 @@ export const slice = createSlice({
       state.isFetchUserInfo = false;
       state.fetchUserInfoError = action.payload;
     },
+    // eslint-disable-next-line
     createUser: (state, action) => {
       state.isCreateUserFetch = true;
       state.createUserError = '';
@@ -60,6 +61,7 @@ export const slice = createSlice({
       state.isCreateUserFetch = false;
       state.createUserError = action.payload;
     },
+    // eslint-disable-next-line
     login: (state, action) => {
       state.isLogin = true;
       state.loginError = '';

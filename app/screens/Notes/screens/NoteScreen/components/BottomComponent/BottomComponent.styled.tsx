@@ -1,7 +1,6 @@
-import Animated from 'react-native-reanimated';
 import styled from 'styled-components/native';
 
-import { StyledTextH2, StyledTextH3 } from 'app/utils/common-styled-components';
+import { StyledTextH3 } from 'app/utils/common-styled-components';
 import {
   calcFontSize,
   calcHeight,

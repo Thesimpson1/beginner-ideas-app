@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import { setSortMode } from 'app/redux/notes/slice';
 
 import {
   changeMode,
