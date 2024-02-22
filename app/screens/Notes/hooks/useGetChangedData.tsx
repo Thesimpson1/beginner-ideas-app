@@ -65,6 +65,5 @@ export const useGetChangedData = ({ data }: GetChangedDataI) => {
       amountOfCards.push(filteredData.length);
     }
   });
-
   return { newData, amountOfCards };
 };

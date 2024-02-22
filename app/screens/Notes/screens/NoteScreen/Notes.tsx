@@ -80,11 +80,13 @@ export function NotesScreen() {
       dispatch(setIsOpenDeleteComponent(false));
     }
   };
+
   const renderItem = ({ item, index }: RenderItemI) => {
     return (
       <StyledCardWithTitleWrapper
         isLastIndex={index === newData.length - 1}
         key={item.title}
+        testID={'StyledCardWithTitleWrapperTestID'}
       >
         <StyledLabel>{item.title}</StyledLabel>
         <NoteCard
@@ -95,6 +97,7 @@ export function NotesScreen() {
       </StyledCardWithTitleWrapper>
     );
   };
+
   return (
     <>
       <StackScreenHeader
@@ -119,7 +122,11 @@ export function NotesScreen() {
         />
         <NoNotes isNoNotes={isNoNotes} />
         {isFocus || isSortByNames ? (
-          <StyledCardWithTitleWrapper isLastIndex>
+          //case with active input
+          <StyledCardWithTitleWrapper
+            isLastIndex
+            testID={'StyledCardWithTitleWrapperTestID'}
+          >
             <NoteCard
               data={dataAfterSearch}
               isSearch={isFocus}
@@ -135,6 +142,7 @@ export function NotesScreen() {
             }}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
+            testID={'NotesFlatListTestID'}
           />
         )}
 

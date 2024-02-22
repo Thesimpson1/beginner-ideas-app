@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import Animated, { SharedValue, useSharedValue } from 'react-native-reanimated';
+import { useAppSelector } from 'app/redux/hooks';
 
 import { SearchIcon } from 'app/assets/icon';
 import { calcHeight, width } from 'app/utils/scaling-system';
@@ -36,6 +37,7 @@ export function Search({
   isRunSearchAnimation,
   isEmptyScreen,
 }: SearchPropsI) {
+  const { notes } = useAppSelector((state) => state.notes);
   const searchWidth = useSharedValue('100%');
   const cancelButtonWidth = useSharedValue(0);
   const cancelButtonHeight = useSharedValue(0);
@@ -59,7 +61,7 @@ export function Search({
   const { dataAfterSearch } = useSearchLogic({ text, data });
   useEffect(() => {
     setDataAfterSearch(dataAfterSearch);
-  }, [text, data]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [text, notes]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onFocus = () => {
     isBlur.value = false;
