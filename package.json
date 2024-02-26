@@ -7,7 +7,9 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "e2e:test": "detox test -c ios.debug",
+    "e2e:build": "detox build -c ios.debug"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.19.3",
@@ -56,6 +58,7 @@
     "@types/react": "^18.0.24",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.2.1",
+    "detox": "^20.18.3",
     "eslint": "^8.46.0",
     "eslint-config-prettier": "^8.9.0",
     "eslint-import-resolver-typescript": "^3.5.5",
