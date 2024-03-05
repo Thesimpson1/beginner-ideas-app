@@ -11,7 +11,13 @@ module.exports = {
     'plugin:import/typescript',
     // 'plugin:eslint-comments/recommended',
   ],
-  plugins: ['prettier', 'import', 'simple-import-sort', 'beginner-apps'],
+  plugins: [
+    'prettier',
+    'import',
+    'simple-import-sort',
+    'beginner-apps',
+    'detox',
+  ],
   rules: {
     // custom beginner-apps rules which will throw errors
     'beginner-apps/styled-components-naming': 2,
@@ -101,6 +107,14 @@ module.exports = {
       rules: {
         'eslint-comments/no-unlimited-disable': 'off',
         'eslint-comments/no-unused-disable': 'off',
+      },
+    },
+    {
+      files: ['e2e/**/*.test.js'],
+      env: {
+        'detox/detox': true,
+        jest: true,
+        'jest/globals': true,
       },
     },
   ],
