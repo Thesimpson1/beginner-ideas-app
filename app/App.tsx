@@ -17,7 +17,7 @@ import { RootNavigator } from 'app/navigation/RootNavigator.navigator';
 
 function App(): JSX.Element {
   return (
-    <StyledGestureHandlerRootView>
+    <StyledGestureHandlerRootView testID={'StyledGestureHandlerRootViewTestID'}>
       <ErrorBoundary>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
