@@ -110,7 +110,7 @@ module.exports = {
       },
     },
     {
-      files: ['e2e/**/*.test.js'],
+      files: ['e2e/**/*.test.js', 'e2e/**/*.js'],
       env: {
         'detox/detox': true,
         jest: true,
