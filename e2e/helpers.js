@@ -29,9 +29,12 @@ export const backToLogin = async () => {
   await waitFor(StyledHomeScreenContainerTestID)
     .toBeVisible()
     .withTimeout(10000);
-  await expect(HomeRightButtonTestID).toBeVisible();
+  await waitFor(HomeRightButtonTestID).toBeVisible().withTimeout(10000);
   await HomeRightButtonTestID.tap();
 
-  await expect(StyledLoadingWrapperTestID).toBeVisible();
+  await waitFor(StyledLoadingWrapperTestID).toBeVisible().withTimeout(10000);
   await waitFor(LoginWrapperTestID).toBeVisible().withTimeout(10000);
 };
+export function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
