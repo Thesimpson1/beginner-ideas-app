@@ -1,10 +1,21 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
+# About Project
+This project  shows some of my skills:
+ 1. There are a lot of animation (used [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/) and [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler))
+ 2. There are unit test. All application is covered by more than 90%(used [Jest](https://jestjs.io/)). 
+ 3. Implemented understandable structure with using Redux toolkit and Redux saga.
+ 4. Connected error tracker(used [sentry](https://sentry.io/welcome/?utm_source=google&utm_medium=cpc&utm_id=%7B20398270056%7D&utm_campaign=Google_Search_Brand_SentryKW_EMEA_Alpha&utm_content=g&utm_term=sentry&gad_source=1&gclid=Cj0KCQjw-r-vBhC-ARIsAGgUO2DbPRcknbicMtLrt04l5cJLcMi9iBmDaT7wNuoIvgXMskNmK0KlXOgaApwMEALw_wcB))
+ 5. There is simple scale system.
+ 6. Was connected [firebase](https://console.firebase.google.com/) for storing some information and authorisation. 
+ 7. Was added navigator for [navigation](https://reactnavigation.org/) between screens.
+ 8. Was added e2e tests(used [detox](https://github.com/wix/Detox)).
+ 9. This project also has additional typeScript and Lint configurations.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
-
-## Step 1: Start the Metro Server
+This project as well has a board with tasks(To do, doing, done, deleted, tasks with problem) and worklog.
+# Run project 
+## Step 1: Set up Environment 
+Set up environment according react native documentation https://reactnative.dev/docs/environment-setup
+## Step 2: Start the Metro Server
 
 First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
 
@@ -18,7 +29,7 @@ npm start
 yarn start
 ```
 
-## Step 2: Start your Application
+## Step 2: Start Application
 
 Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
 
@@ -42,38 +53,7 @@ npm run ios
 yarn ios
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+If everything is set up _correctly_, you should see app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+This is one way to run  app — you can also run it directly from within Android Studio and Xcode respectively.
 
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
