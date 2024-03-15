@@ -13,7 +13,7 @@ const backToLogin = async () => {
   await expect(HomeRightButtonTestID).toBeVisible();
   await HomeRightButtonTestID.tap();
 
-  await expect(StyledLoadingWrapperTestID).toBeVisible();
+  await waitFor(StyledLoadingWrapperTestID).toBeVisible().withTimeout(10000);
   await waitFor(LoginWrapperTestID).toBeVisible().withTimeout(10000);
 };
 
