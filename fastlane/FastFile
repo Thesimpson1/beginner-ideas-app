@@ -1,0 +1,14 @@
+
+platform :android do
+  desc "RN Production App"
+  lane :distribute do
+    gradle(task: 'clean assembleRelease', project_dir: './android', print_command: false, properties: {})
+
+    firebase_app_distribution(
+      app: "1:565152579210:android:fbf5f7f5783532172f3773",
+      testers: "tester1@company.com, tester2@company.com",
+      firebase_cli_token: ENV["FIREBASE_TOKEN"],
+      release_notes: "Lots of amazing new features to test out!"
+    )
+  end
+end
