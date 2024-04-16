@@ -11,4 +11,28 @@ platform :android do
       release_notes: "Lots of amazing new features to test out!"
     )
   end
+
+end
+
+platform :ios do
+  desc 'Fetch certificates and provisioning profiles'
+lane :certificates do
+  get_certificates(
+    output_path: './cert/path/name'
+)
+end
+  desc "RN Production App"
+  lane :distribute do
+    certificates
+    # gym(scheme: 'BeginerIdeasApp', project: './ios/BeginerIdeasApp.xcworkspace')
+    build_app(scheme: "BeginerIdeasApp", project: './ios/BeginerIdeasApp.xcworkspace')
+    increment_build_number(xcodeproj: "BeginerIdeasApp.xcworkspace")
+    firebase_app_distribution(
+      app: "1:565152579210:ios:5ea1836ab5ce388a2f3773",
+      testers: "tester1@company.com, tester2@company.com",
+      firebase_cli_token: ENV["FIREBASE_TOKEN"],
+      release_notes: "Lots of amazing new features to test out!"
+    )
+  end
+
 end

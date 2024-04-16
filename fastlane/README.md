@@ -13,12 +13,20 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
-## Android
+## iOS
 
-### android distribute
+### ios certificates
 
 ```sh
-[bundle exec] fastlane android distribute
+[bundle exec] fastlane ios certificates
+```
+
+Fetch certificates and provisioning profiles
+
+### ios distribute
+
+```sh
+[bundle exec] fastlane ios distribute
 ```
 
 RN Production App

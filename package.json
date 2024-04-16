@@ -11,7 +11,9 @@
     "e2e-ios:test": "detox test --configuration ios.sim.debug",
     "e2e-ios:build": "detox build --configuration ios.sim.debug",
     "e2e-ios:release-test": "detox test --configuration ios.sim.release",
-    "e2e-ios:release-build": "detox build --configuration ios.sim.release"
+    "e2e-ios:release-build": "detox build --configuration ios.sim.release",
+    "run fastline android": "bundle exec fastlane android distribute",
+    "run fastline ios": "bundle exec fastlane ios distribute"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.19.3",
