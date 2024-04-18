@@ -2,7 +2,7 @@ import { TextProps } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import styled from 'styled-components/native';
 
-import { colors } from 'app/constants/color';
+import { colors, MainColorName } from 'app/constants/color';
 
 export const StyledWrapper = styled.View`
   flex: 1;
@@ -18,6 +18,14 @@ export const StyledAnimatedWrapper = styled(Animated.View).attrs({
 })`
   flex: 1;
 ` as typeof Animated.View;
+export const StyledMainWrapper = styled.View`
+  background-color: ${colors[MainColorName.BLUE]};
+  flex: 1;
+`;
+export const StyledMainWrapperWithAnimation = styled(StyledAnimatedWrapper)`
+  background-color: ${colors[MainColorName.BLUE]};
+  flex: 1;
+`;
 export const StyledAnimatedSimpleViewWrapper = styled(Animated.View).attrs({
   entering: FadeIn.duration(500),
 })``;

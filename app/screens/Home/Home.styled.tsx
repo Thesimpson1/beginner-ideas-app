@@ -1,13 +1,15 @@
 import styled from 'styled-components/native';
 
-import { StyledTextH2, StyledTextH3 } from 'app/utils/common-styled-components';
+import {
+  StyledMainWrapper,
+  StyledTextH2,
+  StyledTextH3,
+} from 'app/utils/common-styled-components';
 import { calcHeight, calcWidth } from 'app/utils/scaling-system';
 import { colors, MainColorName } from 'app/constants/color';
 
-export const StyledHomeScreenContainer = styled.View`
-  background-color: ${colors[MainColorName.BLUE]};
+export const StyledHomeScreenContainer = styled(StyledMainWrapper)`
   padding: ${calcHeight(80)}px ${calcWidth(15)}px 0;
-  flex: 1;
 `;
 export const StyledHomeTextWrapper = styled.View`
   flex-direction: row;

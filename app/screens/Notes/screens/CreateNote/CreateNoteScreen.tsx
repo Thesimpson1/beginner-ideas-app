@@ -3,12 +3,12 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { useAppSelector } from 'app/redux/hooks';
 import { NotesStackScreenName } from 'app/types';
 
+import { StyledMainWrapper } from 'app/utils/common-styled-components';
 import { MainNotesParamList } from 'app/navigation/app/Notes.navigator';
 import { StackScreenHeader } from 'app/navigation/navigation-headers/StackScreenHeader/StackScreenHeader';
 import { colors, MainColorName } from 'app/constants/color';
 import { RightDoneButton } from 'app/screens/Notes/screens/CreateNote/components/RightDoneButton/RightDoneButton';
 import {
-  StyledCreateNoteScreenContainer,
   StyledInputWrapper,
 } from 'app/screens/Notes/screens/CreateNote/CreateNote.styled';
 import { useGetNoteLogicAndInfo } from 'app/screens/Notes/screens/CreateNote/hooks/useGetNoteLogicAndInfo';
@@ -42,9 +42,7 @@ export function CreateNoteScreen() {
           }),
         }}
       />
-      <StyledCreateNoteScreenContainer
-        testID={'StyledCreateNoteScreenContainerTestID'}
-      >
+      <StyledMainWrapper testID={'StyledCreateNoteScreenContainerTestID'}>
         <StyledInputWrapper
           autoCorrect={false}
           value={text}
@@ -55,7 +53,7 @@ export function CreateNoteScreen() {
           multiline={true}
           selectionColor={colors[MainColorName.ORANGE]}
         />
-      </StyledCreateNoteScreenContainer>
+      </StyledMainWrapper>
     </>
   );
 }

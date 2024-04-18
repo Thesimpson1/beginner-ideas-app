@@ -1,15 +1,15 @@
 import styled from 'styled-components/native';
 
 import {
-  StyledAnimatedWrapper,
+  StyledMainWrapperWithAnimation,
   StyledTextH1,
 } from 'app/utils/common-styled-components';
 import { calcFontSize, calcHeight } from 'app/utils/scaling-system';
 import { colors, MainColorName } from 'app/constants/color';
 
-export const StyledCalculatorScreenContainer = styled(StyledAnimatedWrapper)`
-  flex: 1;
-  background-color: ${colors[MainColorName.BLUE]};
+export const StyledCalculatorScreenContainer = styled(
+  StyledMainWrapperWithAnimation
+)`
   align-items: center;
 `;
 export const StyledCalculatorContentContainer = styled.View`

@@ -2,14 +2,15 @@ import Animated from 'react-native-reanimated';
 import styled from 'styled-components/native';
 
 import {
-  StyledAnimatedWrapper,
+  StyledMainWrapperWithAnimation,
   StyledTextH1,
 } from 'app/utils/common-styled-components';
 import { calcFontSize, calcHeight, calcWidth } from 'app/utils/scaling-system';
 import { colors, MainColorName } from 'app/constants/color';
 
-export const StyledTimerScreenContainer = styled(StyledAnimatedWrapper)`
-  background-color: ${colors[MainColorName.BLUE]};
+export const StyledTimerScreenContainer = styled(
+  StyledMainWrapperWithAnimation
+)`
   padding: ${calcHeight(20)}px ${calcWidth(15)}px 0 ${calcWidth(15)}px;
   position: relative;
   z-index: -2;
