@@ -1,7 +1,6 @@
 import styled from 'styled-components/native';
 
 import { StyledTextH2 } from 'app/utils/common-styled-components';
-import { calcHeight } from 'app/utils/scaling-system';
 import { colors, MainColorName } from 'app/constants/color';
 
 export const StyledDayWrapper = styled.View<{
