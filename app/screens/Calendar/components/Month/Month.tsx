@@ -8,22 +8,18 @@ import {
   StyledMonthTitle,
   StyledMonthWrapper,
 } from 'app/screens/Calendar/components/Month/Month.styled';
+import { MonthI } from 'app/screens/Calendar/types';
 interface RenderSectionTitleMonthHeaderProps {
-  section: { title: string; data: Array<number> };
+  section: MonthI;
 }
 interface RenderItemMonthProps {
   item: number;
 }
-const MockMonth = [
-  {
-    title: 'April',
-    data: [
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-      22, 23, 24, 25, 26, 27, 28, 29, 30,
-    ],
-  },
-];
-export function Month() {
+interface MonthProps {
+  monthData: Array<MonthI>;
+}
+
+export function Month({ monthData }: MonthProps) {
   const renderItem = ({ item }: RenderItemMonthProps) => (
     <View key={Math.random().toString()}>
       <Day value={item} />
@@ -50,9 +46,9 @@ export function Month() {
   );
 
   return (
-    <StyledMonthWrapper width={calcWidth(117)} height={calcHeight(120)}>
+    <StyledMonthWrapper width={calcWidth(112)} height={calcHeight(120)}>
       <SectionList
-        sections={MockMonth}
+        sections={monthData}
         renderSectionHeader={renderSectionHeader}
         renderItem={() => null}
       />

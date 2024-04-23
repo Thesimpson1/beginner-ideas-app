@@ -1,8 +1,7 @@
 import styled from 'styled-components/native';
 
-import { StyledTextH1, StyledTextH2 } from 'app/utils/common-styled-components';
-import {calcHeight, calcWidth} from 'app/utils/scaling-system';
-import { colors, MainColorName } from 'app/constants/color';
+import { StyledTextH1 } from 'app/utils/common-styled-components';
+import { calcWidth } from 'app/utils/scaling-system';
 
 export const StyledMonthWrapper = styled.View<{
   width: number;
@@ -10,8 +9,8 @@ export const StyledMonthWrapper = styled.View<{
 }>`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-  
   padding: ${calcWidth(5)}px;
+  margin-bottom: ${calcWidth(15)}px;
 `;
 export const StyledMonthTitle = styled(StyledTextH1)<{
   size: number;
