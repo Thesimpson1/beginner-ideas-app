@@ -10,6 +10,7 @@ import {
   StyledYearTitle,
   StyledYearWrapper,
 } from 'app/screens/Calendar/Calendar.styled';
+import { CalendarBottom } from 'app/screens/Calendar/components/CalendarBottom/CalendarBottom';
 import { Month } from 'app/screens/Calendar/components/Month/Month';
 import { MonthI } from 'app/screens/Calendar/types';
 interface RenderSectionCalendarHeader {
@@ -55,6 +56,7 @@ export function CalendarScreen() {
           renderItem={() => null}
         />
       </StyledYearWrapper>
+      <CalendarBottom />
     </StyledMainWrapperWithAnimation>
   );
 }
