@@ -18,4 +18,5 @@ export const StyledMonthTitle = styled(StyledTextH1)<{
 }>`
   color: ${({ color }) => color && color};
   font-size: ${({ size }) => size && size}px;
+  align-self: center;
 `;

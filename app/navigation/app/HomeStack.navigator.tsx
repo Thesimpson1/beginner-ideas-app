@@ -40,6 +40,7 @@ export const HomeStack = () => {
       <Stack.Screen
         name={HomeStackScreenName.CALENDAR}
         component={CalendarScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={HomeStackScreenName.CALCULATOR}

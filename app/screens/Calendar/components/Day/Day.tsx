@@ -8,14 +8,14 @@ import {
 interface DayProps {
   value: number;
 }
-export function Day({ value }: DayProps) {
+export const Day = React.memo(function Day({ value }: DayProps) {
   return (
     <StyledDayWrapper
-      width={calcWidth(15)}
-      height={calcHeight(18)}
+      width={calcWidth(47)}
+      height={calcHeight(50)}
       isBackgroundVisibly={false}
     >
-      <StyledDayText size={calcFontSize(10)}>{value}</StyledDayText>
+      <StyledDayText size={calcFontSize(18)}>{value}</StyledDayText>
     </StyledDayWrapper>
   );
-}
+});
